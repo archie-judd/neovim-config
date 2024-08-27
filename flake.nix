@@ -18,7 +18,8 @@
 
         app = pkgs.writeShellApplication {
           name = "nvim";
-          text = "${neovim.package}/bin/nvim";
+          # "$@" arguments placeholder (so 'nvim <arguments>' works).
+          text = ''${neovim.package}/bin/nvim "$@"'';
           runtimeInputs = neovim.extraPackages;
         };
 
