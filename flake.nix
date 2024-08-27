@@ -1,19 +1,19 @@
 {
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = { flake-utils, nixpkgs, nixpkgs-stable, ... }:
+  outputs = { flake-utils, nixpkgs, nixpkgs-unstable, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        pkgs-stable = nixpkgs-stable.legacyPackages.${system};
+        pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 
         neovim = pkgs.callPackage ./neovim.nix {
           pkgs = pkgs;
-          pkgs-stable = pkgs-stable;
+          pkgs-unstable = pkgs-unstable;
         };
 
         app = pkgs.writeShellApplication {

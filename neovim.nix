@@ -1,4 +1,4 @@
-{ pkgs, pkgs-stable }:
+{ pkgs, pkgs-unstable }:
 
 let
 
@@ -37,7 +37,7 @@ let
     pkgs.vimPlugins.nvim-treesitter-parsers.bash
     pkgs.vimPlugins.nvim-treesitter-parsers.haskell
     pkgs.vimPlugins.nvim-treesitter-parsers.c
-    pkgs-stable.vimPlugins.nvim-treesitter-parsers.sql
+    pkgs.vimPlugins.nvim-treesitter-parsers.sql
     pkgs.vimPlugins.nvim-treesitter-textobjects
     pkgs.vimPlugins.oil-nvim
     pkgs.vimPlugins.catppuccin-nvim
@@ -57,12 +57,12 @@ let
     pkgs.vimPlugins.nvim-dap
     pkgs.vimPlugins.diffview-nvim
     pkgs.vimPlugins.nvim-web-devicons
-    pkgs-stable.vimPlugins.eyeliner-nvim # nvim_buf_del_keymap issue on unstable 2024-08-27
+    pkgs.vimPlugins.eyeliner-nvim
     pkgs.vimPlugins.vim-fugitive
     pkgs.vimPlugins.gitsigns-nvim
     pkgs.vimPlugins.lualine-nvim
     pkgs.vimPlugins.mini-nvim
-    pkgs-stable.vimPlugins.neotest # neotest-5.4.0-unstable failed to build
+    pkgs.vimPlugins.neotest
     pkgs.vimPlugins.neotest-python
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
@@ -73,7 +73,7 @@ let
     pkgs.gcc
     pkgs.ripgrep
     pkgs.fd
-    pkgs.bash-language-server
+    pkgs.nodePackages.bash-language-server
     pkgs.nodePackages.typescript-language-server
     pkgs.haskell-language-server
     pkgs.lua-language-server
@@ -81,7 +81,7 @@ let
     pkgs.ruff
     pkgs.pyright
     pkgs.nixd
-    pkgs-stable.nodePackages.vscode-langservers-extracted # vscode-langservers-extracted-4.10.0 failed on unstable 2024-08-20
+    pkgs.nodePackages.vscode-langservers-extracted
     pkgs.nodePackages.eslint
     pkgs.prettierd
     pkgs.shfmt
@@ -91,18 +91,24 @@ let
     pkgs.black
     pkgs.isort
     pkgs.ormolu
-    pkgs.vscode-js-debug
-    pkgs.nodejs
-    (pkgs.python3.withPackages (pyPkgs: [ pyPkgs.debugpy ]))
+    pkgs-unstable.vscode-js-debug
   ];
 
+  extraPython3Packages = pyPkgs: [ pyPkgs.debugpy ];
+
 in {
-  package = pkgs.neovim.override {
+
+  package = pkgs-unstable.neovim.override {
     configure = {
       packages.all.start = plugins;
       customRC = customRC;
     };
+    withPython3 = true;
+    withNodeJs = true;
+    withRuby = false;
+    extraPython3Packages = extraPython3Packages;
   };
 
   extraPackages = extraPackages;
 }
+
