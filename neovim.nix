@@ -2,7 +2,7 @@
 
 let
 
-  # Copy our config to the nix store
+  # Copy the config to the nix store
   nvimConfig = pkgs.stdenv.mkDerivation {
     name = "nvim-config";
     src = ./nvim;

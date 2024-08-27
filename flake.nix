@@ -11,15 +11,15 @@
         pkgs = nixpkgs.legacyPackages.${system};
         pkgs-stable = nixpkgs-stable.legacyPackages.${system};
 
-        nvim = pkgs.callPackage ./nvim.nix {
+        neovim = pkgs.callPackage ./neovim.nix {
           pkgs = pkgs;
           pkgs-stable = pkgs-stable;
         };
 
         app = pkgs.writeShellApplication {
           name = "nvim";
-          text = "${nvim.package}/bin/nvim";
-          runtimeInputs = nvim.extraPackages;
+          text = "${neovim.package}/bin/nvim";
+          runtimeInputs = neovim.extraPackages;
         };
 
       in {
