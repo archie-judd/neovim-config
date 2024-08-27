@@ -22,9 +22,6 @@
           runtimeInputs = neovim.extraPackages;
         };
 
-      in {
-        packages.default = app;
-
-      });
+      in { packages.default = app; });
 }
 
