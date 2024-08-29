@@ -55,7 +55,6 @@ let
     pkgs.vimPlugins.markdown-preview-nvim
     pkgs.vimPlugins.conform-nvim
     pkgs.vimPlugins.nvim-dap
-    pkgs.vimPlugins.diffview-nvim
     pkgs.vimPlugins.nvim-web-devicons
     pkgs.vimPlugins.eyeliner-nvim
     pkgs.vimPlugins.vim-fugitive
@@ -67,6 +66,7 @@ let
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
     pkgs.vimPlugins.copilot-cmp
+    pkgs-unstable.vimPlugins.diffview-nvim
   ];
 
   extraPackages = [
