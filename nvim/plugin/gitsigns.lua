@@ -12,7 +12,7 @@ local config = function()
 		on_attach = function(buffer)
 			mappings.gitsigns(buffer)
 		end,
-		preview_config = { border = "rounded", focusable = false },
+		preview_config = { border = "rounded", focusable = true },
 	})
 end
 
