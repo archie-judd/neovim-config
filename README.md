@@ -14,6 +14,6 @@ Install imperatively for the current user with:
 nix profile install github:archie-judd/neovim-config
 ```
 
-Install declaratively:
+Install declaratively with a flake:
 
 See here: https://nixos-and-flakes.thiscute.world/nixos-with-flakes/nixos-flake-and-module-system#install-system-packages-from-other-flakes
