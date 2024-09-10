@@ -423,9 +423,15 @@ function M.typescript()
 		buffer = true,
 		noremap = true,
 		silent = true,
-		desc = "Typescript: insert identity function on new line",
+		desc = "Typescript: insert identity function on next line",
 	})
-	vim.keymap.set("n", "<Leader>2", "a,(x)<Space>=><Space>x<Esc>", {
+	vim.keymap.set("n", "<Leader>2", "O(x)<Space>=><Space>x,<Esc>", {
+		buffer = true,
+		noremap = true,
+		silent = true,
+		desc = "Typescript: insert identity function on previous line",
+	})
+	vim.keymap.set("n", "<Leader>3", "a,(x)<Space>=><Space>x<Esc>", {
 		buffer = true,
 		noremap = true,
 		silent = true,
