@@ -15,15 +15,41 @@ local config = function()
 			arguments = { vim.api.nvim_buf_get_name(0) },
 			title = "",
 		}
+		vim.print(vim.inspect(params.arguments))
 		vim.lsp.buf.execute_command(params)
+	end
+
+	local function tsserver_organize_all_changed_imports()
+		-- Get the list of changed files from git (staged, modified, and untracked)
+		local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+		local git_files = vim.fn.systemlist("git ls-files --modified --others --exclude-standard")
+
+		-- Iterate over the list of git files and apply the placeholder function
+		for _, file in ipairs(git_files) do
+			-- Skip empty lines (in case there are any)
+			if file ~= "" then
+				local absolute_path = git_root .. "/" .. file
+				local params = {
+					command = "_typescript.organizeImports",
+					arguments = { absolute_path },
+					title = "",
+				}
+				vim.print(vim.inspect(params.arguments))
+				vim.lsp.buf.execute_command(params)
+			end
+		end
 	end
 
 	lspconfig.tsserver.setup({
 		capabilities = capabilities,
 		commands = {
-			OrganizeImports = {
+			OrganizeTSImports = {
 				tsserver_organize_imports,
-				description = "Organize Imports",
+				description = "Organize Typescipt imports for current file",
+			},
+			OrganizeAllTSImports = {
+				tsserver_organize_all_changed_imports,
+				description = "Organize Typescript imports for all changed files",
 			},
 		},
 	})
