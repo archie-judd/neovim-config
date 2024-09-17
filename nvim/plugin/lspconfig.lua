@@ -15,7 +15,6 @@ local config = function()
 			arguments = { vim.api.nvim_buf_get_name(0) },
 			title = "",
 		}
-		vim.print(vim.inspect(params.arguments))
 		vim.lsp.buf.execute_command(params)
 	end
 
@@ -34,7 +33,6 @@ local config = function()
 					arguments = { absolute_path },
 					title = "",
 				}
-				vim.print(vim.inspect(params.arguments))
 				vim.lsp.buf.execute_command(params)
 			end
 		end
