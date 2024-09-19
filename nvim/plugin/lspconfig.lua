@@ -16,10 +16,6 @@ local config = function()
 				utils.tsserver_organize_imports,
 				description = "Organize Typescipt imports for current file",
 			},
-			OrganizeAllTSImports = {
-				utils.tsserver_organize_all_changed_imports,
-				description = "Organize Typescript imports for all changed files",
-			},
 		},
 	})
 	lspconfig.pyright.setup({ capabilities = capabilities })
