@@ -39,7 +39,6 @@ let
     pkgs.vimPlugins.nvim-treesitter-parsers.c
     pkgs.vimPlugins.nvim-treesitter-parsers.sql
     pkgs.vimPlugins.nvim-treesitter-textobjects
-    pkgs.vimPlugins.oil-nvim
     pkgs.vimPlugins.catppuccin-nvim
     pkgs.vimPlugins.telescope-nvim
     pkgs.vimPlugins.telescope-live-grep-args-nvim
@@ -66,6 +65,7 @@ let
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
     pkgs.vimPlugins.copilot-cmp
+    pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable
     pkgs-unstable.vimPlugins.diffview-nvim
   ];
 
