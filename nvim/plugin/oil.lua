@@ -7,7 +7,7 @@ local config = function()
 	oil.setup({
 		keymaps = { ["<C-p>"] = false },
 		float = {
-			override = function(win_opts)
+			override = function()
 				local total_width = vim.o.columns
 				local total_height = layout.get_editor_height()
 				local width = math.floor(vim.o.columns * 0.7)
@@ -25,6 +25,7 @@ local config = function()
 				}
 				return win_opts
 			end,
+			preview_split = "right",
 		},
 	})
 
