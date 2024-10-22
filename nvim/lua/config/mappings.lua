@@ -1,8 +1,12 @@
 -- It's useful to have core mappings in one file, so accidental remaps can be easily spotted.
 local M = {}
 function M.core()
+	local yank_utils = require("utils.yank")
+
 	-- Set mapleader
 	vim.g.mapleader = ";"
+	vim.keymap.set("i", "<C-x>", "<C-x>", { silent = true, noremap = true })
+
 	vim.keymap.set("i", "<C-x>", "<C-x>", { silent = true, noremap = true })
 
 	-- Close floating windows
@@ -140,8 +144,23 @@ function M.core()
 		{ silent = true, noremap = true, desc = "Terminal: exit terminal mode" }
 	)
 
+	-- Inserting new lines
 	vim.keymap.set("n", "<Leader>o", "jO<Esc>k", { silent = true, noremap = true, desc = "Insert line: below" })
 	vim.keymap.set("n", "<Leader>O", "ko<Esc>j", { silent = true, noremap = true, desc = "Insert line: above" })
+
+	-- Yanking filepaths
+	vim.keymap.set(
+		"n",
+		"<Leader>yp",
+		yank_utils.yank_filepath_to_system_register,
+		{ silent = true, noremap = true, desc = "Yank: yank filepath to the system slipboard" }
+	)
+	vim.keymap.set(
+		"n",
+		"<Leader>yn",
+		yank_utils.yank_filename_to_system_register,
+		{ silent = true, noremap = true, desc = "Yank: yank filename to the system slipboard" }
+	)
 end
 
 function M.nvim_tmux_navigation()
