@@ -152,14 +152,26 @@ function M.core()
 	vim.keymap.set(
 		"n",
 		"<Leader>yp",
-		yank_utils.yank_filepath_to_system_register,
-		{ silent = true, noremap = true, desc = "Yank: yank filepath to the system slipboard" }
+		yank_utils.yank_filepath_to_unnamed_register,
+		{ silent = true, noremap = true, desc = "Yank: yank filepath to the unnamed register" }
 	)
 	vim.keymap.set(
 		"n",
 		"<Leader>yn",
+		yank_utils.yank_filename_to_unnamed_register,
+		{ silent = true, noremap = true, desc = "Yank: yank filename to the unnamed register" }
+	)
+	vim.keymap.set(
+		"n",
+		"<Leader>yp+",
+		yank_utils.yank_filepath_to_system_register,
+		{ silent = true, noremap = true, desc = "Yank: yank filepath to the system register" }
+	)
+	vim.keymap.set(
+		"n",
+		"<Leader>yn+",
 		yank_utils.yank_filename_to_system_register,
-		{ silent = true, noremap = true, desc = "Yank: yank filename to the system slipboard" }
+		{ silent = true, noremap = true, desc = "Yank: yank filename to the system register" }
 	)
 end
 
@@ -217,9 +229,12 @@ function M.lspconfig(bufnr)
 		vim.lsp.buf.hover,
 		{ silent = true, noremap = true, buffer = bufnr, desc = "Lsp: hover" }
 	)
-	vim.keymap.set("n", "<C-s>", function()
-		vim.lsp.buf.signature_help()
-	end, { silent = true, noremap = true, buffer = bufnr, desc = "Lsp: signature help" })
+	vim.keymap.set(
+		"n",
+		"<C-s>",
+		vim.lsp.buf.signature_help,
+		{ silent = true, noremap = true, buffer = bufnr, desc = "Lsp: signature help" }
+	)
 	vim.keymap.set(
 		"n",
 		"<Leader>ca",
@@ -263,9 +278,12 @@ function M.telescope()
 		telescope_builtin.find_files,
 		{ silent = true, noremap = true, desc = "Telescope: find files" }
 	)
-	vim.keymap.set("n", "<Leader>fm", function()
-		telescope_builtin.marks()
-	end, { silent = true, noremap = true, desc = "Telescope: find marks" })
+	vim.keymap.set(
+		"n",
+		"<Leader>fm",
+		telescope_builtin.marks,
+		{ silent = true, noremap = true, desc = "Telescope: find marks" }
+	)
 	vim.keymap.set(
 		"n",
 		"<Leader>fg",
@@ -289,9 +307,7 @@ end
 function M.oil()
 	local oil = require("oil")
 
-	vim.keymap.set("n", "-", function()
-		oil.open_float()
-	end, { noremap = true, silent = true, desc = "Oil: open parent directory" })
+	vim.keymap.set("n", "-", oil.open_float, { noremap = true, silent = true, desc = "Oil: open parent directory" })
 	vim.keymap.set("n", "_", function()
 		oil.open_float(vim.fn.getcwd())
 	end, { noremap = true, silent = true, desc = "Oil: open current working directory" })
@@ -319,9 +335,12 @@ function M.dap()
 	vim.keymap.set("n", "<Leader>so", dap.step_over, { silent = true, noremap = true, desc = "Dap: step over" })
 	vim.keymap.set("n", "<Leader>si", dap.step_into, { silent = true, noremap = true, desc = "Dap: step into" })
 	vim.keymap.set("n", "<Leader>su", dap.step_out, { silent = true, noremap = true, desc = "Dap: step out of" })
-	vim.keymap.set("n", "<Leader>bl", function()
-		dap.list_breakpoints()
-	end, { silent = true, noremap = true, desc = "Dap: add breakpoints to quickfix list" })
+	vim.keymap.set(
+		"n",
+		"<Leader>bl",
+		dap.list_breakpoints,
+		{ silent = true, noremap = true, desc = "Dap: add breakpoints to quickfix list" }
+	)
 	vim.keymap.set("n", "<Leader>ro", function()
 		dap.repl.open({}, "vsplit new")
 	end, { silent = true, noremap = true, desc = "Dap: open the repl" })
@@ -350,9 +369,12 @@ function M.neotest()
 	local neotest = require("neotest")
 	local dap_utils = require("utils.dap")
 
-	vim.keymap.set("n", "<Leader>rt", function()
-		neotest.run.run()
-	end, { silent = true, noremap = true, desc = "Neotest: run closest test" })
+	vim.keymap.set(
+		"n",
+		"<Leader>rt",
+		neotest.run.run,
+		{ silent = true, noremap = true, desc = "Neotest: run closest test" }
+	)
 	vim.keymap.set(
 		"n",
 		"<Leader>dt",
