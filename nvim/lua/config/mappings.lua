@@ -152,20 +152,32 @@ function M.core()
 	vim.keymap.set(
 		"n",
 		"<Leader>yp",
-		yank_utils.yank_filepath_to_unnamed_register,
-		{ silent = true, noremap = true, desc = "Yank: yank filepath to the unnamed register" }
+		yank_utils.yank_abs_filepath_to_unnamed_register,
+		{ silent = true, noremap = true, desc = "Yank: yank absolute filepath to the unnamed register" }
+	)
+	vim.keymap.set(
+		"n",
+		"<Leader>yp+",
+		yank_utils.yank_abs_filepath_to_system_register,
+		{ silent = true, noremap = true, desc = "Yank: yank absolute filepath to the system register" }
+	)
+	vim.keymap.set(
+		"n",
+		"<Leader>yr",
+		yank_utils.yank_rel_filepath_to_unnamed_register,
+		{ silent = true, noremap = true, desc = "Yank: yank relative filepath to the unnamed register" }
+	)
+	vim.keymap.set(
+		"n",
+		"<Leader>yr+",
+		yank_utils.yank_rel_filepath_to_system_register,
+		{ silent = true, noremap = true, desc = "Yank: yank relative filename to the system register" }
 	)
 	vim.keymap.set(
 		"n",
 		"<Leader>yn",
 		yank_utils.yank_filename_to_unnamed_register,
 		{ silent = true, noremap = true, desc = "Yank: yank filename to the unnamed register" }
-	)
-	vim.keymap.set(
-		"n",
-		"<Leader>yp+",
-		yank_utils.yank_filepath_to_system_register,
-		{ silent = true, noremap = true, desc = "Yank: yank filepath to the system register" }
 	)
 	vim.keymap.set(
 		"n",
