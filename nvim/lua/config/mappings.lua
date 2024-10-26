@@ -498,7 +498,7 @@ function M.copilot()
 	local function open_panel()
 		local number_of_columns = vim.api.nvim_win_get_width(0)
 		local number_of_rows = vim.api.nvim_win_get_height(0)
-		local desired_height = 15
+		local desired_height = 20
 		local desired_width = tonumber(vim.wo.colorcolumn)
 		if desired_width == nil then
 			desired_width = 80
