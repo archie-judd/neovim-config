@@ -16,7 +16,7 @@ local config = function()
 		},
 		completion = { completeopt = "menu,menuone,noinsert" },
 		mapping = cmp.mapping.preset.insert({
-			-- ["<C-f>"] = cmp.mapping({ i = cmp.mapping.complete() }),
+			["<C-f>"] = cmp.mapping({ i = cmp.mapping.complete() }),
 			["<C-g>"] = cmp.mapping(function()
 				if cmp.visible_docs() then
 					cmp.close_docs()
