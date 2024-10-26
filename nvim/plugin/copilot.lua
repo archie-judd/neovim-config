@@ -8,11 +8,7 @@ local config = function()
 			enabled = false,
 		},
 		panel = {
-			enabled = true,
-			layout = {
-				position = "right", -- | top | left | right
-				ratio = 0.3,
-			},
+			enabled = false,
 		},
 	})
 	autocommands.copilot()
