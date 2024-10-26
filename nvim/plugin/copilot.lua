@@ -7,7 +7,13 @@ local config = function()
 		suggestion = {
 			enabled = false,
 		},
-		panel = { enabled = false },
+		panel = {
+			enabled = true,
+			layout = {
+				position = "right", -- | top | left | right
+				ratio = 0.3,
+			},
+		},
 	})
 	autocommands.copilot()
 	mappings.copilot()
