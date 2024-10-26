@@ -170,20 +170,57 @@ function M.diffview()
 end
 
 function M.telescope()
+	local core_utils = require("utils.core")
 	vim.api.nvim_create_autocmd("User", {
 		pattern = { "TelescopeFindPre" },
 		callback = function(event)
 			-- close oil if it's open to avoid reading the telescope results into its window
-			require("utils.core").close_buffer_by_filetype_pattern("oil", { force = true })
+			core_utils.close_buffer_by_filetype_pattern("oil", { force = true })
 		end,
 	})
 end
 
 function M.lspconfig()
+	local mappings = require("config.mappings")
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 		callback = function(event)
-			require("config.mappings").lspconfig(event.buf)
+			mappings.lspconfig(event.buf)
+		end,
+	})
+end
+
+function M.copilot()
+	local panel = require("copilot.panel")
+	vim.api.nvim_create_autocmd("BufEnter", {
+		pattern = "copilot:*/*",
+		callback = function(event)
+			vim.keymap.set("n", "<C-c>", function()
+				vim.api.nvim_buf_delete(event.buf, { force = true })
+			end, {
+				buffer = event.buf,
+				noremap = true,
+				silent = true,
+				desc = "Copilot: Close the panel",
+			})
+			vim.keymap.set("n", "<C-n>", panel.jump_next, {
+				buffer = event.buf,
+				noremap = true,
+				silent = true,
+				desc = "Copilot: Next panel suggestion",
+			})
+			vim.keymap.set("n", "<C-p>", panel.jump_prev, {
+				buffer = event.buf,
+				noremap = true,
+				silent = true,
+				desc = "Copilot: Previous panel suggestion",
+			})
+			vim.keymap.set("n", "<C-y>", panel.accept, {
+				buffer = event.buf,
+				noremap = true,
+				silent = true,
+				desc = "Copilot: Accept current panel suggestion",
+			})
 		end,
 	})
 end

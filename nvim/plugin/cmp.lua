@@ -16,7 +16,7 @@ local config = function()
 		},
 		completion = { completeopt = "menu,menuone,noinsert" },
 		mapping = cmp.mapping.preset.insert({
-			["<C-f>"] = cmp.mapping({ i = cmp.mapping.complete() }),
+			-- ["<C-f>"] = cmp.mapping({ i = cmp.mapping.complete() }),
 			["<C-g>"] = cmp.mapping(function()
 				if cmp.visible_docs() then
 					cmp.close_docs()
@@ -60,9 +60,9 @@ local config = function()
 			["<C-y>"] = cmp.mapping.confirm({ select = true }),
 		}),
 		sources = cmp.config.sources({
+			{ name = "copilot" },
 			{ name = "nvim_lsp" },
 			{ name = "nvim_lsp_signature_help" },
-			{ name = "copilot" },
 		}),
 	})
 

@@ -492,4 +492,13 @@ function M.typescript()
 	})
 end
 
+function M.copilot()
+	local panel = require("copilot.panel")
+	vim.keymap.set("i", "<C-h>", panel.open, {
+		noremap = true,
+		silent = true,
+		desc = "Copilot: Open the panel",
+	})
+end
+
 return M
