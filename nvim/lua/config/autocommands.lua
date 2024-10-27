@@ -221,6 +221,12 @@ function M.copilot()
 				silent = true,
 				desc = "Copilot: Accept current panel suggestion",
 			})
+			vim.keymap.set("n", "<C-r>", panel.refresh, {
+				buffer = event.buf,
+				noremap = true,
+				silent = true,
+				desc = "Copilot: Refresh panel suggestions",
+			})
 		end,
 	})
 end
