@@ -2,7 +2,8 @@ local M = {}
 
 ---@return boolean
 function M.dap_is_active()
-	return require("dap").status ~= ""
+	local dap = require("dap")
+	return dap.status ~= ""
 end
 
 function M.debug_with_repl()
@@ -26,6 +27,13 @@ function M.debug_closest_test_with_repl()
 	local wincmd = string.format("%svsplit new", repl_width)
 	neotest.run.run({ strategy = "dap" })
 	dap.repl.open({}, wincmd)
+end
+
+function M.dap_close()
+	local dap = require("dap")
+	dap.terminate()
+	dap.close()
+	dap.repl.close()
 end
 
 return M

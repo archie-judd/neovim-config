@@ -99,10 +99,9 @@ function M.dap()
 	vim.api.nvim_create_autocmd("BufFilePost", {
 		pattern = "*\\[dap-terminal\\]*",
 		callback = function(event)
+			local winid = vim.api.nvim_get_current_win()
+			vim.wo[winid].winfixbuf = true
 			vim.keymap.set("n", "<C-c>", function()
-				dap.terminate()
-				dap.close()
-				dap.repl.close()
 				vim.api.nvim_buf_delete(event.buf, { force = true })
 			end, {
 				buffer = event.buf,
@@ -110,8 +109,6 @@ function M.dap()
 				noremap = true,
 				desc = "Dap: terminate and close",
 			})
-			local winid = vim.api.nvim_get_current_win()
-			vim.wo[winid].winfixbuf = true
 		end,
 	})
 	vim.api.nvim_create_autocmd("FileType", {

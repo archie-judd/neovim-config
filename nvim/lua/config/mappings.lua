@@ -302,7 +302,8 @@ function M.telescope()
 		telescope.extensions.live_grep_args.live_grep_args,
 		{ silent = true, noremap = true, desc = "Telescope: live grep" }
 	)
-	-- Search neovim config. We get the path to the init.lua file, resolve resolve it (to get the real file if it is a symlink), and remove the /init.lua suffix to get the directory path.
+	-- Search neovim config. We get the path to the init.lua file, resolve resolve it (to get the real file if it is
+	-- a symlink), and remove the /init.lua suffix to get the directory path.
 	vim.keymap.set("n", "<Leader>fc", function()
 		telescope_builtin.find_files({
 			cwd = string.gsub(vim.fn.resolve(vim.fn.stdpath("config") .. "/init.lua"), "/init.lua", ""),
@@ -365,15 +366,12 @@ function M.dap()
 end
 
 function M.diffview()
-	local diffview = require("diffview")
-	local actions = require("diffview.actions")
-
-	vim.keymap.set("n", "<Leader>gs", diffview.open, { silent = true, noremap = true, desc = "Diffview: open" })
+	local diffview_utils = require("utils.diffview")
 	vim.keymap.set(
 		"n",
-		"<Leader>gr",
-		actions.refresh_files,
-		{ silent = true, noremap = true, desc = "Diffview: refresh" }
+		"<Leader>gs",
+		diffview_utils.open_diffview,
+		{ silent = true, noremap = true, desc = "Diffview: open" }
 	)
 end
 
@@ -493,35 +491,9 @@ function M.typescript()
 end
 
 function M.copilot()
-	local panel = require("copilot.panel")
+	local copilot_utils = require("utils.copilot")
 
-	local function open_panel()
-		local number_of_columns = vim.api.nvim_win_get_width(0)
-		local number_of_rows = vim.api.nvim_win_get_height(0)
-		local desired_height = 20
-		local desired_width = tonumber(vim.wo.colorcolumn)
-		if desired_width == nil then
-			desired_width = 80
-		end
-
-		-- If there is enough room to view two full lines of code side-by-side, open the panel vertically
-		if number_of_columns >= desired_width * 2 then
-			local panel_layout = {
-				position = "right", -- | top | left | right
-				ratio = math.min(0.5, desired_width / number_of_columns),
-			}
-			panel.open(panel_layout)
-		-- Otherwise horizontally
-		else
-			local panel_layout = {
-				position = "bottom",
-				ratio = math.min(0.5, desired_height / number_of_rows),
-			}
-			panel.open(panel_layout)
-		end
-	end
-
-	vim.keymap.set("i", "<C-h>", open_panel, {
+	vim.keymap.set("i", "<C-h>", copilot_utils.open_panel, {
 		noremap = true,
 		silent = true,
 		desc = "Copilot: Open the panel",
