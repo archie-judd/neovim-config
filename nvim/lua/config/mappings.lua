@@ -344,7 +344,7 @@ function M.dap()
 		{ silent = true, noremap = true, desc = "Dap: start debugging" }
 	)
 	vim.keymap.set("n", "<Leader>dc", dap.continue, { silent = true, noremap = true, desc = "Dap: continue" })
-	vim.keymap.set("n", "<Leader>dr", dap.restart, { silent = true, noremap = true, desc = "Dap: restart" })
+	vim.keymap.set("n", "<Leader>dr", dap_utils.dap_restart, { silent = true, noremap = true, desc = "Dap: restart" })
 	vim.keymap.set("n", "<Leader>so", dap.step_over, { silent = true, noremap = true, desc = "Dap: step over" })
 	vim.keymap.set("n", "<Leader>si", dap.step_into, { silent = true, noremap = true, desc = "Dap: step into" })
 	vim.keymap.set("n", "<Leader>su", dap.step_out, { silent = true, noremap = true, desc = "Dap: step out of" })

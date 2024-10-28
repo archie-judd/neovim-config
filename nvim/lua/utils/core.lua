@@ -32,46 +32,46 @@ end
 ---@param pattern string
 ---@return nil | integer
 function M.get_buffer_by_pattern(pattern)
-	for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-		local buf_name = vim.api.nvim_buf_get_name(bufnr)
+	for _, buf_nr in ipairs(vim.api.nvim_list_bufs()) do
+		local buf_name = vim.api.nvim_buf_get_name(buf_nr)
 		if string.match(buf_name, pattern) ~= nil then
-			return bufnr
+			return buf_nr
 		end
 	end
 	return nil
 end
 
----@param bufnr integer
+---@param buf_nr integer
 ---@return integer | nil
-function M.get_window_for_buffer(bufnr)
-	for _, winnr in ipairs(vim.api.nvim_list_wins()) do
-		if vim.api.nvim_win_get_buf(winnr) == bufnr then
-			return winnr
+function M.get_window_for_buffer(buf_nr)
+	for _, win_nr in ipairs(vim.api.nvim_list_wins()) do
+		if vim.api.nvim_win_get_buf(win_nr) == buf_nr then
+			return win_nr
 		end
 	end
 	return nil
 end
 
----@param winnr integer
+---@param win_nr integer
 ---@return integer | nil
-function M.get_tabpage_for_window(winnr)
-	for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
-		for _, tab_winnr in ipairs(vim.api.nvim_tabpage_list_wins(tabpage)) do
-			if tab_winnr == winnr then
-				return tabpage
+function M.get_tabpage_for_window(win_nr)
+	for _, tab_nr in ipairs(vim.api.nvim_list_tabpages()) do
+		for _, tab_win_nr in ipairs(vim.api.nvim_tabpage_list_wins(tab_nr)) do
+			if tab_win_nr == win_nr then
+				return tab_nr
 			end
 		end
 	end
 	return nil
 end
 
----@param bufnr integer
+---@param buf_nr integer
 ---@return integer | nil
-function M.get_tabpage_for_buffer(bufnr)
-	local winnr = M.get_window_for_buffer(bufnr)
-	if winnr ~= nil then
-		local tabnr = M.get_tabpage_for_window(winnr)
-		return tabnr
+function M.get_tabpage_for_buffer(buf_nr)
+	local win_nr = M.get_window_for_buffer(buf_nr)
+	if win_nr ~= nil then
+		local tab_nr = M.get_tabpage_for_window(win_nr)
+		return tab_nr
 	end
 	return nil
 end

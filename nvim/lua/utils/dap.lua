@@ -36,4 +36,20 @@ function M.dap_close()
 	dap.repl.close()
 end
 
+-- Ensure that when dap restarts, the file buffer is reopened in a non-dap window
+function M.dap_restart()
+	local dap = require("dap")
+	local tabpage = vim.api.nvim_get_current_tabpage()
+	for _, win_nr in ipairs(vim.api.nvim_tabpage_list_wins(tabpage)) do
+		local buf_nr = vim.api.nvim_win_get_buf(win_nr)
+		local buf_name = vim.api.nvim_buf_get_name(buf_nr)
+		if not string.match(buf_name, "%[dap%-terminal%]") and not string.match(buf_name, "%[dap%-repl%]") then
+			vim.api.nvim_set_current_win(win_nr)
+			dap.restart()
+			return
+		end
+	end
+	dap.restart()
+end
+
 return M
