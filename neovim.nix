@@ -91,6 +91,7 @@ let
     pkgs.black
     pkgs.isort
     pkgs.ormolu
+    pkgs.emmet-language-server
     pkgs-unstable.vscode-js-debug
   ];
 

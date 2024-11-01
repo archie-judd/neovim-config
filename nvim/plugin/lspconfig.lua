@@ -26,6 +26,7 @@ local config = function()
 	lspconfig.nixd.setup({ capabilities = capabilities })
 	lspconfig.hls.setup({ capabilities = capabilities })
 	lspconfig.sqlls.setup({ capabilities = capabilities })
+	lspconfig.emmet_language_server.setup({ capabilities = capabilities })
 
 	vim.lsp.handlers["textDocument/publishDiagnostics"] =
 		vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
