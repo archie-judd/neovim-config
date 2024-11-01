@@ -7,6 +7,7 @@ vim.o.pumheight = 10
 vim.o.completeopt = "menuone,noinsert,preview"
 vim.o.shortmess = "ctF" -- 'c' means 'don't show ins-completion mode messages', 't' means truncate file message when opening a file, 'F' means don't show file edit messages upon opening
 vim.o.laststatus = 3 -- only one statusline
+vim.o.backupcopy = "yes" -- when writing a file, make a copy of the original file in the backup location, instead of moving it (which can interfere with file watchers)
 vim.cmd.colorscheme("catppuccin-mocha")
 vim.api.nvim_set_hl(0, "NormalFloat", { fg = "none", bg = "none" }) -- fix oil background
 vim.g.clipboard = { -- OSC52 clipboard
