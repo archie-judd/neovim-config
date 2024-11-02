@@ -1,6 +1,7 @@
 local config = function()
 	local cmp = require("cmp")
 	local cmp_dap = require("cmp_dap")
+	local copilot_comparators = require("copilot_cmp.comparators")
 
 	cmp.setup({
 		enabled = function()
@@ -64,6 +65,20 @@ local config = function()
 			{ name = "nvim_lsp" },
 			{ name = "nvim_lsp_signature_help" },
 		}),
+		sorting = {
+			comparators = {
+				cmp.config.compare.offset,
+				cmp.config.compare.exact,
+				copilot_comparators.prioritize,
+				cmp.config.compare.score,
+				cmp.config.compare.recently_used,
+				cmp.config.compare.locality,
+				cmp.config.compare.kind,
+				cmp.config.compare.sort_text,
+				cmp.config.compare.length,
+				cmp.config.compare.order,
+			},
+		},
 	})
 
 	cmp.setup.cmdline({ "/", "?" }, {
