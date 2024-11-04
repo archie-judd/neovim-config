@@ -1,6 +1,7 @@
 local M = {}
 
 function M.core()
+	local mappings = require("config.mappings")
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "python",
 		callback = function(event)
@@ -32,7 +33,7 @@ function M.core()
 			vim.o.colorcolumn = "101"
 			vim.o.tabstop = 2
 			vim.o.shiftwidth = 2
-			require("config.mappings").typescript()
+			mappings.typescript()
 		end,
 	})
 	vim.api.nvim_create_autocmd("FileType", {
@@ -40,8 +41,9 @@ function M.core()
 		callback = function(event)
 			vim.o.colorcolumn = "101"
 			vim.o.softtabstop = 2
-			vim.o.expandtab = true
 			vim.o.shiftwidth = 2
+			vim.o.expandtab = true
+			mappings.typescript()
 		end,
 	})
 	vim.api.nvim_create_autocmd("FileType", {
@@ -64,8 +66,8 @@ function M.core()
 		pattern = "markdown",
 		callback = function()
 			vim.cmd("setlocal spell spelllang=en_gb")
-			require("config.mappings").markdown_preview()
-			require("config.mappings").vim_markdown_toc()
+			mappings.markdown_preview()
+			mappings.vim_markdown_toc()
 		end,
 	})
 	vim.api.nvim_create_autocmd("TextYankPost", {
