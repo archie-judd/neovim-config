@@ -6,6 +6,7 @@ local config = function()
 			python = { "isort", "black" },
 			javascript = { "prettierd" },
 			typescript = { "prettierd" },
+			typescriptreact = { "prettierd" },
 			json = { "prettierd" },
 			yaml = { "prettierd" },
 			markdown = { "prettierd" },
