@@ -46,7 +46,6 @@ let
     pkgs.vimPlugins.neodev-nvim
     pkgs.vimPlugins.nvim-cmp
     pkgs.vimPlugins.cmp-nvim-lsp
-    pkgs.vimPlugins.cmp-path
     pkgs.vimPlugins.cmp-dap
     pkgs.vimPlugins.cmp-cmdline
     pkgs.vimPlugins.lsp_signature-nvim
@@ -64,7 +63,6 @@ let
     pkgs.vimPlugins.neotest-python
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
-    pkgs.vimPlugins.copilot-cmp
     pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable
     pkgs-unstable.vimPlugins.diffview-nvim
   ];
