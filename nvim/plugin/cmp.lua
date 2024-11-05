@@ -2,12 +2,13 @@ local config = function()
 	local cmp = require("cmp")
 	local cmp_dap = require("cmp_dap")
 	local mappings = require("config.mappings")
+	local usercommands = require("config.usercommands")
 
 	cmp.setup({
 		enabled = function()
 			local enabled = (
 				(vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt" or cmp_dap.is_dap_buffer())
-				and vim.b.cmp_enabled ~= false
+				and vim.g.cmp_enabled ~= false
 			)
 			return enabled
 		end,
@@ -59,6 +60,7 @@ local config = function()
 		},
 	})
 	mappings.cmp()
+	usercommands.cmp()
 end
 
 config()
