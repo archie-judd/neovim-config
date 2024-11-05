@@ -490,13 +490,74 @@ function M.typescript()
 	})
 end
 
-function M.copilot()
+function M.copilot_panel()
 	local copilot_utils = require("utils.copilot")
 
 	vim.keymap.set("i", "<C-h>", copilot_utils.open_panel, {
 		noremap = true,
 		silent = true,
-		desc = "Copilot: Open the panel",
+		desc = "Copilot panel: Open the panel",
+	})
+end
+
+-- The mappings for copilot suggestions are also here to save my sanity
+function M.cmp()
+	local cmp = require("cmp")
+	local copilot_cmp = require("utils.copilot_cmp")
+
+	vim.keymap.set({ "i", "c" }, "<C-y>", copilot_cmp.accept, {
+		noremap = true,
+		silent = true,
+		desc = "Cmp/Copilot: Accept suggestion",
+	})
+	vim.keymap.set({ "i", "c" }, "<C-p>", copilot_cmp.select_prev, {
+		noremap = true,
+		silent = true,
+		desc = "Cmp/Copilot: Prev suggestion",
+	})
+	vim.keymap.set({ "i", "c" }, "<C-n>", copilot_cmp.select_next, {
+		noremap = true,
+		silent = true,
+		desc = "Cmp/Copilot: Next suggestion",
+	})
+	vim.keymap.set("i", "<C-e>", copilot_cmp.close, {
+		noremap = true,
+		silent = true,
+		desc = "Cmp/Copilot: Abort",
+	})
+	vim.keymap.set("i", "<C-f>", copilot_cmp.start, {
+		noremap = true,
+		silent = true,
+		desc = "Cmp/Copilot: Start",
+	})
+	vim.keymap.set("i", "<C-d>", function()
+		if cmp.visible() then
+			cmp.scroll_docs(4)
+		end
+	end, {
+		noremap = true,
+		silent = true,
+		desc = "Cmp: Scroll docs down",
+	})
+	vim.keymap.set("i", "<C-u>", function()
+		if cmp.visible() then
+			cmp.scroll_docs(4)
+		end
+	end, {
+		noremap = true,
+		silent = true,
+		desc = "Cmp: Scroll docs up",
+	})
+	vim.keymap.set("i", "<C-g>", function()
+		if cmp.visible_docs() then
+			cmp.close_docs()
+		else
+			cmp.open_docs()
+		end
+	end, {
+		noremap = true,
+		silent = true,
+		desc = "Cmp: Toggle docs",
 	})
 end
 

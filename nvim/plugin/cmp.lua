@@ -1,12 +1,13 @@
 local config = function()
 	local cmp = require("cmp")
 	local cmp_dap = require("cmp_dap")
-	local copilot_comparators = require("copilot_cmp.comparators")
+	local mappings = require("config.mappings")
 
 	cmp.setup({
 		enabled = function()
 			local enabled = (
-				vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt" or cmp_dap.is_dap_buffer()
+				(vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt" or cmp_dap.is_dap_buffer())
+				and vim.b.cmp_enabled ~= false
 			)
 			return enabled
 		end,
@@ -15,53 +16,8 @@ local config = function()
 				auto_open = false,
 			},
 		},
-		completion = { completeopt = "menu,menuone,noinsert" },
-		mapping = cmp.mapping.preset.insert({
-			["<C-f>"] = cmp.mapping({ i = cmp.mapping.complete() }),
-			["<C-g>"] = cmp.mapping(function()
-				if cmp.visible_docs() then
-					cmp.close_docs()
-				else
-					cmp.open_docs()
-				end
-			end),
-			["<C-u>"] = cmp.mapping({
-				i = function(fallback)
-					if cmp.visible() then
-						cmp.mapping.scroll_docs(-4)
-					else
-						fallback()
-					end
-				end,
-			}),
-			["<C-d>"] = cmp.mapping({
-				i = function(fallback)
-					if cmp.visible() then
-						cmp.mapping.scroll_docs(4)
-					else
-						fallback()
-					end
-				end,
-			}),
-			["<C-p>"] = cmp.mapping({
-				c = function()
-					if cmp.visible() then
-						cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-					end
-				end,
-				i = function(fallback)
-					if cmp.visible() then
-						cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-					else
-						fallback()
-					end
-				end,
-			}),
-			["<C-e>"] = cmp.mapping.abort(),
-			["<C-y>"] = cmp.mapping.confirm({ select = true }),
-		}),
+		completion = { completeopt = "menuone,noinsert,noselect" },
 		sources = cmp.config.sources({
-			{ name = "copilot" },
 			{ name = "nvim_lsp" },
 			{ name = "nvim_lsp_signature_help" },
 		}),
@@ -69,7 +25,6 @@ local config = function()
 			comparators = {
 				cmp.config.compare.offset,
 				cmp.config.compare.exact,
-				copilot_comparators.prioritize,
 				cmp.config.compare.score,
 				cmp.config.compare.recently_used,
 				cmp.config.compare.locality,
@@ -103,6 +58,7 @@ local config = function()
 			{ name = "dap" },
 		},
 	})
+	mappings.cmp()
 end
 
 config()
