@@ -63,6 +63,7 @@ let
     pkgs.vimPlugins.neotest-python
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
+    pkgs.vimPlugins.indent-blankline-nvim
     pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable
     pkgs-unstable.vimPlugins.diffview-nvim
   ];
