@@ -6,7 +6,6 @@ local dap_utils = require("utils.dap")
 local diffview_utils = require("utils.diffview")
 local gitsigns = require("gitsigns")
 local neotest = require("neotest")
-local nvim_tmux_navigation = require("nvim-tmux-navigation")
 local oil = require("oil")
 local telescope = require("telescope")
 local telescope_builtin = require("telescope.builtin")
@@ -196,33 +195,6 @@ function M.core()
 		"<Leader>yn+",
 		yank_utils.yank_filename_to_system_register,
 		{ silent = true, noremap = true, desc = "Yank: yank filename to the system register" }
-	)
-end
-
-function M.nvim_tmux_navigation()
-	vim.keymap.set(
-		"n",
-		"<C-h>",
-		nvim_tmux_navigation.NvimTmuxNavigateLeft,
-		{ silent = true, noremap = true, desc = "Tmux: move left to the next window or tmux pane" }
-	)
-	vim.keymap.set(
-		"n",
-		"<C-j>",
-		nvim_tmux_navigation.NvimTmuxNavigateDown,
-		{ silent = true, noremap = true, desc = "Tmux: move down to the next window or tmux pane" }
-	)
-	vim.keymap.set(
-		"n",
-		"<C-k>",
-		nvim_tmux_navigation.NvimTmuxNavigateUp,
-		{ silent = true, noremap = true, desc = "Tmux: move up to the next window or tmux pane" }
-	)
-	vim.keymap.set(
-		"n",
-		"<C-l>",
-		nvim_tmux_navigation.NvimTmuxNavigateRight,
-		{ silent = true, noremap = true, desc = "Tmux: move right to the next window or tmux pane" }
 	)
 end
 
