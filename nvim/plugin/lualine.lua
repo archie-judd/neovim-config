@@ -1,5 +1,6 @@
+local lualine = require("lualine")
+
 local config = function()
-	local lualine = require("lualine")
 	lualine.setup({
 		options = {
 			theme = "catppuccin",

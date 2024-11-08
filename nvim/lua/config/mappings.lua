@@ -1,8 +1,20 @@
+local cmp = require("cmp")
+local copilot_cmp = require("utils.copilot_cmp")
+local copilot_utils = require("utils.copilot")
+local dap = require("dap")
+local dap_utils = require("utils.dap")
+local diffview_utils = require("utils.diffview")
+local gitsigns = require("gitsigns")
+local neotest = require("neotest")
+local nvim_tmux_navigation = require("nvim-tmux-navigation")
+local oil = require("oil")
+local telescope = require("telescope")
+local telescope_builtin = require("telescope.builtin")
+local yank_utils = require("utils.yank")
+
 -- It's useful to have core mappings in one file, so accidental remaps can be easily spotted.
 local M = {}
 function M.core()
-	local yank_utils = require("utils.yank")
-
 	-- Set mapleader
 	vim.g.mapleader = ";"
 	vim.keymap.set("i", "<C-x>", "<C-x>", { silent = true, noremap = true })
@@ -188,8 +200,6 @@ function M.core()
 end
 
 function M.nvim_tmux_navigation()
-	local nvim_tmux_navigation = require("nvim-tmux-navigation")
-
 	vim.keymap.set(
 		"n",
 		"<C-h>",
@@ -218,8 +228,6 @@ end
 
 ---@param bufnr integer
 function M.lspconfig(bufnr)
-	local telescope_builtin = require("telescope.builtin")
-
 	vim.keymap.set(
 		"n",
 		"<C-]>",
@@ -263,9 +271,6 @@ function M.lspconfig(bufnr)
 end
 
 function M.telescope()
-	local telescope = require("telescope")
-	local telescope_builtin = require("telescope.builtin")
-
 	vim.keymap.set(
 		"n",
 		"<Leader>fk",
@@ -318,8 +323,6 @@ function M.telescope()
 end
 
 function M.oil()
-	local oil = require("oil")
-
 	vim.keymap.set("n", "-", oil.open_float, { noremap = true, silent = true, desc = "Oil: open parent directory" })
 	vim.keymap.set("n", "_", function()
 		oil.open_float(vim.fn.getcwd())
@@ -327,9 +330,6 @@ function M.oil()
 end
 
 function M.dap()
-	local dap = require("dap")
-	local dap_utils = require("utils.dap")
-
 	vim.keymap.set(
 		"n",
 		"<Leader>bp",
@@ -343,11 +343,11 @@ function M.dap()
 		dap_utils.debug_with_repl,
 		{ silent = true, noremap = true, desc = "Dap: start debugging" }
 	)
-	vim.keymap.set("n", "<Leader>dc", dap.continue, { silent = true, noremap = true, desc = "Dap: continue" })
+	vim.keymap.set("n", "<Leader>dc", dap_utils.dap_continue, { silent = true, noremap = true, desc = "Dap: continue" })
 	vim.keymap.set("n", "<Leader>dr", dap_utils.dap_restart, { silent = true, noremap = true, desc = "Dap: restart" })
-	vim.keymap.set("n", "<Leader>so", dap.step_over, { silent = true, noremap = true, desc = "Dap: step over" })
-	vim.keymap.set("n", "<Leader>si", dap.step_into, { silent = true, noremap = true, desc = "Dap: step into" })
-	vim.keymap.set("n", "<Leader>su", dap.step_out, { silent = true, noremap = true, desc = "Dap: step out of" })
+	vim.keymap.set("n", "<Leader>so", dap_utils.step_over, { silent = true, noremap = true, desc = "Dap: step over" })
+	vim.keymap.set("n", "<Leader>si", dap_utils.step_into, { silent = true, noremap = true, desc = "Dap: step into" })
+	vim.keymap.set("n", "<Leader>su", dap_utils.step_out, { silent = true, noremap = true, desc = "Dap: step out of" })
 	vim.keymap.set(
 		"n",
 		"<Leader>bl",
@@ -366,7 +366,6 @@ function M.dap()
 end
 
 function M.diffview()
-	local diffview_utils = require("utils.diffview")
 	vim.keymap.set(
 		"n",
 		"<Leader>gs",
@@ -376,9 +375,6 @@ function M.diffview()
 end
 
 function M.neotest()
-	local neotest = require("neotest")
-	local dap_utils = require("utils.dap")
-
 	vim.keymap.set(
 		"n",
 		"<Leader>rt",
@@ -394,8 +390,6 @@ function M.neotest()
 end
 
 function M.gitsigns(buffer)
-	local gitsigns = require("gitsigns")
-
 	vim.keymap.set("n", "]h", function()
 		if vim.wo.diff then
 			return "]h"
@@ -491,8 +485,6 @@ function M.typescript()
 end
 
 function M.copilot_panel()
-	local copilot_utils = require("utils.copilot")
-
 	vim.keymap.set("i", "<C-h>", copilot_utils.open_panel, {
 		noremap = true,
 		silent = true,
@@ -502,9 +494,6 @@ end
 
 -- The mappings for copilot suggestions are also here to save my sanity
 function M.cmp()
-	local cmp = require("cmp")
-	local copilot_cmp = require("utils.copilot_cmp")
-
 	vim.keymap.set({ "i", "c" }, "<C-y>", copilot_cmp.accept, {
 		noremap = true,
 		silent = true,

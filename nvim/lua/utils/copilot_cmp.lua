@@ -1,7 +1,7 @@
-local M = {}
-
 local cmp = require("cmp")
 local suggestion = require("copilot.suggestion")
+
+local M = {}
 
 function M.start()
 	if not suggestion.is_visible() then

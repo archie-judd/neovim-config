@@ -1,6 +1,7 @@
+local gitsigns = require("gitsigns")
+local mappings = require("config.mappings")
+
 local config = function()
-	local gitsigns = require("gitsigns")
-	local mappings = require("config.mappings")
 	gitsigns.setup({
 		signs = {
 			add = { text = "+" },

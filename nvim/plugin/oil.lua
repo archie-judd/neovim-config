@@ -1,9 +1,9 @@
-local config = function()
-	local oil = require("oil")
-	local layout = require("oil.layout")
-	local mappings = require("config.mappings")
-	local autocommands = require("config.autocommands")
+local autocommands = require("config.autocommands")
+local layout = require("oil.layout")
+local mappings = require("config.mappings")
+local oil = require("oil")
 
+local config = function()
 	oil.setup({
 		keymaps = { ["<C-p>"] = false },
 		float = {

@@ -1,7 +1,12 @@
+local core_utils = require("utils.core")
+local dap = require("dap")
+local diffview = require("diffview")
+local mappings = require("config.mappings")
+local panel = require("copilot.panel")
+
 local M = {}
 
 function M.core()
-	local mappings = require("config.mappings")
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "python",
 		callback = function(event)
@@ -88,7 +93,6 @@ function M.oil()
 	-- vim.api.nvim_create_autocmd("User", {
 	-- 	pattern = "OilEnter",
 	-- 	callback = vim.schedule_wrap(function(args)
-	-- 		local oil = require("oil")
 	-- 		if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
 	-- 			oil.open_preview()
 	-- 		end
@@ -97,7 +101,6 @@ function M.oil()
 end
 
 function M.dap()
-	local dap = require("dap")
 	vim.api.nvim_create_autocmd("BufFilePost", {
 		pattern = "*\\[dap-terminal\\]*",
 		callback = function(event)
@@ -144,7 +147,6 @@ function M.eyeliner()
 end
 
 function M.diffview()
-	local diffview = require("diffview")
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = { "DiffviewFiles" },
 		callback = function(event)
@@ -169,7 +171,6 @@ function M.diffview()
 end
 
 function M.telescope()
-	local core_utils = require("utils.core")
 	vim.api.nvim_create_autocmd("User", {
 		pattern = { "TelescopeFindPre" },
 		callback = function(event)
@@ -180,7 +181,6 @@ function M.telescope()
 end
 
 function M.lspconfig()
-	local mappings = require("config.mappings")
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 		callback = function(event)
@@ -190,7 +190,6 @@ function M.lspconfig()
 end
 
 function M.copilot()
-	local panel = require("copilot.panel")
 	vim.api.nvim_create_autocmd("BufEnter", {
 		pattern = "copilot:*/*",
 		callback = function(event)

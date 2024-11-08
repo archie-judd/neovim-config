@@ -1,9 +1,9 @@
-local config = function()
-	local cmp = require("cmp")
-	local cmp_dap = require("cmp_dap")
-	local mappings = require("config.mappings")
-	local usercommands = require("config.usercommands")
+local cmp = require("cmp")
+local cmp_dap = require("cmp_dap")
+local mappings = require("config.mappings")
+local usercommands = require("config.usercommands")
 
+local config = function()
 	cmp.setup({
 		enabled = function()
 			local enabled = (

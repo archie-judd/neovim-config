@@ -1,7 +1,8 @@
+local mappings = require("config.mappings")
+local neotest = require("neotest")
+local neotest_python = require("neotest-python")
+
 local config = function()
-	local neotest = require("neotest")
-	local neotest_python = require("neotest-python")
-	local mappings = require("config.mappings")
 	neotest.setup({
 		adapters = {
 			neotest_python({

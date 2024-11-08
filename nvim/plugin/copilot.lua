@@ -1,8 +1,8 @@
-local config = function()
-	local copilot = require("copilot")
-	local mappings = require("config.mappings")
-	local autocommands = require("config.autocommands")
+local autocommands = require("config.autocommands")
+local copilot = require("copilot")
+local mappings = require("config.mappings")
 
+local config = function()
 	copilot.setup({
 		suggestion = {
 			enabled = true,

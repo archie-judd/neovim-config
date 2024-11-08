@@ -1,9 +1,9 @@
-local config = function()
-	local actions = require("telescope.actions")
-	local autocommands = require("config.autocommands")
-	local mappings = require("config.mappings")
-	local telescope = require("telescope")
+local actions = require("telescope.actions")
+local autocommands = require("config.autocommands")
+local mappings = require("config.mappings")
+local telescope = require("telescope")
 
+local config = function()
 	telescope.setup({
 		defaults = {
 			path_display = { "truncate" },

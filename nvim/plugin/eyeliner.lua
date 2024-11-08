@@ -1,7 +1,7 @@
-local config = function()
-	local eyeliner = require("eyeliner")
-	local autocommands = require("config.autocommands")
+local autocommands = require("config.autocommands")
+local eyeliner = require("eyeliner")
 
+local config = function()
 	eyeliner.setup({
 		highlight_on_key = true,
 		dim = true,

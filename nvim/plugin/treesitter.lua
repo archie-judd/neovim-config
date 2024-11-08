@@ -1,6 +1,6 @@
-local config = function()
-	local configs = require("nvim-treesitter.configs")
+local configs = require("nvim-treesitter.configs")
 
+local config = function()
 	configs.setup({
 		highlight = {
 			enable = true,

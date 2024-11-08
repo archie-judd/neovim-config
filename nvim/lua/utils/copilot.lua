@@ -1,8 +1,8 @@
+local panel = require("copilot.panel")
+
 local M = {}
 
 function M.open_panel()
-	local panel = require("copilot.panel")
-
 	local number_of_columns = vim.api.nvim_win_get_width(0)
 	local number_of_rows = vim.api.nvim_win_get_height(0)
 	local desired_height = 20

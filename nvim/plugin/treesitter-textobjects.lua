@@ -1,6 +1,6 @@
-local config = function()
-	local nvim_treesitter_configs = require("nvim-treesitter.configs")
+local nvim_treesitter_configs = require("nvim-treesitter.configs")
 
+local config = function()
 	nvim_treesitter_configs.setup({
 		textobjects = {
 			select = {

@@ -1,8 +1,8 @@
-local config = function()
-	local autocommands = require("config.autocommands")
-	local dap = require("dap")
-	local mappings = require("config.mappings")
+local autocommands = require("config.autocommands")
+local dap = require("dap")
+local mappings = require("config.mappings")
 
+local config = function()
 	-- set defaults
 	local terminal_height = math.floor(vim.o.lines * 0.3)
 	dap.defaults.fallback.exception_breakpoints = "default"

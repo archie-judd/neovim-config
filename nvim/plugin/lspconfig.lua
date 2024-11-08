@@ -1,10 +1,10 @@
-local config = function()
-	local autocommands = require("config.autocommands")
-	local cmp_nvim_lsp = require("cmp_nvim_lsp")
-	local lspconfig = require("lspconfig")
-	local neodev = require("neodev")
-	local utils = require("utils.lsp")
+local autocommands = require("config.autocommands")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local lspconfig = require("lspconfig")
+local neodev = require("neodev")
+local utils = require("utils.lsp")
 
+local config = function()
 	local capabilities = cmp_nvim_lsp.default_capabilities()
 
 	neodev.setup({})

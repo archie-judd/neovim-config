@@ -1,5 +1,6 @@
+local lsp_signature = require("lsp_signature")
+
 local config = function()
-	local lsp_signature = require("lsp_signature")
 	lsp_signature.setup({ hint_enable = false, toggle_key = "<C-s>" })
 end
 
