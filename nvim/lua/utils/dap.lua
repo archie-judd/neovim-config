@@ -52,7 +52,15 @@ function M.debug_closest_test_with_repl()
 	dap.repl.open({}, wincmd)
 end
 
-function M.dap_close()
+function M.dap_quit()
+	local dap_repl_bufnr = core_utils.get_bufnr_by_pattern("%[dap%-repl%]")
+	local dap_term_bufnr = core_utils.get_bufnr_by_pattern("%[dap%-terminal%]")
+	if dap_repl_bufnr ~= nil then
+		vim.api.nvim_buf_delete(dap_repl_bufnr, { force = true })
+	end
+	if dap_term_bufnr ~= nil then
+		vim.api.nvim_buf_delete(dap_term_bufnr, { force = true })
+	end
 	dap.terminate()
 	dap.close()
 	dap.repl.close()

@@ -308,7 +308,7 @@ function M.dap()
 		dap.toggle_breakpoint,
 		{ silent = true, noremap = true, desc = "Dap: toggle breakpoint" }
 	)
-	vim.keymap.set("n", "<Leader>dq", dap.terminate, { silent = true, noremap = true, desc = "Dap: terminate session" })
+	vim.keymap.set("n", "<Leader>dq", dap_utils.dap_quit, { silent = true, noremap = true, desc = "Dap: close" })
 	vim.keymap.set(
 		"n",
 		"<Leader>db",

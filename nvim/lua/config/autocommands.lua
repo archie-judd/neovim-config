@@ -112,21 +112,21 @@ function M.dap()
 				buffer = event.buf,
 				silent = true,
 				noremap = true,
-				desc = "Dap: terminate and close",
+				desc = "Dap: close terminal",
 			})
 		end,
 	})
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "dap-repl",
 		callback = function(event)
+			local winid = vim.api.nvim_get_current_win()
+			vim.wo[winid].winfixbuf = true
 			vim.keymap.set("n", "<C-c>", dap.repl.close, {
 				buffer = event.buf,
 				silent = true,
 				noremap = true,
 				desc = "Dap: close repl",
 			})
-			local winid = vim.api.nvim_get_current_win()
-			vim.wo[winid].winfixbuf = true
 		end,
 	})
 end
