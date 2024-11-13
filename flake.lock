@@ -127,11 +127,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1731488212,
-        "narHash": "sha256-aGEil124oi31eCSzqJt3DYfjvu1c1I4sdADh2xdFOho=",
+        "lastModified": 1731504340,
+        "narHash": "sha256-Z5OlsRDYxvDOqzGI0iGsx+9YQRHHQgpJ37ZC1FC20qY=",
         "owner": "archie-judd",
         "repo": "telescope-words.nvim",
-        "rev": "3eec161523f370db1b60710a702a56c03440e1b3",
+        "rev": "ebd410671d96ed70e18411d2368e2196318543ab",
         "type": "github"
       },
       "original": {
