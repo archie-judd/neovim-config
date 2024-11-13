@@ -3,9 +3,10 @@
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    telescope-words.url = "github:archie-judd/telescope-words.nvim";
   };
 
-  outputs = { flake-utils, nixpkgs, nixpkgs-unstable, ... }:
+  outputs = { flake-utils, nixpkgs, nixpkgs-unstable, telescope-words, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -14,11 +15,11 @@
         neovim = pkgs.callPackage ./neovim.nix {
           pkgs = pkgs;
           pkgs-unstable = pkgs-unstable;
+          telescope-words = telescope-words;
         };
 
         app = pkgs.writeShellApplication {
           name = "nvim";
-          # "$@" arguments placeholder (so 'nvim <arguments>' works).
           text = ''${neovim.package}/bin/nvim "$@"'';
           runtimeInputs = neovim.extraPackages;
         };

@@ -279,6 +279,18 @@ function M.telescope()
 		telescope.extensions.live_grep_args.live_grep_args,
 		{ silent = true, noremap = true, desc = "Telescope: live grep" }
 	)
+	vim.keymap.set(
+		"n",
+		"<Leader>fd",
+		telescope.extensions.telescope_words.search_dictionary_for_word_under_cursor,
+		{ silent = true, noremap = true, desc = "Telescope: search dictionary" }
+	)
+	vim.keymap.set(
+		"n",
+		"<Leader>ft",
+		telescope.extensions.telescope_words.search_thesaurus_for_word_under_cursor,
+		{ silent = true, noremap = true, desc = "Telescope: search thesaurus" }
+	)
 	-- Search neovim config. We get the path to the init.lua file, resolve resolve it (to get the real file if it is
 	-- a symlink), and remove the /init.lua suffix to get the directory path.
 	vim.keymap.set("n", "<Leader>fc", function()

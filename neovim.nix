@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable }:
+{ pkgs, pkgs-unstable, telescope-words }:
 
 let
 
@@ -66,6 +66,7 @@ let
     pkgs.vimPlugins.indent-blankline-nvim
     pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable
     pkgs-unstable.vimPlugins.diffview-nvim
+    telescope-words.packages.${pkgs.system}.default
   ];
 
   extraPackages = [
