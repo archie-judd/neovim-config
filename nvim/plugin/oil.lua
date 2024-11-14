@@ -1,3 +1,4 @@
+local actions = require("oil.actions")
 local autocommands = require("config.autocommands")
 local layout = require("oil.layout")
 local mappings = require("config.mappings")
@@ -5,7 +6,7 @@ local oil = require("oil")
 
 local config = function()
 	oil.setup({
-		keymaps = { ["<C-p>"] = false },
+		keymaps = { ["<C-p>"] = false, ["<C-y>"] = actions.select },
 		float = {
 			override = function()
 				local total_width = vim.o.columns
