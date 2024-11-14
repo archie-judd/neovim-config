@@ -11,6 +11,7 @@ local config = function()
 			layout_config = {
 				width = 0.75,
 				height = 0.75,
+				scroll_speed = 4,
 			},
 			vimgrep_arguments = {
 				"rg",
