@@ -291,15 +291,8 @@ function M.telescope()
 		telescope.extensions.telescope_words.search_thesaurus_for_word_under_cursor,
 		{ silent = true, noremap = true, desc = "Telescope: search thesaurus" }
 	)
-	-- Search neovim config. We get the path to the init.lua file, resolve resolve it (to get the real file if it is
-	-- a symlink), and remove the /init.lua suffix to get the directory path.
-	vim.keymap.set("n", "<Leader>fc", function()
-		telescope_builtin.find_files({
-			cwd = string.gsub(vim.fn.resolve(vim.fn.stdpath("config") .. "/init.lua"), "/init.lua", ""),
-		})
-	end, { silent = true, noremap = true, desc = "Telescope: find files in neovim config" })
 	vim.keymap.set("n", "<Leader>fn", function()
-		local notes_dir = os.getenv("HOME") .. "/repos/notes/"
+		local notes_dir = os.getenv("HOME") .. "/workspaces/notes/"
 		telescope_builtin.find_files({
 			cwd = vim.fn.resolve(notes_dir),
 		})
