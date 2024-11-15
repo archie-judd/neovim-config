@@ -54,6 +54,7 @@ local config = function()
 						["<CR>"] = word_actions.replace_word_under_cursor,
 					},
 				},
+				layout_config = { preview_width = 0.65 },
 			},
 		},
 		pickers = {
