@@ -5,6 +5,7 @@ local dap = require("dap")
 local dap_utils = require("utils.dap")
 local diffview_utils = require("utils.diffview")
 local gitsigns = require("gitsigns")
+local maximise = require("maximise")
 local neotest = require("neotest")
 local oil = require("oil")
 local telescope = require("telescope")
@@ -524,6 +525,14 @@ function M.cmp()
 		noremap = true,
 		silent = true,
 		desc = "Cmp: Toggle docs",
+	})
+end
+
+function M.maximise()
+	vim.keymap.set("n", "<Leader>z", maximise.toggle_maximise, {
+		silent = true,
+		noremap = true,
+		desc = "Maximise: toggle maximise",
 	})
 end
 
