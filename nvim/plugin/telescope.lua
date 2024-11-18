@@ -68,7 +68,7 @@ local config = function()
 			find_files = {
 				find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
 			},
-			--marks = { mappings = { n = { ["dd"] = actions.delete_mark + actions.move_to_top } } }, -- not released yet
+			marks = { mappings = { n = { ["dd"] = actions.delete_mark + actions.move_to_top } } },
 		},
 	})
 	telescope.load_extension("live_grep_args")
