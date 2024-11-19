@@ -61,6 +61,7 @@ local config = function()
 			outFiles = { "${workspaceFolder}/**/**/*", "!**/node_modules/**" },
 			skipFiles = { "<node_internals>/**", "node_modules/**" },
 			sourceMaps = true,
+			console = "integratedTerminal",
 		},
 		{
 			-- Debug using ts-node (not node), with the transpile-only option, to skip type checking
@@ -73,6 +74,7 @@ local config = function()
 			sourceMaps = true,
 			cwd = "${workspaceFolder}",
 			outFiles = { "${workspaceFolder}/**/**/*", "!**/node_modules/**" },
+			console = "integratedTerminal",
 		},
 	}
 	mappings.dap()
