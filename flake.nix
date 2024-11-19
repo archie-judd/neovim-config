@@ -3,7 +3,8 @@
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    telescope-words.url = "github:archie-judd/telescope-words.nvim";
+    telescope-words.url =
+      "github:archie-judd/telescope-words.nvim?ref=development";
   };
 
   outputs = { flake-utils, nixpkgs, nixpkgs-unstable, telescope-words, ... }:
