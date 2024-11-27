@@ -4,6 +4,7 @@ local copilot_utils = require("utils.copilot")
 local dap = require("dap")
 local dap_utils = require("utils.dap")
 local diffview_utils = require("utils.diffview")
+local github_link = require("github_link")
 local gitsigns = require("gitsigns")
 local maximise = require("maximise")
 local neotest = require("neotest")
@@ -533,6 +534,14 @@ function M.maximise()
 		silent = true,
 		noremap = true,
 		desc = "Maximise: toggle maximise",
+	})
+end
+
+function M.github_link()
+	vim.keymap.set({ "n", "v" }, "<Leader>gl", github_link.github_link, {
+		silent = true,
+		noremap = true,
+		desc = "GitHub link: generate GitHub link",
 	})
 end
 
