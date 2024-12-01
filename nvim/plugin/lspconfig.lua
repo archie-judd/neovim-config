@@ -9,7 +9,7 @@ local config = function()
 
 	neodev.setup({})
 	autocommands.lspconfig()
-	lspconfig.tsserver.setup({
+	lspconfig.ts_ls.setup({
 		capabilities = capabilities,
 		commands = {
 			OrganizeTSImports = {
