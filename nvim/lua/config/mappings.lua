@@ -271,7 +271,7 @@ function M.telescope()
 	)
 	vim.keymap.set("n", "<Leader>fc", function()
 		telescope_builtin.git_files({
-			git_command = { "git", "ls-files", "--modified", "--exclude-standard", "--no-cached" },
+			git_command = { "git", "ls-files", "--modified", "--others", "--exclude-standard", "--no-cached" },
 		})
 	end, { silent = true, noremap = true, desc = "Telescope: find changed files" })
 	vim.keymap.set(
