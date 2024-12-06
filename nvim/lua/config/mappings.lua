@@ -269,6 +269,11 @@ function M.telescope()
 		telescope_builtin.find_files,
 		{ silent = true, noremap = true, desc = "Telescope: find files" }
 	)
+	vim.keymap.set("n", "<Leader>fc", function()
+		telescope_builtin.git_files({
+			git_command = { "git", "ls-files", "--modified", "--exclude-standard", "--no-cached" },
+		})
+	end, { silent = true, noremap = true, desc = "Telescope: find changed files" })
 	vim.keymap.set(
 		"n",
 		"<Leader>fm",
