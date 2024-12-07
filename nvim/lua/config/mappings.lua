@@ -259,6 +259,12 @@ function M.telescope()
 	)
 	vim.keymap.set(
 		"n",
+		"<Leader>fr",
+		telescope_builtin.registers,
+		{ silent = true, noremap = true, desc = "Telescope: registers" }
+	)
+	vim.keymap.set(
+		"n",
 		"<Leader>fq",
 		telescope_builtin.quickfixhistory,
 		{ silent = true, noremap = true, desc = "Telescope: quickfix lists" }
