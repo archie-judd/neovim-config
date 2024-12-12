@@ -61,34 +61,6 @@ function M.core()
 		{ noremap = true, silent = true, desc = "Search: move to previous item and center screen" }
 	)
 
-	-- Moving between windows
-	vim.keymap.set("n", "<C-h>", function()
-		vim.cmd.wincmd("h")
-	end, { silent = true, noremap = true, desc = "Windows: move left to the next window" })
-	vim.keymap.set("n", "<C-l>", function()
-		vim.cmd.wincmd("l")
-	end, { silent = true, noremap = true, desc = "Windows: move right to the next window" })
-	vim.keymap.set("n", "<C-j>", function()
-		vim.cmd.wincmd("j")
-	end, { silent = true, noremap = true, desc = "Windows: move down to the next window" })
-	vim.keymap.set("n", "<C-k>", function()
-		vim.cmd.wincmd("k")
-	end, { silent = true, noremap = true, desc = "Windows: move up to the next window" })
-
-	-- Resizing windows
-	vim.keymap.set("n", "<M-k>", function()
-		vim.cmd(":horizontal resize +10")
-	end, { silent = true, noremap = true, desc = "Windows: increase window vertical size" })
-	vim.keymap.set("n", "<M-j>", function()
-		vim.cmd(":horizontal resize -10")
-	end, { silent = true, noremap = true, desc = "Windows: decease window vertical size" })
-	vim.keymap.set("n", "<M-l>", function()
-		vim.cmd(":vertical resize +10")
-	end, { silent = true, noremap = true, desc = "Windows: increase window horizontal size" })
-	vim.keymap.set("n", "<M-h>", function()
-		vim.cmd(":vertical resize -10")
-	end, { silent = true, noremap = true, desc = "Windows: decrease window horizontal size" })
-
 	-- Moving windows themselves
 	vim.keymap.set("n", "<M-S-h>", function()
 		vim.cmd.wincmd("H")
