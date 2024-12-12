@@ -77,16 +77,16 @@ function M.core()
 
 	-- Resizing windows
 	vim.keymap.set("n", "<M-k>", function()
-		vim.cmd(":horizontal resize +5")
+		vim.cmd(":horizontal resize +10")
 	end, { silent = true, noremap = true, desc = "Windows: increase window vertical size" })
 	vim.keymap.set("n", "<M-j>", function()
-		vim.cmd(":horizontal resize -5")
+		vim.cmd(":horizontal resize -10")
 	end, { silent = true, noremap = true, desc = "Windows: decease window vertical size" })
 	vim.keymap.set("n", "<M-l>", function()
-		vim.cmd(":vertical resize +5")
+		vim.cmd(":vertical resize +10")
 	end, { silent = true, noremap = true, desc = "Windows: increase window horizontal size" })
 	vim.keymap.set("n", "<M-h>", function()
-		vim.cmd(":vertical resize -5")
+		vim.cmd(":vertical resize -10")
 	end, { silent = true, noremap = true, desc = "Windows: decrease window horizontal size" })
 
 	-- Moving windows themselves
