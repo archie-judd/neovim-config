@@ -3,6 +3,7 @@ local copilot_cmp = require("utils.copilot_cmp")
 local copilot_utils = require("utils.copilot")
 local dap = require("dap")
 local dap_utils = require("utils.dap")
+local dap_widgets = require("dap.ui.widgets")
 local diffview_utils = require("utils.diffview")
 local github_link = require("github_link")
 local gitsigns = require("gitsigns")
@@ -11,6 +12,7 @@ local neotest = require("neotest")
 local oil = require("oil")
 local telescope = require("telescope")
 local telescope_builtin = require("telescope.builtin")
+local utils = require("utils.core")
 local yank_utils = require("utils.yank")
 
 -- It's useful to have core mappings in one file, so accidental remaps can be easily spotted.
@@ -247,11 +249,12 @@ function M.telescope()
 		telescope_builtin.find_files,
 		{ silent = true, noremap = true, desc = "Telescope: find files" }
 	)
-	vim.keymap.set("n", "<Leader>fc", function()
-		telescope_builtin.git_files({
-			git_command = { "git", "ls-files", "--modified", "--others", "--exclude-standard", "--no-cached" },
-		})
-	end, { silent = true, noremap = true, desc = "Telescope: find changed files" })
+	vim.keymap.set(
+		"n",
+		"<Leader>fc",
+		telescope.extensions.git_changed_files.git_changed_files,
+		{ silent = true, noremap = true, desc = "Telescope: find changed files" }
+	)
 	vim.keymap.set(
 		"n",
 		"<Leader>fm",
@@ -292,39 +295,94 @@ function M.oil()
 end
 
 function M.dap()
+	vim.g.maplocalleader = ","
 	vim.keymap.set(
 		"n",
-		"<Leader>bp",
+		"<LocalLeader>fb",
+		telescope.extensions.dap.dap_breakpoints,
+		{ silent = true, noremap = true, desc = "Telescope Dap: find breakpoints" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>ff",
+		telescope.extensions.dap.dap_frames,
+		{ silent = true, noremap = true, desc = "Telescope Dap: find stack frames" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>fc",
+		telescope.extensions.dap.dap_commands,
+		{ silent = true, noremap = true, desc = "Telescope Dap: find commands" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>b",
 		dap.toggle_breakpoint,
 		{ silent = true, noremap = true, desc = "Dap: toggle breakpoint" }
 	)
-	vim.keymap.set("n", "<Leader>dq", dap_utils.dap_quit, { silent = true, noremap = true, desc = "Dap: close" })
+	vim.keymap.set("n", "<LocalLeader>q", dap_utils.dap_quit, { silent = true, noremap = true, desc = "Dap: close" })
+	vim.keymap.set("n", "<LocalLeader>bc", function()
+		dap.set_breakpoint(
+			utils.user_input_or_nil("Condition (default is always stop): "),
+			utils.user_input_or_nil("Number of hits to trigger (default is zero): "),
+			utils.user_input_or_nil("Log message (default is none): ")
+		)
+	end, {
+		silent = false,
+		noremap = true,
+		desc = "Dap: add conditional breakpoint",
+	})
 	vim.keymap.set(
 		"n",
-		"<Leader>db",
+		"<LocalLeader>d",
 		dap_utils.debug_with_repl,
 		{ silent = true, noremap = true, desc = "Dap: start debugging" }
 	)
-	vim.keymap.set("n", "<Leader>dc", dap_utils.dap_continue, { silent = true, noremap = true, desc = "Dap: continue" })
-	vim.keymap.set("n", "<Leader>dr", dap_utils.dap_restart, { silent = true, noremap = true, desc = "Dap: restart" })
-	vim.keymap.set("n", "<Leader>so", dap_utils.step_over, { silent = true, noremap = true, desc = "Dap: step over" })
-	vim.keymap.set("n", "<Leader>si", dap_utils.step_into, { silent = true, noremap = true, desc = "Dap: step into" })
-	vim.keymap.set("n", "<Leader>su", dap_utils.step_out, { silent = true, noremap = true, desc = "Dap: step out of" })
 	vim.keymap.set(
 		"n",
-		"<Leader>bl",
-		dap.list_breakpoints,
-		{ silent = true, noremap = true, desc = "Dap: add breakpoints to quickfix list" }
+		"<LocalLeader>c",
+		dap_utils.dap_continue,
+		{ silent = true, noremap = true, desc = "Dap: continue" }
 	)
-	vim.keymap.set("n", "<Leader>ro", function()
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>r",
+		dap_utils.dap_restart,
+		{ silent = true, noremap = true, desc = "Dap: restart" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>o",
+		dap_utils.step_over,
+		{ silent = true, noremap = true, desc = "Dap: step over" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>i",
+		dap_utils.step_into,
+		{ silent = true, noremap = true, desc = "Dap: step into" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>u",
+		dap_utils.step_out,
+		{ silent = true, noremap = true, desc = "Dap: step out of" }
+	)
+	vim.keymap.set("n", "<LocalLeader>ro", function()
 		dap.repl.open({}, "vsplit new")
 	end, { silent = true, noremap = true, desc = "Dap: open the repl" })
 	vim.keymap.set(
 		"n",
-		"<Leader>bc",
+		"<LocalLeader>cb",
 		dap.clear_breakpoints,
 		{ silent = true, noremap = true, desc = "Dap: clear breakpoints" }
 	)
+	vim.keymap.set("n", "<LocalLeader>v", function()
+		dap_widgets.hover()
+	end, { silent = true, noremap = true, desc = "Dap: inspect variable" })
+	vim.keymap.set("n", "<LocalLeader>s", function()
+		dap_widgets.centered_float(dap_widgets.scopes)
+	end, { silent = true, noremap = true, desc = "Dap: show scoped variables" })
 end
 
 function M.diffview()

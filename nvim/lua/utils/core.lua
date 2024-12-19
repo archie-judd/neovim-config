@@ -88,4 +88,12 @@ function M.get_tabnr_for_bufnr(bufnr)
 	return nil
 end
 
+function M.user_input_or_nil(prompt)
+	local input = vim.fn.input(prompt)
+	if input == "" then
+		return nil
+	end
+	return input
+end
+
 return M
