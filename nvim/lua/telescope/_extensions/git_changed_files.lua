@@ -6,6 +6,7 @@ local telescope = require("telescope")
 
 -- Custom Git Changes Picker
 local function git_changed_files()
+	local git_root = vim.fn.system("git rev-parse --show-toplevel"):gsub("\n$", "")
 	local cmd = {
 		"bash",
 		"-c",
@@ -15,7 +16,7 @@ local function git_changed_files()
 	pickers
 		.new({}, {
 			prompt_title = "Git Changed Files",
-			finder = finders.new_oneshot_job(cmd, { entry_maker = make_entry.gen_from_file({}) }),
+			finder = finders.new_oneshot_job(cmd, { entry_maker = make_entry.gen_from_file({ cwd = git_root }) }),
 			previewer = conf.values.grep_previewer({}),
 			sorter = conf.values.generic_sorter({}),
 			layout_config = {
