@@ -23,6 +23,17 @@ function M.try_to_move_to_debugged_buf()
 		local debugged_winnr = core_utils.get_winnr_for_bufnr(debugged_bufnr)
 		if debugged_winnr ~= nil then
 			vim.api.nvim_set_current_win(debugged_winnr)
+		else
+			for _, winnr in ipairs(vim.api.nvim_tabpage_list_wins(vim.api.nvim_get_current_tabpage())) do
+				local bufnr = vim.api.nvim_win_get_buf(winnr)
+				local bufname = vim.api.nvim_buf_get_name(bufnr)
+				if
+					string.match(bufname, "%[dap%-repl%]") == nil
+					and string.match(bufname, "%[dap%-terminal%]") == nil
+				then
+					break
+				end
+			end
 		end
 	end
 end
