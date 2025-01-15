@@ -395,15 +395,16 @@ function M.diffview()
 end
 
 function M.neotest()
+	vim.g.maplocalleader = ","
 	vim.keymap.set(
 		"n",
-		"<Leader>rt",
+		"<LocalLeader>rt",
 		neotest.run.run,
 		{ silent = true, noremap = true, desc = "Neotest: run closest test" }
 	)
 	vim.keymap.set(
 		"n",
-		"<Leader>dt",
+		"<LocalLeader>dt",
 		dap_utils.debug_closest_test_with_repl,
 		{ silent = true, noremap = true, desc = "Neotest: debug closest test" }
 	)
