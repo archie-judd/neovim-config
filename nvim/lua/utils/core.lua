@@ -13,12 +13,29 @@ function M.close_buffer_by_filetype_pattern(pattern, opts)
 	end
 end
 
----@param inactive_only boolean
 ---@param force boolean
-function M.close_floating_windows(inactive_only, force)
-	for _, win in ipairs(vim.api.nvim_list_wins()) do
-		if vim.api.nvim_win_get_config(win).zindex and (not inactive_only or vim.api.nvim_get_current_win() ~= win) then
-			vim.api.nvim_win_close(win, force)
+function M.close_active_or_topmost_floating_window(force)
+	-- If in a floating window, close it
+	local current_win = vim.api.nvim_get_current_win()
+	local current_config = vim.api.nvim_win_get_config(current_win)
+	if current_config.zindex then
+		vim.api.nvim_win_close(current_win, force)
+	-- Otherwise take the topmost floating window and close that
+	else
+		local windows_with_zindex = {}
+		for _, win in ipairs(vim.api.nvim_list_wins()) do
+			local config = vim.api.nvim_win_get_config(win)
+			if config.zindex ~= nil then
+				table.insert(windows_with_zindex, { win = win, zindex = config.zindex })
+			end
+		end
+
+		table.sort(windows_with_zindex, function(a, b)
+			return a.zindex < b.zindex
+		end)
+		if #windows_with_zindex > 0 then
+			local first = windows_with_zindex[1]
+			vim.api.nvim_win_close(first.win, force)
 		end
 	end
 end

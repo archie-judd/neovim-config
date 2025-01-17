@@ -100,37 +100,6 @@ function M.oil()
 	-- })
 end
 
-function M.dap()
-	vim.api.nvim_create_autocmd("BufFilePost", {
-		pattern = "*\\[dap-terminal\\]*",
-		callback = function(event)
-			local winid = vim.api.nvim_get_current_win()
-			vim.wo[winid].winfixbuf = true
-			vim.keymap.set("n", "<C-c>", function()
-				vim.api.nvim_buf_delete(event.buf, { force = true })
-			end, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Dap: close terminal",
-			})
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "dap-repl",
-		callback = function(event)
-			local winid = vim.api.nvim_get_current_win()
-			vim.wo[winid].winfixbuf = true
-			vim.keymap.set("n", "<C-c>", dap.repl.close, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Dap: close repl",
-			})
-		end,
-	})
-end
-
 function M.eyeliner()
 	-- Set the eyeliner highlights to be color-scheme dependent
 	vim.api.nvim_create_autocmd("ColorScheme", {

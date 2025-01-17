@@ -43,24 +43,109 @@ function M.dap_is_active()
 	return dap.status ~= ""
 end
 
-function M.debug_with_repl()
+function M.debug()
 	if not M.dap_is_active() then
 		dap.terminate()
 	end
-	local repl_width = math.floor(vim.o.columns * 0.4)
-	local wincmd = string.format("%svsplit new", repl_width)
 	dap.continue()
-	dap.repl.open({}, wincmd)
 end
 
-function M.debug_closest_test_with_repl()
+local function open_floating_terminal_window(buf)
+	local available_height = vim.o.lines - vim.o.cmdheight - 2
+	local available_width = vim.o.columns
+	local width = math.floor(available_width * 0.48)
+	local height = math.floor(available_height * 0.48)
+	local col = math.floor(3 * (vim.o.columns / 4))
+	local row = math.ceil(2 + (available_height / 2))
+
+	-- Create the floating window with the terminal
+	local win = vim.api.nvim_open_win(buf, true, {
+		relative = "editor",
+		width = width,
+		height = height,
+		col = col,
+		row = row,
+		style = "minimal", -- No borders or title
+		border = "single", -- Add border (optional)
+		title = "DAP Terminal",
+		title_pos = "center",
+		zindex = 50,
+	})
+	return win
+end
+
+local function open_repl_window(buf)
+	local available_height = vim.o.lines - vim.o.cmdheight - 2
+	local width = math.floor(vim.o.columns * 0.48)
+	local height = math.floor(available_height * 0.48)
+	local row = 0
+	local col = math.floor(3 * (vim.o.columns / 4))
+	local opts = {
+		relative = "editor",
+		width = width,
+		height = height,
+		row = row,
+		col = col,
+		style = "minimal",
+		border = "single",
+		title = "DAP REPL",
+		title_pos = "center",
+		zindex = 50,
+	}
+
+	-- Create the floating window
+	local win = vim.api.nvim_open_win(buf, true, opts)
+	return win
+end
+
+function M.open_floating_terminal()
+	local buf = vim.api.nvim_create_buf(false, true) -- Create a new buffer (no file, scratch)
+	local win = open_floating_terminal_window(buf)
+	return buf, win
+end
+
+function M.open_repl_floating_window()
+	local repl_buf = core_utils.get_bufnr_by_pattern("dap%-repl")
+	local repl_win = nil
+	-- If open, focus the window
+	if repl_buf ~= nil and vim.api.nvim_buf_is_valid(repl_buf) then
+		repl_win = core_utils.get_winnr_for_bufnr(repl_buf)
+		if repl_win ~= nil and vim.api.nvim_win_is_valid(repl_win) then
+			vim.api.nvim_set_current_win(repl_win)
+		else
+			open_repl_window(repl_buf)
+		end
+	else
+		dap.repl.open(nil)
+		repl_buf = core_utils.get_bufnr_by_pattern("dap%-repl")
+		if repl_buf ~= nil and vim.api.nvim_buf_is_valid(repl_buf) then
+			repl_win = core_utils.get_winnr_for_bufnr(repl_buf)
+			if repl_win ~= nil and vim.api.nvim_win_is_valid(repl_win) then
+				vim.api.nvim_win_close(repl_win, true)
+				open_repl_window(repl_buf)
+			end
+		end
+	end
+end
+
+function M.open_terminal_floating_window()
+	local term_buf = core_utils.get_bufnr_by_pattern("%[dap%-terminal%]")
+	local term_win = nil
+	if term_buf ~= nil and vim.api.nvim_buf_is_valid(term_buf) then
+		term_win = core_utils.get_winnr_for_bufnr(term_buf)
+		if term_win ~= nil and vim.api.nvim_win_is_valid(term_win) then
+			vim.api.nvim_set_current_win(term_win)
+		else
+			open_floating_terminal_window(term_buf)
+		end
+	end
+end
+
+function M.debug_closest_test()
 	if not M.dap_is_active() then
 		dap.terminate()
 	end
-	local repl_width = math.floor(vim.o.columns * 0.4)
-	local wincmd = string.format("%svsplit new", repl_width)
 	neotest.run.run({ strategy = "dap" })
-	dap.repl.open({}, wincmd)
 end
 
 function M.dap_quit()

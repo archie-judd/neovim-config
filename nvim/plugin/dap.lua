@@ -1,17 +1,16 @@
-local autocommands = require("config.autocommands")
 local dap = require("dap")
+local dap_utils = require("utils.dap")
 local mappings = require("config.mappings")
 
 local config = function()
 	-- set defaults
-	local terminal_height = math.floor(vim.o.lines * 0.3)
 	dap.defaults.fallback.exception_breakpoints = "default"
-	dap.defaults.fallback.terminal_win_cmd = string.format("below %ssplit new", terminal_height)
-	dap.defaults.fallback.focus_terminal = true
+	dap.defaults.fallback.terminal_win_cmd = dap_utils.open_floating_terminal
+	dap.defaults.fallback.switchbuf = "usevisible,usetab,uselast"
 
 	-- python
 	local python_debugger_path = vim.g.python3_host_prog
-	local python_path = vim.fn.exepath("python") ~= "" and vim.fn.exepath("python") or vim.fn.exepath("python3") -- use the path for 'python', if it exists, else use the path for 'python3'
+	local python_path = vim.fn.exepath("python") ~= "" and vim.fn.exepath("python") or vim.fn.exepath("python3") -- use the path for "python", if it exists, else use the path for "python3"
 	dap.adapters["python"] = {
 		type = "executable",
 		command = python_debugger_path,
@@ -78,7 +77,6 @@ local config = function()
 		},
 	}
 	mappings.dap()
-	autocommands.dap()
 end
 
 config()

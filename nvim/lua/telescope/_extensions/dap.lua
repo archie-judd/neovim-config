@@ -17,7 +17,6 @@ local get_breakpoints = function()
 	for bufnum, breakpoints_raw in pairs(response) do
 		local buffer_name = vim.api.nvim_buf_get_name(bufnum)
 		for _, bp_raw in ipairs(breakpoints_raw) do
-			vim.print(bp_raw)
 			table.insert(breakpoints, {
 				active = true,
 				bufnum = bufnum,

@@ -1,6 +1,7 @@
 local cmp = require("cmp")
 local copilot_cmp = require("utils.copilot_cmp")
 local copilot_utils = require("utils.copilot")
+local core_utils = require("utils.core")
 local dap = require("dap")
 local dap_utils = require("utils.dap")
 local dap_widgets = require("dap.ui.widgets")
@@ -25,7 +26,11 @@ function M.core()
 	vim.keymap.set("i", "<C-x>", "<C-x>", { silent = true, noremap = true })
 
 	-- Close floating windows
-	vim.keymap.set("n", "<C-c>", ":fc<CR>", { silent = true, noremap = true, desc = "Floating windows: close topmost" })
+	vim.keymap.set("n", "<C-c>", function()
+		core_utils.close_active_or_topmost_floating_window(false)
+	end, { silent = true, noremap = true, desc = "Floating windows: close active or topmost floating window" })
+
+	vim.keymap.set("n", "<C-w>", "<C-w>w", { silent = true, noremap = true, desc = "Windows: move to the next window" })
 
 	-- Hack for easy de-highlighting
 	vim.keymap.set(
@@ -321,7 +326,7 @@ function M.dap()
 		{ silent = true, noremap = true, desc = "Dap: toggle breakpoint" }
 	)
 	vim.keymap.set("n", "<LocalLeader>q", dap_utils.dap_quit, { silent = true, noremap = true, desc = "Dap: close" })
-	vim.keymap.set("n", "<LocalLeader>bc", function()
+	vim.keymap.set("n", "<LocalLeader>z", function()
 		dap.set_breakpoint(
 			utils.user_input_or_nil("Condition (default is always stop): "),
 			utils.user_input_or_nil("Number of hits to trigger (default is zero): "),
@@ -335,7 +340,7 @@ function M.dap()
 	vim.keymap.set(
 		"n",
 		"<LocalLeader>d",
-		dap_utils.debug_with_repl,
+		dap_utils.debug,
 		{ silent = true, noremap = true, desc = "Dap: start debugging" }
 	)
 	vim.keymap.set(
@@ -368,12 +373,15 @@ function M.dap()
 		dap_utils.step_out,
 		{ silent = true, noremap = true, desc = "Dap: step out of" }
 	)
-	vim.keymap.set("n", "<LocalLeader>ro", function()
-		dap.repl.open({}, "vsplit new")
-	end, { silent = true, noremap = true, desc = "Dap: open the repl" })
 	vim.keymap.set(
 		"n",
-		"<LocalLeader>cb",
+		"<LocalLeader>r",
+		dap_utils.open_repl_floating_window,
+		{ silent = true, noremap = true, desc = "Dap: open or focus the repl window" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>x",
 		dap.clear_breakpoints,
 		{ silent = true, noremap = true, desc = "Dap: clear breakpoints" }
 	)
@@ -383,6 +391,24 @@ function M.dap()
 	vim.keymap.set("n", "<LocalLeader>s", function()
 		dap_widgets.centered_float(dap_widgets.scopes)
 	end, { silent = true, noremap = true, desc = "Dap: show scoped variables" })
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>t",
+		dap_utils.open_terminal_floating_window,
+		{ silent = true, noremap = true, desc = "Dap: open or focus the terminal window" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>dt",
+		dap_utils.debug_closest_test,
+		{ silent = true, noremap = true, desc = "Dap: debug closest test" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>e",
+		dap_utils.dap_restart,
+		{ silent = true, noremap = true, desc = "Dap: restart debugging session" }
+	)
 end
 
 function M.diffview()
@@ -398,15 +424,9 @@ function M.neotest()
 	vim.g.maplocalleader = ","
 	vim.keymap.set(
 		"n",
-		"<LocalLeader>rt",
+		"<Leader>rt",
 		neotest.run.run,
 		{ silent = true, noremap = true, desc = "Neotest: run closest test" }
-	)
-	vim.keymap.set(
-		"n",
-		"<LocalLeader>dt",
-		dap_utils.debug_closest_test_with_repl,
-		{ silent = true, noremap = true, desc = "Neotest: debug closest test" }
 	)
 end
 
