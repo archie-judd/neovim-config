@@ -66,6 +66,7 @@ let
     pkgs.vimPlugins.copilot-lua
     pkgs.vimPlugins.indent-blankline-nvim
     pkgs.vimPlugins.CopilotChat-nvim
+    pkgs.vimPlugins.render-markdown-nvim
     pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable
     pkgs-unstable.vimPlugins.diffview-nvim
     telescope-words.packages.${pkgs.system}.default
