@@ -46,18 +46,6 @@ function M.get_char_under_cursor()
 	return string.sub(vim.api.nvim_get_current_line(), position[2], position[2])
 end
 
----@param path string
----@return nil | integer
-function M.get_bufnr_by_absolute_path(path)
-	for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-		local buf_name = vim.api.nvim_buf_get_name(bufnr)
-		if buf_name == path then
-			return bufnr
-		end
-	end
-	return nil
-end
-
 ---@param pattern string
 ---@return nil | integer
 function M.get_bufnr_by_pattern(pattern)

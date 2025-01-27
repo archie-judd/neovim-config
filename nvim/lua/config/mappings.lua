@@ -351,12 +351,6 @@ function M.dap()
 	)
 	vim.keymap.set(
 		"n",
-		"<LocalLeader>r",
-		dap_utils.dap_restart,
-		{ silent = true, noremap = true, desc = "Dap: restart" }
-	)
-	vim.keymap.set(
-		"n",
 		"<LocalLeader>o",
 		dap_utils.step_over,
 		{ silent = true, noremap = true, desc = "Dap: step over" }
@@ -408,6 +402,12 @@ function M.dap()
 		"<LocalLeader>e",
 		dap_utils.dap_restart,
 		{ silent = true, noremap = true, desc = "Dap: restart debugging session" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>g",
+		dap_utils.move_to_current_frame,
+		{ silent = true, noremap = true, desc = "Dap: go to current frame" }
 	)
 end
 

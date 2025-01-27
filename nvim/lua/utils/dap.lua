@@ -4,36 +4,48 @@ local neotest = require("neotest")
 
 local M = {}
 
+---@param opts table
 ---@return integer | nil
-function M.get_debugged_bufnr()
-	local session = dap.session()
+function M.get_debugged_bufnr(opts)
+	if opts == nil then
+		opts = {}
+	end
+	local session = opts.session or dap.session()
 	local debugged_bufnr = nil
 	if session ~= nil then
 		local debugged_filepath = session.config.program
 		if debugged_filepath ~= nil then
-			debugged_bufnr = core_utils.get_bufnr_by_absolute_path(debugged_filepath)
+			debugged_bufnr = vim.fn.bufnr(debugged_filepath)
 		end
 	end
 	return debugged_bufnr
 end
 
-function M.try_to_move_to_debugged_buf()
-	local debugged_bufnr = M.get_debugged_bufnr()
+function M.move_to_current_frame()
+	local session = dap.session()
+	local current_frame = session.current_frame
+	local bufnr = M.get_debugged_bufnr({ session = session })
+	if bufnr ~= nil then
+		local debugged_winnr = core_utils.get_winnr_for_bufnr(bufnr)
+		if debugged_winnr ~= nil then
+			vim.api.nvim_set_current_win(debugged_winnr)
+			if current_frame ~= nil then
+				local line_number = session.current_frame.line
+				local column_number = session.current_frame.column
+				vim.api.nvim_win_set_cursor(debugged_winnr, { line_number, column_number })
+			end
+		end
+	end
+end
+
+---@return integer | nil
+function M.try_to_move_to_debugged_buf(opts)
+	local debugged_bufnr = M.get_debugged_bufnr(opts)
 	if debugged_bufnr ~= nil then
 		local debugged_winnr = core_utils.get_winnr_for_bufnr(debugged_bufnr)
 		if debugged_winnr ~= nil then
 			vim.api.nvim_set_current_win(debugged_winnr)
-		else
-			for _, winnr in ipairs(vim.api.nvim_tabpage_list_wins(vim.api.nvim_get_current_tabpage())) do
-				local bufnr = vim.api.nvim_win_get_buf(winnr)
-				local bufname = vim.api.nvim_buf_get_name(bufnr)
-				if
-					string.match(bufname, "%[dap%-repl%]") == nil
-					and string.match(bufname, "%[dap%-terminal%]") == nil
-				then
-					break
-				end
-			end
+			return debugged_winnr
 		end
 	end
 end
@@ -50,6 +62,7 @@ function M.debug()
 	dap.continue()
 end
 
+---@param buf integer
 local function open_floating_terminal_window(buf)
 	local available_height = vim.o.lines - vim.o.cmdheight - 2
 	local available_width = vim.o.columns
@@ -74,6 +87,7 @@ local function open_floating_terminal_window(buf)
 	return win
 end
 
+---@param buf integer
 local function open_repl_window(buf)
 	local available_height = vim.o.lines - vim.o.cmdheight - 2
 	local width = math.floor(vim.o.columns * 0.48)
@@ -165,7 +179,12 @@ end
 -- Ensure that dap debugged window is focussed before running the command
 function M.dap_restart()
 	M.try_to_move_to_debugged_buf()
-	dap.restart()
+	local session = dap.session()
+	if session ~= nil then
+		dap.restart()
+	else
+		dap.continue()
+	end
 end
 
 function M.dap_continue()
