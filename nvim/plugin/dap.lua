@@ -66,13 +66,15 @@ local config = function()
 			-- Debug using ts-node (not node), with the transpile-only option, to skip type checking
 			type = "pwa-node",
 			request = "launch",
-			name = "Launch Current File (ts-node -transpile-only)",
-			runtimeExecutable = "node",
-			runtimeArgs = { "-r", "ts-node/register/transpile-only" },
-			args = { "${file}" },
-			sourceMaps = true,
+			name = "Launch Current File (tsx)",
+			runtimeExecutable = "tsx",
+			program = "${file}",
 			cwd = "${workspaceFolder}",
 			outFiles = { "${workspaceFolder}/**/**/*", "!**/node_modules/**" },
+			skipFiles = {
+				"<node_internals>/**",
+				"${workspaceFolder}/node_modules/**",
+			},
 			console = "integratedTerminal",
 		},
 	}
