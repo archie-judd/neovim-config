@@ -5,18 +5,25 @@ local neotest = require("neotest")
 local M = {}
 
 ---@param opts table
+local function try_to_get_debugged_filepath(opts)
+	local session = opts.session or dap.session()
+	local debugged_filepath = nil
+	if session ~= nil then
+		debugged_filepath = session.program
+		if debugged_filepath == nil then
+			debugged_filepath = session.current_frame.source.path
+		end
+	end
+	return debugged_filepath
+end
+
+---@param opts table
 ---@return integer | nil
 function M.get_debugged_bufnr(opts)
-	if opts == nil then
-		opts = {}
-	end
-	local session = opts.session or dap.session()
 	local debugged_bufnr = nil
-	if session ~= nil then
-		local debugged_filepath = session.config.program
-		if debugged_filepath ~= nil then
-			debugged_bufnr = vim.fn.bufnr(debugged_filepath)
-		end
+	local debugged_filepath = try_to_get_debugged_filepath(opts)
+	if debugged_filepath ~= nil then
+		debugged_bufnr = vim.fn.bufnr(debugged_filepath)
 	end
 	return debugged_bufnr
 end
