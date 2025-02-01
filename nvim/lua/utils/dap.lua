@@ -4,8 +4,10 @@ local neotest = require("neotest")
 
 local M = {}
 
----@param opts table
+---@param opts table | nil
+---@return string | nil
 local function try_to_get_debugged_filepath(opts)
+	opts = opts or {}
 	local session = opts.session or dap.session()
 	local debugged_filepath = nil
 	if session ~= nil then
@@ -19,7 +21,7 @@ end
 
 ---@param opts table
 ---@return integer | nil
-function M.get_debugged_bufnr(opts)
+function M.try_to_get_debugged_bufnr(opts)
 	local debugged_bufnr = nil
 	local debugged_filepath = try_to_get_debugged_filepath(opts)
 	if debugged_filepath ~= nil then
@@ -31,7 +33,7 @@ end
 function M.move_to_current_frame()
 	local session = dap.session()
 	local current_frame = session.current_frame
-	local bufnr = M.get_debugged_bufnr({ session = session })
+	local bufnr = M.try_to_get_debugged_bufnr({ session = session })
 	if bufnr ~= nil then
 		local debugged_winnr = core_utils.get_winnr_for_bufnr(bufnr)
 		if debugged_winnr ~= nil then
@@ -45,9 +47,11 @@ function M.move_to_current_frame()
 	end
 end
 
+---@param opts table | nil
 ---@return integer | nil
 function M.try_to_move_to_debugged_buf(opts)
-	local debugged_bufnr = M.get_debugged_bufnr(opts)
+	opts = opts or {}
+	local debugged_bufnr = M.try_to_get_debugged_bufnr(opts)
 	if debugged_bufnr ~= nil then
 		local debugged_winnr = core_utils.get_winnr_for_bufnr(debugged_bufnr)
 		if debugged_winnr ~= nil then
