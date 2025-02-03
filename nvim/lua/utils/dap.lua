@@ -12,7 +12,7 @@ local function try_to_get_debugged_filepath(opts)
 	local debugged_filepath = nil
 	if session ~= nil then
 		debugged_filepath = session.program
-		if debugged_filepath == nil then
+		if debugged_filepath == nil and session.current ~= nil then
 			debugged_filepath = session.current_frame.source.path
 		end
 	end
