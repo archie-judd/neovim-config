@@ -9,7 +9,7 @@ local function config()
 			relative = "editor",
 			border = "single",
 			row = 0,
-			col = vim.o.columns / 2, -- column position of the window, default is centered
+			col = math.floor(3 * (vim.o.columns / 4)), -- column position of the window, default is centered
 		},
 	})
 end
