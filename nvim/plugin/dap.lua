@@ -78,9 +78,10 @@ local config = function()
 			console = "integratedTerminal",
 		},
 		{
+			-- Debug .test.ts files with jest
 			type = "pwa-node",
 			request = "launch",
-			name = "Debug test file (jest)",
+			name = "Debug Test File (jest)",
 			cwd = "${workspaceFolder}",
 			runtimeArgs = {
 				"--inspect-brk",
