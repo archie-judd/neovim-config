@@ -77,6 +77,19 @@ local config = function()
 			},
 			console = "integratedTerminal",
 		},
+		{
+			type = "pwa-node",
+			request = "launch",
+			name = "Debug test file (jest)",
+			cwd = "${workspaceFolder}",
+			runtimeArgs = {
+				"--inspect-brk",
+				"${workspaceFolder}/node_modules/jest/bin/jest.js",
+				"--runInBand",
+				"${file}",
+			},
+			console = "integratedTerminal",
+		},
 	}
 	mappings.dap()
 end
