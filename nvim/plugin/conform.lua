@@ -24,6 +24,9 @@ local config = function()
 			black = {
 				prepend_args = { "--preview" },
 			},
+			pg_format = {
+				prepend_args = { "--type-case", 2 },
+			},
 		},
 	})
 end
