@@ -14,6 +14,7 @@ local config = function()
 			sh = { "shfmt" },
 			nix = { "nixfmt" },
 			haskell = { "ormolu" },
+			sql = { "pg_format" },
 		},
 		format_on_save = {
 			timeout_ms = 5000,

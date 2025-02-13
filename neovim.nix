@@ -87,6 +87,7 @@ let
     pkgs.nodePackages.vscode-langservers-extracted
     pkgs.nodePackages.eslint
     pkgs.prettierd
+    pkgs.pgformatter # For postgres sqls
     pkgs.shfmt
     pkgs.stylua
     pkgs.sqls
