@@ -25,7 +25,9 @@ local config = function()
 				prepend_args = { "--preview" },
 			},
 			pg_format = {
-				prepend_args = { "--type-case", 2 },
+				-- set types to upper case and stop it from separating tables of format #table_name to
+				-- # table_name
+				prepend_args = { "--type-case", 2, "--placeholder", [[#\w+]] },
 			},
 		},
 	})
