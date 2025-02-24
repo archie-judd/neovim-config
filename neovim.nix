@@ -68,6 +68,7 @@ let
     pkgs.vimPlugins.CopilotChat-nvim
     pkgs.vimPlugins.render-markdown-nvim
     pkgs.vimPlugins.avante-nvim
+    pkgs.vimPlugins.mini-diff
     pkgs-unstable.vimPlugins.codecompanion-nvim # Not available in stable
     pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable
     pkgs-unstable.vimPlugins.diffview-nvim
