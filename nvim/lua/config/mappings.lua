@@ -1,4 +1,6 @@
 local cmp = require("cmp")
+local codecompanion = require("codecompanion")
+local codecompanion_utils = require("utils.codecompanion")
 local copilot_cmp = require("utils.copilot_cmp")
 local copilot_utils = require("utils.copilot")
 local core_utils = require("utils.core")
@@ -605,6 +607,28 @@ function M.github_link()
 		noremap = true,
 		desc = "GitHub link: generate GitHub link",
 	})
+end
+
+function M.codecompanion()
+	vim.g.maplocalleader = " "
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>c",
+		codecompanion_utils.open_chat,
+		{ noremap = true, silent = true, desc = "CodeCompanion: Open chat" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>a",
+		codecompanion.actions,
+		{ noremap = true, silent = true, desc = "CodeCompanion: Open actions" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>b",
+		codecompanion_utils.jump_to_context_buffer,
+		{ noremap = true, silent = true, desc = "CodeCompanion: Jump to edited buffer" }
+	)
 end
 
 return M

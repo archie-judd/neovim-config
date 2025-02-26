@@ -1,5 +1,5 @@
+local codecompanion_utils = require("utils.codecompanion")
 local core_utils = require("utils.core")
-local dap = require("dap")
 local diffview = require("diffview")
 local mappings = require("config.mappings")
 local panel = require("copilot.panel")
@@ -127,6 +127,15 @@ function M.diffview()
 				silent = true,
 				desc = "Diffview: close",
 			})
+			vim.keymap.set("n", "gr", function()
+				diffview.close()
+				diffview.open()
+			end, {
+				buffer = event.buf,
+				noremap = true,
+				silent = true,
+				desc = "Diffview: refresh",
+			})
 		end,
 	})
 	-- make sure we can't read buffers into the diffview file panel
@@ -194,6 +203,26 @@ function M.copilot()
 				silent = true,
 				desc = "Copilot: Refresh panel suggestions",
 			})
+		end,
+	})
+end
+
+function M.codecompanion()
+	vim.api.nvim_create_autocmd("BufEnter", {
+		pattern = "*CodeCompanion*",
+		callback = function(event)
+			vim.keymap.set(
+				"n",
+				"<C-c>",
+				codecompanion_utils.close_chat,
+				{ buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: close chat" }
+			)
+			vim.keymap.set(
+				{ "n", "i" },
+				"<C-s>",
+				codecompanion_utils.submit,
+				{ buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: submit prompt" }
+			)
 		end,
 	})
 end
