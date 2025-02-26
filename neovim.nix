@@ -103,7 +103,6 @@ let
   ];
 
   extraPython3Packages = pyPkgs: [ pyPkgs.debugpy ];
-  extraLuaPackages = luaPkgs: [ luaPkgs.tiktoken_core ];
 
 in {
 
@@ -116,7 +115,6 @@ in {
     withNodeJs = true;
     withRuby = false;
     extraPython3Packages = extraPython3Packages;
-    extraLuaPackages = extraLuaPackages;
   };
 
   extraPackages = extraPackages;
