@@ -56,7 +56,10 @@ function M.jump_to_context_buffer()
 
 	local diff_info = diff.get_buf_data()
 	if diff_info and #diff_info.hunks > 0 then
+		-- go to the first hunk
 		diff.goto_hunk("first")
+		-- center the window
+		vim.api.nvim_command("normal! zz")
 	end
 end
 
