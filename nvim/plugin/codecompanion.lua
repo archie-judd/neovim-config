@@ -50,8 +50,8 @@ local function config()
 				-- prompt = "Prompt ", -- Prompt used for interactive LLM calls
 				provider = "default", -- default|telescope|mini_pick
 				opts = {
-					show_default_actions = false,
-					show_default_prompt_library = false,
+					show_default_actions = true,
+					show_default_prompt_library = true,
 				},
 			},
 		},
@@ -76,7 +76,7 @@ local function config()
 					auto_submit = false,
 					index = 1,
 					stop_context_insertion = true,
-					user_prompt = true,
+					user_prompt = false,
 				},
 			},
 		},
