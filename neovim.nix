@@ -59,16 +59,15 @@ let
     pkgs.vimPlugins.vim-fugitive
     pkgs.vimPlugins.gitsigns-nvim
     pkgs.vimPlugins.lualine-nvim
-    pkgs.vimPlugins.mini-nvim
     pkgs.vimPlugins.neotest
     pkgs.vimPlugins.neotest-python
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
     pkgs.vimPlugins.indent-blankline-nvim
-    pkgs.vimPlugins.CopilotChat-nvim
     pkgs.vimPlugins.render-markdown-nvim
     pkgs.vimPlugins.mini-diff
-    pkgs-unstable.vimPlugins.avante-nvim
+    pkgs.vimPlugins.mini-surround
+    pkgs.vimPlugins.mini-ai
     pkgs-unstable.vimPlugins.codecompanion-nvim # Not available in stable
     pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable
     pkgs-unstable.vimPlugins.diffview-nvim

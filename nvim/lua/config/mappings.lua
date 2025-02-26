@@ -2,7 +2,6 @@ local cmp = require("cmp")
 local codecompanion = require("codecompanion")
 local codecompanion_utils = require("utils.codecompanion")
 local copilot_cmp = require("utils.copilot_cmp")
-local copilot_utils = require("utils.copilot")
 local core_utils = require("utils.core")
 local dap = require("dap")
 local dap_utils = require("utils.dap")
@@ -524,14 +523,6 @@ function M.typescript()
 		noremap = true,
 		silent = true,
 		desc = "Typescript: insert identity function on current line",
-	})
-end
-
-function M.copilot_panel()
-	vim.keymap.set("i", "<C-h>", copilot_utils.open_panel, {
-		noremap = true,
-		silent = true,
-		desc = "Copilot panel: Open the panel",
 	})
 end
 

@@ -4,25 +4,6 @@ local utils = require("utils.core")
 
 local M = {}
 
-function M.read_anthropic_api_key()
-	local home = os.getenv("HOME") or "~"
-	local path = home .. "/.config/anthropic_token"
-
-	local file = io.open(path, "r")
-	if not file then
-		vim.notify("Error: Unable to open " .. path, vim.log.levels.ERROR)
-		return nil
-	end
-
-	local api_key = file:read("*l")
-	file:close()
-
-	if not api_key or api_key == "" then
-		return nil
-	end
-	return api_key
-end
-
 function M.submit()
 	local chat = codecompanion.last_chat()
 	if chat ~= nil then

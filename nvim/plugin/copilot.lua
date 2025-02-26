@@ -1,6 +1,4 @@
-local autocommands = require("config.autocommands")
 local copilot = require("copilot")
-local mappings = require("config.mappings")
 
 local config = function()
 	copilot.setup({
@@ -21,8 +19,6 @@ local config = function()
 			auto_refresh = true,
 		},
 	})
-	autocommands.copilot()
-	mappings.copilot_panel()
 end
 
 config()

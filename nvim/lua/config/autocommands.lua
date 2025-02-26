@@ -2,7 +2,7 @@ local codecompanion_utils = require("utils.codecompanion")
 local core_utils = require("utils.core")
 local diffview = require("diffview")
 local mappings = require("config.mappings")
-local panel = require("copilot.panel")
+local oil = require("oil")
 
 local M = {}
 
@@ -90,14 +90,14 @@ function M.oil()
 		end,
 	})
 	-- Disabling preview until https://github.com/stevearc/oil.nvim/issues/435 is resolved
-	-- vim.api.nvim_create_autocmd("User", {
-	-- 	pattern = "OilEnter",
-	-- 	callback = vim.schedule_wrap(function(args)
-	-- 		if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
-	-- 			oil.open_preview()
-	-- 		end
-	-- 	end),
-	-- })
+	vim.api.nvim_create_autocmd("User", {
+		pattern = "OilEnter",
+		callback = vim.schedule_wrap(function(args)
+			if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
+				oil.open_preview()
+			end
+		end),
+	})
 end
 
 function M.eyeliner()
@@ -163,46 +163,6 @@ function M.lspconfig()
 		group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 		callback = function(event)
 			mappings.lspconfig(event.buf)
-		end,
-	})
-end
-
-function M.copilot()
-	vim.api.nvim_create_autocmd("BufEnter", {
-		pattern = "copilot:*/*",
-		callback = function(event)
-			vim.keymap.set("n", "<C-c>", function()
-				vim.api.nvim_buf_delete(event.buf, { force = true })
-			end, {
-				buffer = event.buf,
-				noremap = true,
-				silent = true,
-				desc = "Copilot: Close the panel",
-			})
-			vim.keymap.set("n", "<C-n>", panel.jump_next, {
-				buffer = event.buf,
-				noremap = true,
-				silent = true,
-				desc = "Copilot: Next panel suggestion",
-			})
-			vim.keymap.set("n", "<C-p>", panel.jump_prev, {
-				buffer = event.buf,
-				noremap = true,
-				silent = true,
-				desc = "Copilot: Previous panel suggestion",
-			})
-			vim.keymap.set("n", "<C-y>", panel.accept, {
-				buffer = event.buf,
-				noremap = true,
-				silent = true,
-				desc = "Copilot: Accept current panel suggestion",
-			})
-			vim.keymap.set("n", "<C-r>", panel.refresh, {
-				buffer = event.buf,
-				noremap = true,
-				silent = true,
-				desc = "Copilot: Refresh panel suggestions",
-			})
 		end,
 	})
 end
