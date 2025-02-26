@@ -1,28 +1,16 @@
-local adapters = require("codecompanion.adapters")
 local autocommands = require("config.autocommands")
 local codecompanion = require("codecompanion")
 local mappings = require("config.mappings")
-local utils = require("utils.codecompanion")
 
 local function config()
 	local CHAT_WINDOW_WIDTH = 0.4
 	local CHAT_WINDOW_HEIGHT = 0.85
 
 	codecompanion.setup({
-		adapters = {
-			anthropic = function()
-				return adapters.extend("anthropic", {
-					env = {
-						api_key = utils.read_anthropic_api_key(),
-					},
-				})
-			end,
-		},
-
 		strategies = {
 			-- Change the default chat adapter
 			chat = {
-				adapter = "anthropic",
+				adapter = "copilot",
 				keymaps = {
 					-- make unreachable ( I use my own functions )
 					send = {
@@ -33,6 +21,7 @@ local function config()
 					},
 				},
 			},
+			inline = { adapter = "copilot" },
 		},
 		display = {
 			chat = {
@@ -80,9 +69,6 @@ local function config()
 					user_prompt = true,
 				},
 			},
-		},
-		opts = {
-			send_code = false,
 		},
 	})
 	mappings.codecompanion()
