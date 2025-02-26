@@ -44,6 +44,16 @@ local function config()
 				enabled = true,
 				provider = "mini_diff",
 			},
+			action_palette = {
+				-- width = 95,
+				-- height = 10,
+				-- prompt = "Prompt ", -- Prompt used for interactive LLM calls
+				provider = "default", -- default|telescope|mini_pick
+				opts = {
+					show_default_actions = false,
+					show_default_prompt_library = false,
+				},
+			},
 		},
 		prompt_library = {
 			["Edit current buffer"] = {
