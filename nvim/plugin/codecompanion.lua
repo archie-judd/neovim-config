@@ -106,7 +106,7 @@ local function config()
 				prompts = {
 					{
 						role = "system",
-						content = "Generate a concise commit message for a given git diff. The message should be descriptive and under 60 characters. Use lua_cmd_runner to execute a git fugitive commit command in the command line with nvim_feedkeys.",
+						content = "Generate a descriptive commit message for a given git diff. The message should be descriptive and under 60 characters. Use lua_cmd_runner to execute a git fugitive commit command in the command line with nvim_feedkeys.",
 					},
 					{
 						role = "user",
