@@ -25,7 +25,12 @@ local function config()
 					tools = {
 						["clipboard"] = {
 							callback = tools.module_dir .. "clipboard.lua",
-							description = "Copy the output of your response to the neovim register",
+							description = "A tool for copying and pasting test to and from the clipboard buffer",
+						},
+						["lua_cmd_runner"] = {
+							callback = tools.module_dir .. "lua_cmd_runner.lua",
+							description = "A tool for executing lua commands",
+							opts = { user_approval = true },
 						},
 					},
 				},
@@ -101,11 +106,11 @@ local function config()
 				prompts = {
 					{
 						role = "system",
-						content = "You will be requested to generate a a commit message for a given git diff. Create a concise and descriptive message that explains the changes that have been made. Keep the message shorter than 60 characters. Surround it with quotes and copy it to the clipboard, using the clipboard tool, being sure not to ruin the XML, and using the default register unless otherwise specified.",
+						content = "Generate a concise commit message for a given git diff. The message should be descriptive and under 60 characters. Use lua_cmd_runner to execute a git fugitive commit command in the command line with nvim_feedkeys.",
 					},
 					{
 						role = "user",
-						content = "@clipboard Here is the diff: #diff_stage\n\n. Write a commit message and copy it to the clipboard.",
+						content = '@lua_cmd_runner Here is the diff: #diff_stage\n\n Write a commit message and execute a git fugitive commit using vim.api.nvim_i `vim.api.nvim_feedkeys(":Git commit -m <commit-message>", "n", false)`. Set force to true to bypass approval, and ensure the user is in normal mode - you can use vim.cmd("stopinsert").',
 					},
 				},
 				opts = {
