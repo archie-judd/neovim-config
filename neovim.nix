@@ -102,6 +102,7 @@ let
   ];
 
   extraPython3Packages = pyPkgs: [ pyPkgs.debugpy ];
+  extraLuaPackages = luaPkgs: [ luaPkgs.xml2lua ];
 
 in {
 
@@ -114,6 +115,7 @@ in {
     withNodeJs = true;
     withRuby = false;
     extraPython3Packages = extraPython3Packages;
+    extraLuaPackages = extraLuaPackages;
   };
 
   extraPackages = extraPackages;
