@@ -62,7 +62,7 @@ local function config()
 				prompts = {
 					{
 						role = "system",
-						content = "You are an experienced developer. You will be requested to make some changes to a provided buffer. Do so. Keep your responses concise and to the point. Don't include next-step suggestions.",
+						content = "You are an experienced developer. You will be requested to make some changes to a provided buffer. Think carefully about where in the buffer any changes should go. Keep your responses concise and to the point. Don't include next-step suggestions.",
 					},
 					{
 						role = "user",
