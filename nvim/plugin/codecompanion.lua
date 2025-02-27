@@ -1,6 +1,7 @@
 local autocommands = require("config.autocommands")
 local codecompanion = require("codecompanion")
 local mappings = require("config.mappings")
+local tools = require("utils.codecompanion.tools")
 
 local function config()
 	local CHAT_WINDOW_WIDTH = 0.4
@@ -18,6 +19,24 @@ local function config()
 					},
 					close = {
 						modes = { n = "<NOP>", i = "<NOP>" },
+					},
+				},
+				agents = {
+					tools = {
+						["clipboard"] = {
+							callback = tools.module_dir .. "clipboard.lua",
+							description = "Copy the output of your response to the neovim register",
+						},
+					},
+				},
+				variables = {
+					["diff"] = {
+						callback = "utils.codecompanion.variables.diff",
+						description = "Share the git diff for unstaged files with the llm",
+					},
+					["diff_staged"] = {
+						callback = "utils.codecompanion.variables.diff_staged",
+						description = "Share the git diff for staged files with the llm",
 					},
 				},
 			},
@@ -45,9 +64,6 @@ local function config()
 				provider = "mini_diff",
 			},
 			action_palette = {
-				-- width = 95,
-				-- height = 10,
-				-- prompt = "Prompt ", -- Prompt used for interactive LLM calls
 				provider = "default", -- default|telescope|mini_pick
 				opts = {
 					show_default_actions = true,
@@ -75,6 +91,29 @@ local function config()
 					short_name = "ecb",
 					auto_submit = false,
 					index = 1,
+					stop_context_insertion = true,
+					user_prompt = false,
+				},
+			},
+			["Generate a commit message"] = {
+				strategy = "chat",
+				description = "Generate a commit message",
+				prompts = {
+					{
+						role = "system",
+						content = "You will be requested to generate a a commit message for a given git diff. Create a concise and descriptive message that explains the changes that have been made. Keep the message shorter than 60 characters. Surround it with quotes and copy it to the clipboard, using the clipboard tool, being sure not to ruin the XML, and using the default register unless otherwise specified.",
+					},
+					{
+						role = "user",
+						content = "@clipboard Here is the diff: #diff_stage\n\n. Write a commit message and copy it to the clipboard.",
+					},
+				},
+				opts = {
+					modes = { "n" },
+					is_slash_cmd = true,
+					short_name = "gcm",
+					auto_submit = true,
+					index = 2,
 					stop_context_insertion = true,
 					user_prompt = false,
 				},

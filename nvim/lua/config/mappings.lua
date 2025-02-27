@@ -1,6 +1,6 @@
 local cmp = require("cmp")
 local codecompanion = require("codecompanion")
-local codecompanion_utils = require("utils.codecompanion")
+local codecompanion_utils = require("utils.codecompanion.chat")
 local copilot_cmp = require("utils.copilot_cmp")
 local core_utils = require("utils.core")
 local dap = require("dap")

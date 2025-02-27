@@ -1,4 +1,4 @@
-local codecompanion_utils = require("utils.codecompanion")
+local codecompanion_utils = require("utils.codecompanion.chat")
 local core_utils = require("utils.core")
 local diffview = require("diffview")
 local mappings = require("config.mappings")
