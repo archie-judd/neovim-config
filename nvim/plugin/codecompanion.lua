@@ -110,7 +110,7 @@ local function config()
 					},
 					{
 						role = "user",
-						content = '@lua_cmd_runner Here is the diff: #diff_stage\n\n Write a commit message and execute a git fugitive commit using vim.api.nvim_i `vim.api.nvim_feedkeys(":Git commit -m <commit-message>", "n", false)`. Set force to true to bypass approval, and ensure the user is in normal mode - you can use vim.cmd("stopinsert").',
+						content = '@lua_cmd_runner Here is the diff: #diff_stage.\n\nWrite a commit message and execute a git fugitive commit using vim.api.nvim_i `vim.api.nvim_feedkeys(":Git commit -m <commit-message>", "n", false)`. Set force to true to bypass approval, and ensure the user is in normal mode - you can use vim.cmd("stopinsert").',
 					},
 				},
 				opts = {
