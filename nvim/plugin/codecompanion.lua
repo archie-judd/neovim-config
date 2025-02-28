@@ -4,8 +4,8 @@ local mappings = require("config.mappings")
 local tools = require("utils.codecompanion.tools")
 
 local function config()
-	local CHAT_WINDOW_WIDTH = 0.4
 	local CHAT_WINDOW_HEIGHT = 0.85
+	local CHAT_WINDOW_WIDTH = 0.45
 
 	codecompanion.setup({
 		strategies = {
@@ -39,7 +39,7 @@ local function config()
 						callback = "utils.codecompanion.variables.diff",
 						description = "Share the git diff for unstaged files with the llm",
 					},
-					["diff_staged"] = {
+					["sdiff"] = {
 						callback = "utils.codecompanion.variables.diff_staged",
 						description = "Share the git diff for staged files with the llm",
 					},
@@ -101,7 +101,7 @@ local function config()
 				},
 			},
 			["Generate a commit message"] = {
-				strategy = "inline",
+				strategy = "chat",
 				description = "Generate a commit message",
 				prompts = {
 					{
@@ -110,7 +110,7 @@ local function config()
 					},
 					{
 						role = "user",
-						content = '@lua_cmd_runner Here is the diff: #diff_stage.\n\nWrite a commit message and execute a git fugitive commit using vim.api.nvim_i `vim.api.nvim_feedkeys(":Git commit -m <commit-message>", "n", false)`. Set force to true to bypass approval, and ensure the user is in normal mode - you can use vim.cmd("stopinsert").',
+						content = '@lua_cmd_runner Here is the git diff: #sdiff.\n\nWrite a commit message and execute a git fugitive commit using vim.api.nvim_i `vim.api.nvim_feedkeys(":Git commit -m <commit-message>", "n", false)`. Set force to true to bypass approval, and ensure the user is in normal mode - you can use vim.cmd("stopinsert").',
 					},
 				},
 				opts = {
@@ -127,6 +127,8 @@ local function config()
 	})
 	mappings.codecompanion()
 	autocommands.codecompanion()
+	-- expand cc to CodeCompanion in the command lines
+	vim.cmd("cabbrev cc CodeCompanion")
 end
 
 config()

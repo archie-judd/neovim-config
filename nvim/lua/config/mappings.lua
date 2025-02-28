@@ -620,6 +620,12 @@ function M.codecompanion()
 		codecompanion_utils.jump_to_context_buffer,
 		{ noremap = true, silent = true, desc = "CodeCompanion: Jump to edited buffer" }
 	)
+	vim.keymap.set(
+		"v",
+		"ga",
+		codecompanion.add,
+		{ noremap = true, silent = true, desc = "CodeCompanion: Add selection to chat" }
+	)
 end
 
 return M
