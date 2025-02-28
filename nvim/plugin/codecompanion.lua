@@ -43,6 +43,10 @@ local function config()
 						callback = "utils.codecompanion.variables.diff_staged",
 						description = "Share the git diff for staged files with the llm",
 					},
+					["gfiles"] = {
+						callback = "utils.codecompanion.variables.git_files",
+						description = "Share the relative paths of all files in the git repository with the llm",
+					},
 				},
 			},
 			inline = { adapter = "copilot" },
