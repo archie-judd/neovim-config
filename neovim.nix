@@ -88,7 +88,6 @@ let
     pkgs.nixd
     pkgs.nodePackages.vscode-langservers-extracted
     pkgs.nodePackages.eslint
-    pkgs.prettierd
     pkgs.shfmt
     pkgs.stylua
     pkgs.sqls
