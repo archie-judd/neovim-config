@@ -93,8 +93,6 @@ let
     pkgs.stylua
     pkgs.sqls
     pkgs.nixfmt-classic
-    pkgs.black
-    pkgs.isort
     pkgs.ormolu
     pkgs.emmet-language-server
     pkgs.yaml-language-server
