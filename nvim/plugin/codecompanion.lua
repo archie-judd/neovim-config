@@ -101,7 +101,7 @@ local function config()
 				},
 			},
 			["Generate a commit message"] = {
-				strategy = "chat",
+				strategy = "inline",
 				description = "Generate a commit message",
 				prompts = {
 					{
