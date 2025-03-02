@@ -101,4 +101,12 @@ function M.user_input_or_nil(prompt)
 	return input
 end
 
+function M.move_to_previous_window()
+	local current_win = vim.api.nvim_get_current_win()
+	local previous_win = vim.fn.win_getid(vim.fn.winnr("#"))
+	if previous_win and vim.api.nvim_win_is_valid(previous_win) and current_win ~= previous_win then
+		vim.api.nvim_set_current_win(previous_win)
+	end
+end
+
 return M

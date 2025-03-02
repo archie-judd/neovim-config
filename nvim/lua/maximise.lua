@@ -39,10 +39,4 @@ function M.toggle_maximise()
 	end
 end
 
-vim.api.nvim_create_autocmd({ "WinLeave" }, {
-	callback = function()
-		M.restore()
-	end,
-})
-
 return M

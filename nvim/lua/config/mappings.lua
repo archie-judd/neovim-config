@@ -7,6 +7,7 @@ local dap = require("dap")
 local dap_utils = require("utils.dap")
 local dap_widgets = require("dap.ui.widgets")
 local diffview_utils = require("utils.diffview")
+local float_term = require("float_term")
 local github_link = require("github_link")
 local gitsigns = require("gitsigns")
 local maximise = require("maximise")
@@ -19,17 +20,23 @@ local yank_utils = require("utils.yank")
 
 -- It's useful to have core mappings in one file, so accidental remaps can be easily spotted.
 local M = {}
+
 function M.core()
 	-- Set mapleader
 	vim.g.mapleader = ";"
-	vim.keymap.set("i", "<C-x>", "<C-x>", { silent = true, noremap = true })
-
-	vim.keymap.set("i", "<C-x>", "<C-x>", { silent = true, noremap = true })
 
 	-- Close floating windows
-	vim.keymap.set("n", "<C-c>", function()
+	vim.keymap.set({ "n", "i" }, "<C-q>", function()
 		core_utils.close_active_or_topmost_floating_window(false)
-	end, { silent = true, noremap = true, desc = "Floating windows: close active or topmost floating window" })
+	end, { silent = true, noremap = true, desc = "Windows: close active or topmost floating window" })
+
+	-- Move to last window
+	vim.keymap.set(
+		{ "n", "i", "t" },
+		"<C-b>",
+		core_utils.move_to_previous_window,
+		{ silent = true, noremap = true, desc = "Windows: move to previous window" }
+	)
 
 	vim.keymap.set("n", "<C-w>", "<C-w>w", { silent = true, noremap = true, desc = "Windows: move to the next window" })
 
@@ -615,17 +622,15 @@ function M.codecompanion()
 		{ noremap = true, silent = true, desc = "CodeCompanion: Open actions" }
 	)
 	vim.keymap.set(
-		"n",
-		"<LocalLeader>b",
-		codecompanion_utils.jump_to_context_buffer,
-		{ noremap = true, silent = true, desc = "CodeCompanion: Jump to edited buffer" }
-	)
-	vim.keymap.set(
 		"v",
 		"ga",
 		codecompanion.add,
 		{ noremap = true, silent = true, desc = "CodeCompanion: Add selection to chat" }
 	)
+end
+
+function M.float_term()
+	vim.keymap.set("n", "<leader>tt", float_term.open, { noremap = true, silent = true, desc = "Float term: open" })
 end
 
 return M

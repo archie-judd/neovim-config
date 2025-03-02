@@ -4,9 +4,10 @@ local mappings = require("config.mappings")
 local tools = require("utils.codecompanion.tools")
 
 local function config()
-	local CHAT_WINDOW_HEIGHT = 0.85
-	local CHAT_WINDOW_WIDTH = 0.45
-
+	local WINDOW_HEIGHT = 0.85
+	local WINDOW_WIDTH = 0.4
+	local TOP_MARGIN = 0.075
+	local RIGHT_MARGIN = 0.0125
 	codecompanion.setup({
 		strategies = {
 			-- Change the default chat adapter
@@ -55,11 +56,10 @@ local function config()
 			chat = {
 				window = {
 					layout = "float",
-					width = CHAT_WINDOW_WIDTH,
-					height = CHAT_WINDOW_HEIGHT,
-					-- these are the row/col of the window's top-left corner
-					row = math.floor(((vim.o.lines * (1 - CHAT_WINDOW_HEIGHT)) - 2) / 2),
-					col = math.floor((vim.o.columns * (1.5 - CHAT_WINDOW_WIDTH)) / 2),
+					width = math.floor(vim.o.columns * WINDOW_WIDTH),
+					height = math.floor((vim.o.lines - 2) * WINDOW_HEIGHT),
+					row = math.floor((vim.o.lines - 2) * TOP_MARGIN),
+					col = math.floor((vim.o.columns * (1 - RIGHT_MARGIN - WINDOW_WIDTH))),
 				},
 				start_in_insert_mode = true,
 			},

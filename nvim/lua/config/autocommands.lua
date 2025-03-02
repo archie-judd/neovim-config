@@ -1,7 +1,9 @@
 local codecompanion_utils = require("utils.codecompanion.chat")
 local core_utils = require("utils.core")
 local diffview = require("diffview")
+local float_term = require("float_term")
 local mappings = require("config.mappings")
+local maximise = require("maximise")
 local oil = require("oil")
 
 local M = {}
@@ -22,7 +24,7 @@ function M.core()
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "qf",
 		callback = function(event)
-			vim.keymap.set("n", "<C-c>", function()
+			vim.keymap.set("n", "<C-q>", function()
 				vim.api.nvim_buf_delete(event.buf, { force = true })
 			end, {
 				buffer = event.buf,
@@ -119,7 +121,7 @@ function M.diffview()
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = { "DiffviewFiles" },
 		callback = function(event)
-			vim.keymap.set("n", "<C-c>", function()
+			vim.keymap.set("n", "<C-q>", function()
 				diffview.close()
 			end, {
 				buffer = event.buf,
@@ -172,8 +174,8 @@ function M.codecompanion()
 		pattern = "*CodeCompanion*",
 		callback = function(event)
 			vim.keymap.set(
-				"n",
-				"<C-c>",
+				{ "n", "i" },
+				"<C-q>",
 				codecompanion_utils.close_chat,
 				{ buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: close chat" }
 			)
@@ -183,6 +185,42 @@ function M.codecompanion()
 				codecompanion_utils.submit,
 				{ buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: submit prompt" }
 			)
+			vim.keymap.set(
+				"n",
+				"<C-b>",
+				codecompanion_utils.jump_to_context_buffer,
+				{ buffer = event.buf, noremap = true, silent = true, desc = "CodeCompanion: Jump to edited buffer" }
+			)
+		end,
+	})
+end
+
+function M.maximise()
+	vim.api.nvim_create_autocmd("WinLeave", {
+		callback = function()
+			maximise.restore()
+		end,
+	})
+end
+
+function M.float_term()
+	vim.api.nvim_create_autocmd("TermOpen", {
+		pattern = "*",
+		callback = function(event)
+			vim.keymap.set(
+				"t",
+				"<C-q>",
+				float_term.close,
+				{ buffer = event.buf, noremap = true, silent = true, desc = "Floating term: close" }
+			)
+		end,
+	})
+
+	vim.api.nvim_create_autocmd("WinClosed", {
+		callback = function(event)
+			if vim.bo[event.buf].buftype == "terminal" then
+				vim.api.nvim_buf_delete(event.buf, { force = true })
+			end
 		end,
 	})
 end
