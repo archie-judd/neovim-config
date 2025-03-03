@@ -86,6 +86,7 @@ let
     pkgs.ruff
     pkgs.pyright
     pkgs.nixd
+    pkgs.nodejs # needed for copilot
     pkgs.nodePackages.vscode-langservers-extracted
     pkgs.nodePackages.eslint
     pkgs.shfmt
