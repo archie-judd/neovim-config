@@ -176,7 +176,7 @@ function M.codecompanion()
 			vim.keymap.set(
 				{ "n", "i" },
 				"<C-q>",
-				codecompanion_utils.close_chat,
+				codecompanion_utils.close,
 				{ buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: close chat" }
 			)
 			vim.keymap.set(
@@ -204,6 +204,20 @@ function M.maximise()
 end
 
 function M.float_term()
+	vim.api.nvim_create_autocmd("BufEnter", {
+		pattern = "*",
+		callback = function(event)
+			if vim.bo.buftype == "terminal" then
+				vim.keymap.set(
+					"t",
+					"<C-q>",
+					float_term.close,
+					{ buffer = event.buf, noremap = true, silent = true, desc = "Floating term: close" }
+				)
+			end
+		end,
+	})
+
 	vim.api.nvim_create_autocmd("TermOpen", {
 		pattern = "*",
 		callback = function(event)
@@ -216,10 +230,13 @@ function M.float_term()
 		end,
 	})
 
-	vim.api.nvim_create_autocmd("WinClosed", {
+	vim.api.nvim_create_autocmd("ExitPre", {
+		pattern = "*",
 		callback = function(event)
-			if vim.bo[event.buf].buftype == "terminal" then
-				vim.api.nvim_buf_delete(event.buf, { force = true })
+			for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+				if vim.api.nvim_buf_get_option(buf, "buftype") == "terminal" then
+					vim.api.nvim_buf_delete(buf, { force = true })
+				end
 			end
 		end,
 	})

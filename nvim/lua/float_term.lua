@@ -8,11 +8,16 @@ function M.open()
 	local WINDOW_WIDTH = 0.3
 	local TOP_MARGIN = 0.075
 	local RIGHT_MARGIN = 0.025
-	if vim.g.floating_term_win and vim.api.nvim_win_is_valid(vim.g.floating_term_win) then
+
+	if
+		vim.g.floating_term_win
+		and vim.api.nvim_win_is_valid(vim.g.floating_term_win)
+		and vim.g.term_buffer
+		and vim.api.nvim_buf_is_valid(vim.g.term_buffer)
+	then
 		vim.api.nvim_set_current_win(vim.g.floating_term_win)
 		vim.cmd("startinsert")
 	else
-		local buf = vim.api.nvim_create_buf(false, true)
 		local opts = {
 			relative = "editor",
 			width = math.floor(vim.o.columns * WINDOW_WIDTH),
@@ -22,10 +27,15 @@ function M.open()
 			style = "minimal",
 			border = "rounded",
 		}
-		vim.g.floating_term_win = vim.api.nvim_open_win(buf, true, opts)
-		vim.g.term_buffer = buf
-		vim.cmd("terminal")
-		vim.cmd("startinsert")
+		if vim.g.term_buffer and vim.api.nvim_buf_is_valid(vim.g.term_buffer) then
+			vim.g.floating_term_win = vim.api.nvim_open_win(vim.g.term_buffer, true, opts)
+			vim.cmd("startinsert")
+		else
+			vim.g.term_buffer = vim.api.nvim_create_buf(false, true)
+			vim.g.floating_term_win = vim.api.nvim_open_win(vim.g.term_buffer, true, opts)
+			vim.cmd("terminal")
+			vim.cmd("startinsert")
+		end
 	end
 end
 

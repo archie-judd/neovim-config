@@ -12,24 +12,35 @@ function M.submit()
 	end
 end
 
-function M.open_chat()
+---@param opts table
+function M.open(opts)
+	opts = opts or {}
 	local chat = codecompanion.last_chat()
 
 	if not chat then
 		codecompanion.chat()
 	else
 		if chat.ui:is_visible() then
-			local winnr = utils.get_winnr_for_bufnr(chat.ui.bufnr)
-			if winnr then
-				vim.api.nvim_set_current_win(winnr)
+			if opts.new then
+				codecompanion.close_last_chat()
+				codecompanion.chat()
+			else
+				local winnr = utils.get_winnr_for_bufnr(chat.ui.bufnr)
+				if winnr then
+					vim.api.nvim_set_current_win(winnr)
+				end
 			end
 		else
-			codecompanion.chat()
+			if opts.new then
+				codecompanion.chat()
+			else
+				chat.ui:open()
+			end
 		end
 	end
 end
 
-function M.close_chat()
+function M.close()
 	local chat = codecompanion.last_chat()
 
 	if chat ~= nil and chat.ui:is_visible() then

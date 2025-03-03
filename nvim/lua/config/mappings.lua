@@ -609,12 +609,12 @@ end
 
 function M.codecompanion()
 	vim.g.maplocalleader = " "
-	vim.keymap.set(
-		"n",
-		"<LocalLeader>c",
-		codecompanion_utils.open_chat,
-		{ noremap = true, silent = true, desc = "CodeCompanion: Open chat" }
-	)
+	vim.keymap.set("n", "<LocalLeader>c", function()
+		codecompanion_utils.open({ new = false })
+	end, { noremap = true, silent = true, desc = "CodeCompanion: Open chat" })
+	vim.keymap.set("n", "<LocalLeader>n", function()
+		codecompanion_utils.open({ new = true })
+	end, { noremap = true, silent = true, desc = "CodeCompanion: New chat" })
 	vim.keymap.set(
 		"n",
 		"<LocalLeader>a",
