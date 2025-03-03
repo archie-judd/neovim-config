@@ -30,15 +30,27 @@ function M.core()
 		core_utils.close_active_or_topmost_floating_window(false)
 	end, { silent = true, noremap = true, desc = "Windows: close active or topmost floating window" })
 
-	-- Move to last window
-	vim.keymap.set(
-		{ "n", "i", "t" },
-		"<C-b>",
-		core_utils.move_to_previous_window,
-		{ silent = true, noremap = true, desc = "Windows: move to previous window" }
+	vim.api.nvim_set_keymap(
+		"t",
+		"<Esc>",
+		[[<C-\><C-n>]],
+		{ noremap = true, silent = true, desc = "Terminal: exit terminal mode" }
 	)
 
-	vim.keymap.set("n", "<C-w>", "<C-w>w", { silent = true, noremap = true, desc = "Windows: move to the next window" })
+	-- Delete unneeded default diagnosics mappings
+	vim.api.nvim_del_keymap("n", "<C-w>d")
+	vim.api.nvim_del_keymap("n", "<C-w><C-d>")
+
+	-- Move to next / previous windows
+	vim.keymap.set(
+		{ "n", "i" },
+		"<C-w>",
+		core_utils.switch_windows,
+		{ silent = true, noremap = true, desc = "Windows: move to the next window" }
+	)
+	vim.keymap.set({ "n", "i" }, "<C-S-w>", function()
+		core_utils.switch_windows({ reverse = true })
+	end, { silent = true, noremap = true, desc = "Windows: move to the previous window" })
 
 	-- Hack for easy de-highlighting
 	vim.keymap.set(
@@ -134,15 +146,6 @@ function M.core()
 		{ silent = true, noremap = true, desc = "Quickfix: go to previous location" }
 	)
 	vim.keymap.set("n", "]q", ":cnext<CR>", { silent = true, noremap = true, desc = "Quickfix: go to next location" })
-
-	-- Escape Terminal
-	vim.keymap.set(
-		"t",
-		"<Esc><Esc>",
-		"<C-<Bslash>><C-n>",
-
-		{ silent = true, noremap = true, desc = "Terminal: exit terminal mode" }
-	)
 
 	-- Inserting new lines
 	vim.keymap.set("n", "<Leader>o", "jO<Esc>k", { silent = true, noremap = true, desc = "Insert line: below" })

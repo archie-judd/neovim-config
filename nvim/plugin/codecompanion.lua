@@ -70,7 +70,7 @@ local function config()
 			},
 			diff = {
 				enabled = true,
-				provider = "mini_diff",
+				provider = "default",
 			},
 			action_palette = {
 				provider = "default", -- default|telescope|mini_pick

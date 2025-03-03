@@ -65,7 +65,6 @@ let
     pkgs.vimPlugins.copilot-lua
     pkgs.vimPlugins.indent-blankline-nvim
     pkgs.vimPlugins.render-markdown-nvim
-    pkgs.vimPlugins.mini-diff
     pkgs.vimPlugins.mini-surround
     pkgs.vimPlugins.mini-ai
     pkgs-unstable.vimPlugins.codecompanion-nvim # Not available in stable

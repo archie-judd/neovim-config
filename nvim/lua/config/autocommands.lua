@@ -1,5 +1,6 @@
 local codecompanion_utils = require("utils.codecompanion.chat")
 local core_utils = require("utils.core")
+local diff_utils = require("utils.diff")
 local diffview = require("diffview")
 local float_term = require("float_term")
 local mappings = require("config.mappings")
@@ -80,6 +81,34 @@ function M.core()
 	vim.api.nvim_create_autocmd("TextYankPost", {
 		callback = function(event)
 			vim.highlight.on_yank()
+		end,
+	})
+
+	vim.api.nvim_create_autocmd("OptionSet", {
+		pattern = "diff",
+		callback = function(event)
+			vim.keymap.set("n", "<C-q>", function()
+				diff_utils.close(1)
+			end, {
+				buffer = event.buf,
+				silent = true,
+				noremap = true,
+				desc = "Diff: close, keeping leftmost buffer",
+			})
+			vim.keymap.set("n", "[C", diff_utils.go_to_first_conflict, {
+				buffer = event.buf,
+				silent = true,
+				noremap = true,
+				desc = "Diff: move to first conflict",
+			})
+			vim.keymap.set("n", "]C", diff_utils.go_to_last_conflict, {
+				buffer = event.buf,
+				silent = true,
+				noremap = true,
+				desc = "Diff: move to last conflict",
+			})
+			-- Disable folding in diff buffers
+			vim.wo.foldenable = false
 		end,
 	})
 end
@@ -207,7 +236,7 @@ function M.float_term()
 	vim.api.nvim_create_autocmd("BufEnter", {
 		pattern = "*",
 		callback = function(event)
-			if vim.bo.buftype == "terminal" then
+			if event.buf == vim.g.term_buffer then
 				vim.keymap.set(
 					"t",
 					"<C-q>",
@@ -221,12 +250,11 @@ function M.float_term()
 	vim.api.nvim_create_autocmd("TermOpen", {
 		pattern = "*",
 		callback = function(event)
-			vim.keymap.set(
-				"t",
-				"<C-q>",
-				float_term.close,
-				{ buffer = event.buf, noremap = true, silent = true, desc = "Floating term: close" }
-			)
+			if event.buf == vim.g.term_buffer then
+				vim.keymap.set("t", "<C-q>", function()
+					float_term.close()
+				end, { buffer = event.buf, noremap = true, silent = true, desc = "Floating term: close" })
+			end
 		end,
 	})
 

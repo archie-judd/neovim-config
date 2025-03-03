@@ -16,7 +16,6 @@ function M.open()
 		and vim.api.nvim_buf_is_valid(vim.g.term_buffer)
 	then
 		vim.api.nvim_set_current_win(vim.g.floating_term_win)
-		vim.cmd("startinsert")
 	else
 		local opts = {
 			relative = "editor",
@@ -29,12 +28,10 @@ function M.open()
 		}
 		if vim.g.term_buffer and vim.api.nvim_buf_is_valid(vim.g.term_buffer) then
 			vim.g.floating_term_win = vim.api.nvim_open_win(vim.g.term_buffer, true, opts)
-			vim.cmd("startinsert")
 		else
 			vim.g.term_buffer = vim.api.nvim_create_buf(false, true)
 			vim.g.floating_term_win = vim.api.nvim_open_win(vim.g.term_buffer, true, opts)
 			vim.cmd("terminal")
-			vim.cmd("startinsert")
 		end
 	end
 end

@@ -1,5 +1,28 @@
 local M = {}
 
+---@param opts table
+function M.switch_windows(opts)
+	opts = opts or {}
+	local windows = vim.api.nvim_tabpage_list_wins(0)
+	local current_window = vim.api.nvim_get_current_win()
+	local current_index = 0
+	for i, win in ipairs(windows) do
+		if win == current_window then
+			current_index = i
+			break
+		end
+	end
+	local next_index
+	if opts.reverse then
+		next_index = (current_index - 2) % #windows + 1
+	else
+		next_index = (current_index % #windows) + 1
+	end
+	if vim.api.nvim_win_is_valid(windows[next_index]) then
+		vim.api.nvim_set_current_win(windows[next_index])
+	end
+end
+
 ---@param pattern string
 ---@param opts table
 function M.close_buffer_by_filetype_pattern(pattern, opts)
@@ -99,14 +122,6 @@ function M.user_input_or_nil(prompt)
 		return nil
 	end
 	return input
-end
-
-function M.move_to_previous_window()
-	local current_win = vim.api.nvim_get_current_win()
-	local previous_win = vim.fn.win_getid(vim.fn.winnr("#"))
-	if previous_win and vim.api.nvim_win_is_valid(previous_win) and current_win ~= previous_win then
-		vim.api.nvim_set_current_win(previous_win)
-	end
 end
 
 return M
