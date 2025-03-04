@@ -86,6 +86,7 @@ function M.core()
 
 	vim.api.nvim_create_autocmd("OptionSet", {
 		pattern = "diff",
+
 		callback = function(event)
 			vim.keymap.set("n", "<C-q>", function()
 				diff_utils.close(1)
@@ -99,13 +100,29 @@ function M.core()
 				buffer = event.buf,
 				silent = true,
 				noremap = true,
-				desc = "Diff: move to first conflict",
+				desc = "Diff: move to first conflict and center",
 			})
 			vim.keymap.set("n", "]C", diff_utils.go_to_last_conflict, {
 				buffer = event.buf,
 				silent = true,
 				noremap = true,
-				desc = "Diff: move to last conflict",
+				desc = "Diff: move to last conflict and center",
+			})
+			vim.keymap.set("n", "]c", function()
+				vim.cmd("normal! ]czz")
+			end, {
+				buffer = event.buf,
+				silent = true,
+				noremap = true,
+				desc = "Diff: move to next conflict and center",
+			})
+			vim.keymap.set("n", "[c", function()
+				vim.cmd("normal! [czz")
+			end, {
+				buffer = event.buf,
+				silent = true,
+				noremap = true,
+				desc = "Diff: move to previous conflict and center",
 			})
 			-- Disable folding in diff buffers
 			vim.wo.foldenable = false
@@ -213,12 +230,6 @@ function M.codecompanion()
 				"<C-s>",
 				codecompanion_utils.submit,
 				{ buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: submit prompt" }
-			)
-			vim.keymap.set(
-				"n",
-				"<C-b>",
-				codecompanion_utils.jump_to_context_buffer,
-				{ buffer = event.buf, noremap = true, silent = true, desc = "CodeCompanion: Jump to edited buffer" }
 			)
 		end,
 	})

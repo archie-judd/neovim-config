@@ -1,6 +1,6 @@
 local M = {}
----@param keep number The buffer number to keep open, counted from left, from 1 (1 is leftmost).
 
+---@param keep number The buffer number to keep open, counted from left, from 1 (1 is leftmost).
 function M.close(keep)
 	local diff_windows = {}
 	for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -16,7 +16,7 @@ function M.close(keep)
 
 	for i, win in ipairs(diff_windows) do
 		if i ~= keep then
-			vim.api.nvim_win_set_buf(win.win, vim.api.nvim_create_buf(false, true))
+			vim.api.nvim_buf_delete(win.buf, { force = true })
 		else
 			vim.api.nvim_win_set_option(win.win, "diff", false)
 		end
@@ -26,13 +26,13 @@ end
 function M.go_to_first_conflict()
 	vim.cmd("normal! gg")
 	vim.cmd("normal! ]c")
-	vim.cmd("normal! [c")
+	vim.cmd("normal! [czz")
 end
 
 function M.go_to_last_conflict()
 	vim.cmd("normal! G")
 	vim.cmd("normal! [c")
-	vim.cmd("normal! ]c")
+	vim.cmd("normal! ]czz")
 end
 
 return M

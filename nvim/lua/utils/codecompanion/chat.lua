@@ -43,8 +43,6 @@ function M.close()
 	local chat = codecompanion.last_chat()
 
 	if chat ~= nil and chat.ui:is_visible() then
-		local bufnr = chat.context.buffer
-		diff.disable(bufnr)
 		chat.ui:hide()
 	end
 end
