@@ -380,12 +380,6 @@ function M.dap()
 	)
 	vim.keymap.set(
 		"n",
-		"<LocalLeader>r",
-		dap_utils.open_repl_window,
-		{ silent = true, noremap = true, desc = "Dap: open or focus the repl window" }
-	)
-	vim.keymap.set(
-		"n",
 		"<LocalLeader>x",
 		dap.clear_breakpoints,
 		{ silent = true, noremap = true, desc = "Dap: clear breakpoints" }
@@ -627,7 +621,7 @@ function M.codecompanion()
 end
 
 function M.terminal()
-	vim.keymap.set("n", "<leader>tt", terminal.open, { noremap = true, silent = true, desc = "Float term: open" })
+	vim.keymap.set("n", "<leader>tt", terminal.open, { noremap = true, silent = true, desc = "Terminal: open" })
 end
 
 return M

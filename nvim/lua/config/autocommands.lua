@@ -254,7 +254,7 @@ function M.terminal()
 					{ "n", "t" },
 					"<C-q>",
 					terminal.close,
-					{ buffer = event.buf, noremap = true, silent = true, desc = "Floating term: close" }
+					{ buffer = event.buf, noremap = true, silent = true, desc = "Terminal: close" }
 				)
 			end
 		end,
@@ -269,7 +269,7 @@ function M.terminal()
 			if event.buf == vim.g.term_buffer then
 				vim.keymap.set({ "n", "t" }, "<C-q>", function()
 					terminal.close()
-				end, { buffer = event.buf, noremap = true, silent = true, desc = "Floating term: close" })
+				end, { buffer = event.buf, noremap = true, silent = true, desc = "Termninal: close" })
 			end
 		end,
 	})
@@ -296,13 +296,12 @@ function M.dap()
 				noremap = true,
 				desc = "Dap: close terminal",
 			})
+			dap.repl.open(nil, "split")
 		end,
 	})
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "dap-repl",
 		callback = function(event)
-			local winid = vim.api.nvim_get_current_win()
-			vim.wo[winid].winfixbuf = true
 			vim.keymap.set("n", "<C-q>", dap.repl.close, {
 				buffer = event.buf,
 				silent = true,
