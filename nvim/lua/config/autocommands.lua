@@ -88,7 +88,6 @@ function M.core()
 
 	vim.api.nvim_create_autocmd("OptionSet", {
 		pattern = "diff",
-
 		callback = function(event)
 			vim.keymap.set("n", "<C-q>", function()
 				diff_utils.close(1)
@@ -110,24 +109,6 @@ function M.core()
 				noremap = true,
 				desc = "Diff: move to last conflict and center",
 			})
-			vim.keymap.set("n", "]c", function()
-				vim.cmd("normal! ]czz")
-			end, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Diff: move to next conflict and center",
-			})
-			vim.keymap.set("n", "[c", function()
-				vim.cmd("normal! [czz")
-			end, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Diff: move to previous conflict and center",
-			})
-			-- Disable folding in diff buffers
-			vim.wo.foldenable = false
 		end,
 	})
 end
@@ -194,6 +175,31 @@ function M.diffview()
 		callback = function(event)
 			local winid = vim.api.nvim_get_current_win()
 			vim.wo[winid].winfixbuf = true
+		end,
+	})
+	vim.api.nvim_create_autocmd("User", {
+		pattern = "DiffviewDiffBufWinEnter",
+		callback = function(event)
+			vim.keymap.set("n", "<C-q>", function()
+				diffview.close()
+			end, {
+				buffer = event.buf,
+				silent = true,
+				noremap = true,
+				desc = "Diff: close, keeping leftmost buffer",
+			})
+			vim.keymap.set("n", "[C", diff_utils.go_to_first_conflict, {
+				buffer = event.buf,
+				silent = true,
+				noremap = true,
+				desc = "Diff: move to first conflict and center",
+			})
+			vim.keymap.set("n", "]C", diff_utils.go_to_last_conflict, {
+				buffer = event.buf,
+				silent = true,
+				noremap = true,
+				desc = "Diff: move to last conflict and center",
+			})
 		end,
 	})
 end
@@ -297,17 +303,6 @@ function M.dap()
 				desc = "Dap: close terminal",
 			})
 			dap.repl.open(nil, "split")
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "dap-repl",
-		callback = function(event)
-			vim.keymap.set("n", "<C-q>", dap.repl.close, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Dap: close repl",
-			})
 		end,
 	})
 end

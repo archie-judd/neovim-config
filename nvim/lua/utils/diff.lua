@@ -26,13 +26,13 @@ end
 function M.go_to_first_conflict()
 	vim.cmd("normal! gg")
 	vim.cmd("normal! ]c")
-	vim.cmd("normal! [czz")
+	vim.cmd("normal! [c")
 end
 
 function M.go_to_last_conflict()
 	vim.cmd("normal! G")
 	vim.cmd("normal! [c")
-	vim.cmd("normal! ]czz")
+	vim.cmd("normal! ]c")
 end
 
 return M

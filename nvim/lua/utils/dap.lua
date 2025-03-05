@@ -62,12 +62,12 @@ local function try_to_move_to_debugged_buf(opts)
 end
 
 ---@return boolean
-local function dap_is_active()
+function M.dap_is_active()
 	return dap.status ~= ""
 end
 
 function M.debug()
-	if not dap_is_active() then
+	if not M.dap_is_active() then
 		dap.terminate()
 	end
 	dap.continue()
@@ -85,7 +85,7 @@ function M.open_terminal()
 end
 
 function M.debug_closest_test()
-	if not dap_is_active() then
+	if not M.dap_is_active() then
 		dap.terminate()
 	end
 	neotest.run.run({ strategy = "dap" })
@@ -94,10 +94,10 @@ end
 function M.dap_quit()
 	local dap_repl_bufnr = core_utils.get_bufnr_by_pattern("%[dap%-repl%]")
 	local dap_term_bufnr = core_utils.get_bufnr_by_pattern("%[dap%-terminal%]")
-	if dap_repl_bufnr ~= nil then
+	if dap_repl_bufnr ~= nil and vim.api.nvim_buf_is_valid(dap_repl_bufnr) then
 		vim.api.nvim_buf_delete(dap_repl_bufnr, { force = true })
 	end
-	if dap_term_bufnr ~= nil then
+	if dap_term_bufnr ~= nil and vim.api.nvim_buf_is_valid(dap_term_bufnr) then
 		vim.api.nvim_buf_delete(dap_term_bufnr, { force = true })
 	end
 	dap.terminate()

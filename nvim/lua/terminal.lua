@@ -7,14 +7,7 @@ function M.open()
 	local TERMINAL_WIDTH = 0.4
 	local width = math.floor(vim.o.columns * TERMINAL_WIDTH)
 
-	if
-		vim.g.term_win
-		and vim.api.nvim_win_is_valid(vim.g.term_win)
-		and vim.g.term_buffer
-		and vim.api.nvim_buf_is_valid(vim.g.term_buffer)
-	then
-		vim.api.nvim_set_current_win(vim.g.term_win)
-	else
+	if not vim.g.term_win or not vim.api.nvim_win_is_valid(vim.g.term_win) then
 		vim.cmd("vsplit")
 		vim.cmd("vertical resize " .. width)
 		vim.g.term_win = vim.api.nvim_get_current_win()

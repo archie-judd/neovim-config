@@ -398,7 +398,7 @@ function M.dap()
 	)
 	vim.keymap.set(
 		"n",
-		"<LocalLeader>e",
+		"<LocalLeader>r",
 		dap_utils.dap_restart,
 		{ silent = true, noremap = true, desc = "Dap: restart debugging session" }
 	)

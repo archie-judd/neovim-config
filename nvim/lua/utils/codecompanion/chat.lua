@@ -1,5 +1,4 @@
 local codecompanion = require("codecompanion")
-local utils = require("utils.core")
 
 local M = {}
 
@@ -23,11 +22,6 @@ function M.open(opts)
 			if opts.new then
 				codecompanion.close_last_chat()
 				codecompanion.chat()
-			else
-				local winnr = utils.get_winnr_for_bufnr(chat.ui.bufnr)
-				if winnr then
-					vim.api.nvim_set_current_win(winnr)
-				end
 			end
 		else
 			if opts.new then
