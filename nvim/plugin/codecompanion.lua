@@ -61,7 +61,7 @@ local function config()
 					border = "single",
 					width = WINDOW_WIDTH,
 				},
-				start_in_insert_mode = true,
+				start_in_insert_mode = false,
 			},
 			debug_window = {
 				-- this doesn't seem to work
