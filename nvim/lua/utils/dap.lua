@@ -11,8 +11,8 @@ local function try_to_get_debugged_filepath(opts)
 	local session = opts.session or dap.session()
 	local debugged_filepath = nil
 	if session ~= nil then
-		debugged_filepath = session.program
-		if debugged_filepath == nil and session.current ~= nil then
+		debugged_filepath = session.config.program
+		if debugged_filepath == nil and session.current_frame ~= nil then
 			debugged_filepath = session.current_frame.source.path
 		end
 	end
@@ -27,13 +27,14 @@ local function try_to_get_debugged_bufnr(opts)
 	if debugged_filepath ~= nil then
 		debugged_bufnr = vim.fn.bufnr(debugged_filepath)
 	end
+	vim.print(debugged_filepath)
 	return debugged_bufnr
 end
 
 function M.move_to_current_frame()
 	local session = dap.session()
 	local current_frame = session.current_frame
-	local bufnr = M.try_to_get_debugged_bufnr({ session = session })
+	local bufnr = try_to_get_debugged_bufnr({ session = session })
 	if bufnr ~= nil then
 		local debugged_winnr = core_utils.get_winnr_for_bufnr(bufnr)
 		if debugged_winnr ~= nil then
