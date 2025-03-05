@@ -7,7 +7,6 @@ local dap = require("dap")
 local dap_utils = require("utils.dap")
 local dap_widgets = require("dap.ui.widgets")
 local diffview_utils = require("utils.diffview")
-local float_term = require("float_term")
 local github_link = require("github_link")
 local gitsigns = require("gitsigns")
 local maximise = require("maximise")
@@ -15,6 +14,7 @@ local neotest = require("neotest")
 local oil = require("oil")
 local telescope = require("telescope")
 local telescope_builtin = require("telescope.builtin")
+local terminal = require("terminal")
 local utils = require("utils.core")
 local yank_utils = require("utils.yank")
 
@@ -381,7 +381,7 @@ function M.dap()
 	vim.keymap.set(
 		"n",
 		"<LocalLeader>r",
-		dap_utils.open_repl_floating_window,
+		dap_utils.open_repl_window,
 		{ silent = true, noremap = true, desc = "Dap: open or focus the repl window" }
 	)
 	vim.keymap.set(
@@ -396,12 +396,6 @@ function M.dap()
 	vim.keymap.set("n", "<LocalLeader>s", function()
 		dap_widgets.centered_float(dap_widgets.scopes)
 	end, { silent = true, noremap = true, desc = "Dap: show scoped variables" })
-	vim.keymap.set(
-		"n",
-		"<LocalLeader>t",
-		dap_utils.open_terminal_floating_window,
-		{ silent = true, noremap = true, desc = "Dap: open or focus the terminal window" }
-	)
 	vim.keymap.set(
 		"n",
 		"<LocalLeader>dt",
@@ -632,8 +626,8 @@ function M.codecompanion()
 	)
 end
 
-function M.float_term()
-	vim.keymap.set("n", "<leader>tt", float_term.open, { noremap = true, silent = true, desc = "Float term: open" })
+function M.terminal()
+	vim.keymap.set("n", "<leader>tt", terminal.open, { noremap = true, silent = true, desc = "Float term: open" })
 end
 
 return M

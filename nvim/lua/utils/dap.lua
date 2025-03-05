@@ -74,86 +74,48 @@ function M.debug()
 end
 
 ---@param buf integer
-local function open_floating_terminal_window(buf)
-	local available_height = vim.o.lines - vim.o.cmdheight - 2
-	local available_width = vim.o.columns
-	local width = math.floor(available_width * 0.48)
-	local height = math.floor(available_height * 0.48)
-	local col = math.floor(3 * (vim.o.columns / 4))
-	local row = math.ceil(2 + (available_height / 2))
-
-	-- Create the floating window with the terminal
-	local win = vim.api.nvim_open_win(buf, true, {
-		relative = "editor",
-		width = width,
-		height = height,
-		col = col,
-		row = row,
-		style = "minimal", -- No borders or title
-		border = "single", -- Add border (optional)
-		title = "DAP Terminal",
-		title_pos = "center",
-		zindex = 50,
-	})
+local function open_terminal_window(buf)
+	local TERMINAL_WIDTH = 0.4
+	local width = math.floor(vim.o.columns * TERMINAL_WIDTH)
+	vim.cmd("vsplit")
+	vim.cmd("vertical resize " .. width)
+	local win = vim.api.nvim_get_current_win()
+	vim.api.nvim_win_set_buf(win, buf)
 	return win
 end
 
----@param buf integer
-local function open_repl_window(buf)
-	local available_height = vim.o.lines - vim.o.cmdheight - 2
-	local width = math.floor(vim.o.columns * 0.48)
-	local height = math.floor(available_height * 0.48)
-	local row = 0
-	local col = math.floor(3 * (vim.o.columns / 4))
-	local opts = {
-		relative = "editor",
-		width = width,
-		height = height,
-		row = row,
-		col = col,
-		style = "minimal",
-		border = "single",
-		title = "DAP REPL",
-		title_pos = "center",
-		zindex = 50,
-	}
-
-	-- Create the floating window
-	local win = vim.api.nvim_open_win(buf, true, opts)
-	return win
-end
-
-function M.open_floating_terminal()
+function M.open_terminal()
 	local buf = vim.api.nvim_create_buf(false, true) -- Create a new buffer (no file, scratch)
-	local win = open_floating_terminal_window(buf)
+	local win = open_terminal_window(buf)
 	return buf, win
 end
 
-function M.open_repl_floating_window()
+function M.open_repl_window()
 	local repl_buf = core_utils.get_bufnr_by_pattern("dap%-repl")
-	local repl_win = nil
-	-- If open, focus the window
-	if repl_buf ~= nil and vim.api.nvim_buf_is_valid(repl_buf) then
-		repl_win = core_utils.get_winnr_for_bufnr(repl_buf)
-		if repl_win ~= nil and vim.api.nvim_win_is_valid(repl_win) then
-			vim.api.nvim_set_current_win(repl_win)
-		else
-			open_repl_window(repl_buf)
-		end
-	else
+	if repl_buf == nil or not vim.api.nvim_buf_is_valid(repl_buf) then
 		dap.repl.open(nil)
 		repl_buf = core_utils.get_bufnr_by_pattern("dap%-repl")
-		if repl_buf ~= nil and vim.api.nvim_buf_is_valid(repl_buf) then
-			repl_win = core_utils.get_winnr_for_bufnr(repl_buf)
-			if repl_win ~= nil and vim.api.nvim_win_is_valid(repl_win) then
-				vim.api.nvim_win_close(repl_win, true)
-				open_repl_window(repl_buf)
+	end
+	if repl_buf ~= nil and vim.api.nvim_buf_is_valid(repl_buf) then
+		local repl_win = core_utils.get_winnr_for_bufnr(repl_buf)
+		if repl_win ~= nil and vim.api.nvim_win_is_valid(repl_win) then
+			vim.api.nvim_win_close(repl_win, true)
+		end
+		local term_buf = core_utils.get_bufnr_by_pattern("%[dap%-terminal%]")
+		if term_buf ~= nil and vim.api.nvim_buf_is_valid(term_buf) then
+			local term_win = core_utils.get_winnr_for_bufnr(term_buf)
+			if term_win ~= nil and vim.api.nvim_win_is_valid(term_win) then
+				vim.api.nvim_set_current_win(term_win)
+				vim.cmd("split")
+				vim.api.nvim_win_set_buf(0, repl_buf)
+				return vim.api.nvim_get_current_win()
 			end
 		end
 	end
 end
 
-function M.open_terminal_floating_window()
+function M.open_terminal_window()
+	local TERM_WIDTH = 0.4
 	local term_buf = core_utils.get_bufnr_by_pattern("%[dap%-terminal%]")
 	local term_win = nil
 	if term_buf ~= nil and vim.api.nvim_buf_is_valid(term_buf) then
@@ -161,7 +123,8 @@ function M.open_terminal_floating_window()
 		if term_win ~= nil and vim.api.nvim_win_is_valid(term_win) then
 			vim.api.nvim_set_current_win(term_win)
 		else
-			open_floating_terminal_window(term_buf)
+			vim.cmd("vsplit")
+			vim.cmd("vertical resize " .. TERM_WIDTH)
 		end
 	end
 end

@@ -1,11 +1,13 @@
 local codecompanion_utils = require("utils.codecompanion.chat")
 local core_utils = require("utils.core")
+local dap = require("dap")
+local dap_utils = require("utils.dap")
 local diff_utils = require("utils.diff")
 local diffview = require("diffview")
-local float_term = require("float_term")
 local mappings = require("config.mappings")
 local maximise = require("maximise")
 local oil = require("oil")
+local terminal = require("terminal")
 
 local M = {}
 
@@ -238,20 +240,20 @@ end
 function M.maximise()
 	vim.api.nvim_create_autocmd("WinLeave", {
 		callback = function()
-			maximise.restore()
+			maximise.restore_if_maximised()
 		end,
 	})
 end
 
-function M.float_term()
+function M.terminal()
 	vim.api.nvim_create_autocmd("BufEnter", {
 		pattern = "*",
 		callback = function(event)
 			if event.buf == vim.g.term_buffer then
 				vim.keymap.set(
-					"t",
+					{ "n", "t" },
 					"<C-q>",
-					float_term.close,
+					terminal.close,
 					{ buffer = event.buf, noremap = true, silent = true, desc = "Floating term: close" }
 				)
 			end
@@ -261,9 +263,12 @@ function M.float_term()
 	vim.api.nvim_create_autocmd("TermOpen", {
 		pattern = "*",
 		callback = function(event)
+			vim.wo.number = false
+			vim.wo.relativenumber = false
+			vim.wo.signcolumn = "no"
 			if event.buf == vim.g.term_buffer then
-				vim.keymap.set("t", "<C-q>", function()
-					float_term.close()
+				vim.keymap.set({ "n", "t" }, "<C-q>", function()
+					terminal.close()
 				end, { buffer = event.buf, noremap = true, silent = true, desc = "Floating term: close" })
 			end
 		end,
@@ -277,6 +282,33 @@ function M.float_term()
 					vim.api.nvim_buf_delete(buf, { force = true })
 				end
 			end
+		end,
+	})
+end
+
+function M.dap()
+	vim.api.nvim_create_autocmd("BufFilePost", {
+		pattern = "*\\[dap-terminal\\]*",
+		callback = function(event)
+			vim.keymap.set("n", "<C-q>", dap_utils.dap_quit, {
+				buffer = event.buf,
+				silent = true,
+				noremap = true,
+				desc = "Dap: close terminal",
+			})
+		end,
+	})
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = "dap-repl",
+		callback = function(event)
+			local winid = vim.api.nvim_get_current_win()
+			vim.wo[winid].winfixbuf = true
+			vim.keymap.set("n", "<C-q>", dap.repl.close, {
+				buffer = event.buf,
+				silent = true,
+				noremap = true,
+				desc = "Dap: close repl",
+			})
 		end,
 	})
 end
