@@ -50,6 +50,17 @@ local function config()
 						repository with the llm]],
 					},
 				},
+				slash_commands = {
+					["file"] = {
+						callback = "strategies.chat.slash_commands.file",
+						description = "Insert a file",
+						opts = {
+							contains_code = true,
+							max_lines = 1000,
+							provider = "telescope",
+						},
+					},
+				},
 			},
 			inline = { adapter = "copilot" },
 		},
@@ -73,7 +84,7 @@ local function config()
 				provider = "default",
 			},
 			action_palette = {
-				provider = "default", -- default|telescope|mini_pick
+				provider = "telescope",
 				opts = {
 					show_default_actions = true,
 					show_default_prompt_library = true,
