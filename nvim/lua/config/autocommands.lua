@@ -302,7 +302,18 @@ function M.dap()
 				noremap = true,
 				desc = "Dap: close terminal",
 			})
-			dap.repl.open(nil, "split")
+			dap.repl.open({ number = false, relativenumber = false }, "split")
+		end,
+	})
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = "dap-repl",
+		callback = function(event)
+			vim.keymap.set("n", "<C-q>", dap_utils.dap_quit, {
+				buffer = event.buf,
+				silent = true,
+				noremap = true,
+				desc = "Dap: close repl",
+			})
 		end,
 	})
 end
