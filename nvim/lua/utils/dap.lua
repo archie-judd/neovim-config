@@ -91,8 +91,12 @@ function M.dap_restart()
 end
 
 function M.dap_continue()
-	try_to_move_to_debugged_buf()
-	dap.continue()
+	local session = dap.session()
+	-- only continue if there is a session
+	if session ~= nil then
+		try_to_move_to_debugged_buf()
+		dap.continue()
+	end
 end
 
 function M.step_over()
