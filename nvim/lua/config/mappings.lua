@@ -314,6 +314,18 @@ function M.dap()
 	vim.g.maplocalleader = ","
 	vim.keymap.set(
 		"n",
+		"<LocalLeader>d",
+		dap_utils.start,
+		{ silent = true, noremap = true, desc = "Dap: start debug session" }
+	)
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>q",
+		dap_utils.quit,
+		{ silent = true, noremap = true, desc = "Dap: quit debug session" }
+	)
+	vim.keymap.set(
+		"n",
 		"<LocalLeader>fb",
 		telescope.extensions.dap.dap_breakpoints,
 		{ silent = true, noremap = true, desc = "Telescope Dap: find breakpoints" }
@@ -336,7 +348,7 @@ function M.dap()
 		dap.toggle_breakpoint,
 		{ silent = true, noremap = true, desc = "Dap: toggle breakpoint" }
 	)
-	vim.keymap.set("n", "<LocalLeader>q", dap_utils.dap_quit, { silent = true, noremap = true, desc = "Dap: close" })
+
 	vim.keymap.set("n", "<LocalLeader>z", function()
 		dap.set_breakpoint(
 			utils.user_input_or_nil("Condition (default is always stop): "),
@@ -348,12 +360,7 @@ function M.dap()
 		noremap = true,
 		desc = "Dap: add conditional breakpoint",
 	})
-	vim.keymap.set(
-		"n",
-		"<LocalLeader>d",
-		dap_utils.debug,
-		{ silent = true, noremap = true, desc = "Dap: start debugging" }
-	)
+
 	vim.keymap.set(
 		"n",
 		"<LocalLeader>c",

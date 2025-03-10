@@ -34,16 +34,33 @@ local function try_to_move_to_debugged_buf()
 end
 
 ---@return boolean
-function M.dap_is_active()
-	return dap.status ~= ""
+local function dap_is_active()
+	return dap.status() ~= ""
 end
 
-function M.debug()
-	if not M.dap_is_active() then
-		dap.terminate()
+function M.start()
+	if not dap_is_active() then
+		vim.notify("Starting debug session", vim.log.levels.INFO)
+		vim.g.debugged_bufnr = vim.api.nvim_get_current_buf()
+		dap.continue()
+	else
+		vim.notify("Debug session already active", vim.log.levels.INFO)
 	end
-	vim.g.debugged_bufnr = vim.api.nvim_get_current_buf()
-	dap.continue()
+end
+
+function M.quit()
+	vim.notify("Closing debug session", vim.log.levels.INFO)
+	local dap_term_bufnr = core_utils.get_bufnr_by_pattern("%[dap%-terminal%]")
+	if dap_term_bufnr ~= nil and vim.api.nvim_buf_is_valid(dap_term_bufnr) then
+		vim.api.nvim_buf_delete(dap_term_bufnr, { force = true })
+	end
+	dap.repl.close()
+	if dap_is_active() then
+		dap.terminate()
+		dap.close()
+	else
+	end
+	vim.g.debugged_bufnr = nil
 end
 
 function M.open_terminal()
@@ -58,60 +75,59 @@ function M.open_terminal()
 end
 
 function M.debug_closest_test()
-	if not M.dap_is_active() then
-		dap.terminate()
+	if dap_is_active() then
+		vim.notify("Cannot debug test, debug session already active", vim.log.levels.INFO)
+	else
+		vim.notify("Debugging test", vim.log.levels.INFO)
+		neotest.run.run({ strategy = "dap" })
 	end
-	neotest.run.run({ strategy = "dap" })
-end
-
-function M.dap_quit()
-	local dap_repl_bufnr = core_utils.get_bufnr_by_pattern("%[dap%-repl%]")
-	local dap_term_bufnr = core_utils.get_bufnr_by_pattern("%[dap%-terminal%]")
-	if dap_repl_bufnr ~= nil and vim.api.nvim_buf_is_valid(dap_repl_bufnr) then
-		vim.api.nvim_buf_delete(dap_repl_bufnr, { force = true })
-	end
-	if dap_term_bufnr ~= nil and vim.api.nvim_buf_is_valid(dap_term_bufnr) then
-		vim.api.nvim_buf_delete(dap_term_bufnr, { force = true })
-	end
-	dap.terminate()
-	dap.close()
-	dap.repl.close()
-	vim.g.debugged_bufnr = nil
 end
 
 -- Ensure that dap debugged window is focussed before running the command
 function M.dap_restart()
-	try_to_move_to_debugged_buf()
-	local session = dap.session()
-	if session ~= nil then
+	if dap_is_active() then
+		vim.notify("Restarting debug session", vim.log.levels.INFO)
+		try_to_move_to_debugged_buf()
 		dap.restart()
 	else
-		dap.continue()
+		vim.notify("Cannot restart - no active debug session", vim.log.levels.INFO)
 	end
 end
 
 function M.dap_continue()
-	local session = dap.session()
-	-- only continue if there is a session
-	if session ~= nil then
+	if dap_is_active() then
 		try_to_move_to_debugged_buf()
 		dap.continue()
+	else
+		vim.notify("Cannot continue - no active debug session", vim.log.levels.INFO)
 	end
 end
 
 function M.step_over()
-	try_to_move_to_debugged_buf()
-	dap.step_over()
+	if dap_is_active() then
+		try_to_move_to_debugged_buf()
+		dap.step_over()
+	else
+		vim.notify("Cannot step over - no active debug session", vim.log.levels.INFO)
+	end
 end
 
 function M.step_into()
-	try_to_move_to_debugged_buf()
-	dap.step_into()
+	if dap_is_active() then
+		try_to_move_to_debugged_buf()
+		dap.step_into()
+	else
+		vim.notify("Cannot step into - no active debug session", vim.log.levels.INFO)
+	end
 end
 
 function M.step_out()
-	try_to_move_to_debugged_buf()
-	dap.step_out()
+	if dap_is_active() then
+		try_to_move_to_debugged_buf()
+		dap.step_out()
+	else
+		vim.notify("Cannout step out - no active debug session", vim.log.levels.INFO)
+	end
 end
 
 return M
