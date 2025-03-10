@@ -89,26 +89,30 @@ function M.core()
 	vim.api.nvim_create_autocmd("OptionSet", {
 		pattern = "diff",
 		callback = function(event)
-			vim.keymap.set("n", "<C-q>", function()
-				diff_utils.close(1)
-			end, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Diff: close, keeping leftmost buffer",
-			})
-			vim.keymap.set("n", "[C", diff_utils.go_to_first_conflict, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Diff: move to first conflict and center",
-			})
-			vim.keymap.set("n", "]C", diff_utils.go_to_last_conflict, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Diff: move to last conflict and center",
-			})
+			-- Exclude diffview buffers
+			local bufname = vim.api.nvim_buf_get_name(event.buf)
+			if not string.match(bufname, "diffview") then
+				vim.keymap.set("n", "<C-q>", function()
+					diff_utils.close(1)
+				end, {
+					buffer = event.buf,
+					silent = true,
+					noremap = true,
+					desc = "Diff: close, keeping leftmost buffer",
+				})
+				vim.keymap.set("n", "[C", diff_utils.go_to_first_conflict, {
+					buffer = event.buf,
+					silent = true,
+					noremap = true,
+					desc = "Diff: move to first conflict and center",
+				})
+				vim.keymap.set("n", "]C", diff_utils.go_to_last_conflict, {
+					buffer = event.buf,
+					silent = true,
+					noremap = true,
+					desc = "Diff: move to last conflict and center",
+				})
+			end
 		end,
 	})
 end

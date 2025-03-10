@@ -6,22 +6,6 @@ local M = {}
 
 vim.g.debugged_bufnr = nil
 
-function M.move_to_current_frame()
-	local session = dap.session()
-	local current_frame = session.current_frame
-	if vim.g.debugged_bufnr ~= nil and vim.api.nvim_buf_is_valid(vim.g.debugged_bufnr) then
-		local debugged_winnr = core_utils.get_winnr_for_bufnr(vim.g.debugged_bufnr)
-		if debugged_winnr ~= nil and vim.api.nvim_win_is_valid(debugged_winnr) then
-			vim.api.nvim_set_current_win(debugged_winnr)
-			if current_frame ~= nil then
-				local line_number = session.current_frame.line
-				local column_number = session.current_frame.column
-				vim.api.nvim_win_set_cursor(debugged_winnr, { line_number, column_number })
-			end
-		end
-	end
-end
-
 ---@return integer | nil
 local function try_to_move_to_debugged_buf()
 	if vim.g.debugged_bufnr ~= nil and vim.api.nvim_buf_is_valid(vim.g.debugged_bufnr) then
@@ -35,7 +19,23 @@ end
 
 ---@return boolean
 local function dap_is_active()
-	return dap.status() ~= ""
+	return dap.session() ~= nil
+end
+
+local function move_to_current_frame()
+	local session = dap.session()
+	local current_frame = session.current_frame
+	if vim.g.debugged_bufnr ~= nil and vim.api.nvim_buf_is_valid(vim.g.debugged_bufnr) then
+		local debugged_winnr = core_utils.get_winnr_for_bufnr(vim.g.debugged_bufnr)
+		if debugged_winnr ~= nil and vim.api.nvim_win_is_valid(debugged_winnr) then
+			vim.api.nvim_set_current_win(debugged_winnr)
+			if current_frame ~= nil then
+				local line_number = session.current_frame.line
+				local column_number = session.current_frame.column
+				vim.api.nvim_win_set_cursor(debugged_winnr, { line_number, column_number })
+			end
+		end
+	end
 end
 
 function M.start()
@@ -127,6 +127,14 @@ function M.step_out()
 		dap.step_out()
 	else
 		vim.notify("Cannout step out - no active debug session", vim.log.levels.INFO)
+	end
+end
+
+function M.move_to_current_frame()
+	if dap_is_active() then
+		move_to_current_frame()
+	else
+		vim.notify("Cannot move to current frame - no active debug session", vim.log.levels.INFO)
 	end
 end
 
