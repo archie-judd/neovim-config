@@ -173,9 +173,30 @@ function M.diffview()
 			})
 		end,
 	})
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = { "DiffviewFileHistory" },
+		callback = function(event)
+			vim.keymap.set("n", "<C-q>", function()
+				diffview.close()
+			end, {
+				buffer = event.buf,
+				noremap = true,
+				silent = true,
+				desc = "Diffview: close file history",
+			})
+		end,
+	})
 	-- make sure we can't read buffers into the diffview file panel
 	vim.api.nvim_create_autocmd("BufWinEnter", {
 		pattern = "DiffviewFilePanel",
+		callback = function(event)
+			local winid = vim.api.nvim_get_current_win()
+			vim.wo[winid].winfixbuf = true
+		end,
+	})
+	-- make sure we can't read buffers into the diffview file panel
+	vim.api.nvim_create_autocmd("BufWinEnter", {
+		pattern = "DiffviewFileHistoryPanel",
 		callback = function(event)
 			local winid = vim.api.nvim_get_current_win()
 			vim.wo[winid].winfixbuf = true
@@ -228,8 +249,8 @@ function M.lspconfig()
 end
 
 function M.codecompanion()
-	vim.api.nvim_create_autocmd("BufEnter", {
-		pattern = "*CodeCompanion*",
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = "codecompanion",
 		callback = function(event)
 			vim.keymap.set(
 				{ "n", "i" },
@@ -309,8 +330,8 @@ function M.dap()
 			dap.repl.open({ number = false, relativenumber = false }, "split")
 		end,
 	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "dap-repl",
+	vim.api.nvim_create_autocmd("BufFilePost", {
+		pattern = "*\\[dap-terminal\\]*",
 		callback = function(event)
 			vim.keymap.set("n", "<C-q>", dap_utils.quit, {
 				buffer = event.buf,
@@ -318,6 +339,7 @@ function M.dap()
 				noremap = true,
 				desc = "Dap: quit debug session",
 			})
+			dap.repl.open({ number = false, relativenumber = false }, "split")
 		end,
 	})
 end

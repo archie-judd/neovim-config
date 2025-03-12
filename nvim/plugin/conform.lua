@@ -25,6 +25,11 @@ local config = function()
 			timeout_ms = 5000,
 			lsp_fallback = true,
 		},
+		formatters = {
+			black = {
+				prepend_args = { "--preview" },
+			},
+		},
 	})
 end
 
