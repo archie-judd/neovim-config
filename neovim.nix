@@ -77,6 +77,7 @@ let
     pkgs.gcc
     pkgs.ripgrep
     pkgs.fd
+    pkgs.jq
     pkgs.nodePackages.bash-language-server
     pkgs.nodePackages.typescript-language-server
     pkgs.haskell-language-server

@@ -11,13 +11,18 @@ local config = function()
 					return { "isort", "black" }
 				end
 			end,
-			javascript = { "prettierd" },
-			typescript = { "prettierd" },
-			typescriptreact = { "prettierd" },
-			json = { "prettierd" },
-			yaml = { "prettierd" },
-			markdown = { "prettierd" },
-
+			javascript = { "prettier" },
+			typescript = { "prettier" },
+			typescriptreact = { "prettier" },
+			json = function(bufnr)
+				if conform.get_formatter_info("prettier", bufnr).available then
+					return { "prettier" }
+				else
+					return { "jq" }
+				end
+			end,
+			yaml = { "prettier" },
+			markdown = { "prettier" },
 			nix = { "nixfmt" },
 			haskell = { "ormolu" },
 		},
