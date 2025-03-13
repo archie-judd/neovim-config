@@ -613,7 +613,7 @@ end
 
 function M.codecompanion()
 	vim.g.maplocalleader = " "
-	vim.keymap.set("n", "<LocalLeader>c", function()
+	vim.keymap.set({ "n", "v" }, "<LocalLeader>c", function()
 		codecompanion_utils.open({ new = false })
 	end, { noremap = true, silent = true, desc = "CodeCompanion: Open chat" })
 	vim.keymap.set("n", "<LocalLeader>n", function()
@@ -624,12 +624,6 @@ function M.codecompanion()
 		"<LocalLeader>a",
 		codecompanion.actions,
 		{ noremap = true, silent = true, desc = "CodeCompanion: Open actions" }
-	)
-	vim.keymap.set(
-		"v",
-		"ga",
-		codecompanion.add,
-		{ noremap = true, silent = true, desc = "CodeCompanion: Add selection to chat" }
 	)
 end
 

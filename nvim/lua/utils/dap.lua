@@ -4,18 +4,7 @@ local neotest = require("neotest")
 
 local M = {}
 
-vim.g.debugged_bufnr = nil
-
----@return integer | nil
-local function try_to_move_to_debugged_buf()
-	if vim.g.debugged_bufnr ~= nil and vim.api.nvim_buf_is_valid(vim.g.debugged_bufnr) then
-		local debugged_winnr = core_utils.get_winnr_for_bufnr(vim.g.debugged_bufnr)
-		if debugged_winnr ~= nil then
-			vim.api.nvim_set_current_win(debugged_winnr)
-			return debugged_winnr
-		end
-	end
-end
+vim.g.debugged_winnr = nil
 
 ---@return boolean
 local function dap_is_active()
@@ -25,15 +14,12 @@ end
 local function move_to_current_frame()
 	local session = dap.session()
 	local current_frame = session.current_frame
-	if vim.g.debugged_bufnr ~= nil and vim.api.nvim_buf_is_valid(vim.g.debugged_bufnr) then
-		local debugged_winnr = core_utils.get_winnr_for_bufnr(vim.g.debugged_bufnr)
-		if debugged_winnr ~= nil and vim.api.nvim_win_is_valid(debugged_winnr) then
-			vim.api.nvim_set_current_win(debugged_winnr)
-			if current_frame ~= nil then
-				local line_number = session.current_frame.line
-				local column_number = session.current_frame.column
-				vim.api.nvim_win_set_cursor(debugged_winnr, { line_number, column_number })
-			end
+	if vim.g.debugged_winnr ~= nil and vim.api.nvim_win_is_valid(vim.g.debugged_winnr) then
+		vim.api.nvim_set_current_win(vim.g.debugged_winnr)
+		if current_frame ~= nil then
+			local line_number = session.current_frame.line
+			local column_number = session.current_frame.column
+			vim.api.nvim_win_set_cursor(vim.g.debugged_winnr, { line_number, column_number })
 		end
 	end
 end
@@ -41,7 +27,7 @@ end
 function M.start()
 	if not dap_is_active() then
 		vim.notify("Starting debug session", vim.log.levels.INFO)
-		vim.g.debugged_bufnr = vim.api.nvim_get_current_buf()
+		vim.g.debugged_winnr = vim.api.nvim_get_current_win()
 		dap.continue()
 	else
 		vim.notify("Debug session already active", vim.log.levels.INFO)
@@ -60,7 +46,7 @@ function M.quit()
 		dap.close()
 	else
 	end
-	vim.g.debugged_bufnr = nil
+	vim.g.debugged_winnr = nil
 end
 
 function M.open_terminal()
@@ -87,8 +73,12 @@ end
 function M.dap_restart()
 	if dap_is_active() then
 		vim.notify("Restarting debug session", vim.log.levels.INFO)
-		try_to_move_to_debugged_buf()
-		dap.restart()
+		if vim.api.nvim_win_is_valid(vim.g.debugged_winnr) then
+			vim.api.nvim_set_current_win(vim.g.debugged_winnr)
+			dap.restart()
+		else
+			vim.notify("Cannot find debug window", vim.log.levels.INFO)
+		end
 	else
 		vim.notify("Cannot restart - no active debug session", vim.log.levels.INFO)
 	end
@@ -96,8 +86,12 @@ end
 
 function M.dap_continue()
 	if dap_is_active() then
-		try_to_move_to_debugged_buf()
-		dap.continue()
+		if vim.api.nvim_win_is_valid(vim.g.debugged_winnr) then
+			vim.api.nvim_set_current_win(vim.g.debugged_winnr)
+			dap.continue()
+		else
+			vim.notify("Cannot find debug window", vim.log.levels.INFO)
+		end
 	else
 		vim.notify("Cannot continue - no active debug session", vim.log.levels.INFO)
 	end
@@ -105,8 +99,12 @@ end
 
 function M.step_over()
 	if dap_is_active() then
-		try_to_move_to_debugged_buf()
-		dap.step_over()
+		if vim.api.nvim_win_is_valid(vim.g.debugged_winnr) then
+			vim.api.nvim_set_current_win(vim.g.debugged_winnr)
+			dap.step_over()
+		else
+			vim.notify("Cannot find debug window", vim.log.levels.INFO)
+		end
 	else
 		vim.notify("Cannot step over - no active debug session", vim.log.levels.INFO)
 	end
@@ -114,8 +112,12 @@ end
 
 function M.step_into()
 	if dap_is_active() then
-		try_to_move_to_debugged_buf()
-		dap.step_into()
+		if vim.api.nvim_win_is_valid(vim.g.debugged_winnr) then
+			vim.api.nvim_set_current_win(vim.g.debugged_winnr)
+			dap.step_into()
+		else
+			vim.notify("Cannot find debug window", vim.log.levels.INFO)
+		end
 	else
 		vim.notify("Cannot step into - no active debug session", vim.log.levels.INFO)
 	end
@@ -123,8 +125,12 @@ end
 
 function M.step_out()
 	if dap_is_active() then
-		try_to_move_to_debugged_buf()
-		dap.step_out()
+		if vim.api.nvim_win_is_valid(vim.g.debugged_winnr) then
+			vim.api.nvim_set_current_win(vim.g.debugged_winnr)
+			dap.step_out()
+		else
+			vim.notify("Cannot find debug window", vim.log.levels.INFO)
+		end
 	else
 		vim.notify("Cannout step out - no active debug session", vim.log.levels.INFO)
 	end
