@@ -92,7 +92,7 @@ function M.core()
 			-- Exclude diffview buffers
 			local bufname = vim.api.nvim_buf_get_name(event.buf)
 			if not string.match(bufname, "diffview") then
-				vim.keymap.set("n", "<C-q>", function()
+				vim.keymap.set("n", "<Leader>cd", function()
 					diff_utils.close(1)
 				end, {
 					buffer = event.buf,
