@@ -205,14 +205,6 @@ function M.diffview()
 	vim.api.nvim_create_autocmd("User", {
 		pattern = "DiffviewDiffBufWinEnter",
 		callback = function(event)
-			vim.keymap.set("n", "<C-q>", function()
-				diffview.close()
-			end, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Diff: close, keeping leftmost buffer",
-			})
 			vim.keymap.set("n", "[C", diff_utils.go_to_first_conflict, {
 				buffer = event.buf,
 				silent = true,
