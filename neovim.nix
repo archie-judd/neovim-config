@@ -74,28 +74,38 @@ let
   ];
 
   extraPackages = [
+    # binaries
     pkgs.gcc
+    # telescope
     pkgs.ripgrep
     pkgs.fd
-    pkgs.jq
-    pkgs.nodePackages.bash-language-server
-    pkgs.nodePackages.typescript-language-server
-    pkgs.haskell-language-server
-    pkgs.lua-language-server
-    pkgs.marksman
-    pkgs.ruff
-    pkgs.pyright
-    pkgs.nixd
-    pkgs.nodejs # needed for copilot
-    pkgs.nodePackages.vscode-langservers-extracted
-    pkgs.nodePackages.eslint
-    pkgs.shfmt
-    pkgs.stylua
+    # copilot
+    pkgs.nodejs
+    # nix
+    pkgs.nixd # lsp
+    pkgs.nixfmt-classic # formatter
+    # bash
+    pkgs.bash-language-server # lsp
+    pkgs.shfmt # formatter
+    # haskell
+    pkgs.haskell-language-server # lsp
+    pkgs.ormolu # formatter
+    # markdown
+    pkgs.marksman # lsp
+    pkgs.mdformat # formatter
+    # python
+    pkgs.pyright # lsp
+    # pkgs.nodePackages.vscode-langservers-extracted # I can't remember what this is for!
+    # lua
+    pkgs.lua-language-server # lsp
+    pkgs.stylua # formatter
+    # sql
     pkgs.sqls
-    pkgs.nixfmt-classic
-    pkgs.ormolu
+    # html
     pkgs.emmet-language-server
+    # yml
     pkgs.yaml-language-server
+    # debugging
     pkgs-unstable.vscode-js-debug
   ];
 
