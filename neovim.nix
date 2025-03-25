@@ -79,19 +79,19 @@ let
     # telescope
     pkgs.ripgrep
     pkgs.fd
-    # typescript
-    pkgs.typescript-language-server
-    # python
-    pkgs.pyright
     # copilot
     pkgs.nodejs
+    # typescript
+    pkgs.typescript-language-server
+    pkgs.vscode-langservers-extracted # eslint language server
+    # python
+    pkgs.pyright
     # bash
     pkgs.bash-language-server # lsp
     pkgs.shfmt # formatter
     # markdown
     pkgs.marksman # lsp
     pkgs.mdformat # formatter
-    # pkgs.nodePackages.vscode-langservers-extracted # I can't remember what this is for!
     # nix
     pkgs.nixfmt-classic
     pkgs.nixd
