@@ -81,24 +81,13 @@ let
     pkgs.fd
     # copilot
     pkgs.nodejs
-    # nix
-    pkgs.nixd # lsp
-    pkgs.nixfmt-classic # formatter
     # bash
     pkgs.bash-language-server # lsp
     pkgs.shfmt # formatter
-    # haskell
-    pkgs.haskell-language-server # lsp
-    pkgs.ormolu # formatter
     # markdown
     pkgs.marksman # lsp
     pkgs.mdformat # formatter
-    # python
-    pkgs.pyright # lsp
     # pkgs.nodePackages.vscode-langservers-extracted # I can't remember what this is for!
-    # lua
-    pkgs.lua-language-server # lsp
-    pkgs.stylua # formatter
     # sql
     pkgs.sqls
     # html
