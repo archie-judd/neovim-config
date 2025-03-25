@@ -65,6 +65,7 @@ function M.debug_closest_test()
 		vim.notify("Cannot debug test, debug session already active", vim.log.levels.INFO)
 	else
 		vim.notify("Debugging test", vim.log.levels.INFO)
+		vim.g.debugged_winnr = vim.api.nvim_get_current_win()
 		neotest.run.run({ strategy = "dap" })
 	end
 end

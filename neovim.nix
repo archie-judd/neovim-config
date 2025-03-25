@@ -103,6 +103,9 @@ let
     pkgs.yaml-language-server
     # debugging
     pkgs-unstable.vscode-js-debug
+    # lua
+    pkgs.lua-language-server
+    pkgs.stylua
   ];
 
   extraPython3Packages = pyPkgs: [ pyPkgs.debugpy ];
