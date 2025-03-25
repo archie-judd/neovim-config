@@ -88,6 +88,9 @@ let
     pkgs.marksman # lsp
     pkgs.mdformat # formatter
     # pkgs.nodePackages.vscode-langservers-extracted # I can't remember what this is for!
+		# nix
+		pkgs.nixfmt-classic
+		pkgs.nixd
     # sql
     pkgs.sqls
     # html
