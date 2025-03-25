@@ -19,6 +19,20 @@ local config = function()
 		},
 	})
 	lspconfig.pyright.setup({ capabilities = capabilities })
+	lspconfig.pylsp.setup({
+		settings = {
+			capabilities = capabilities,
+			pylsp = {
+				plugins = {
+					mypy = { enabled = true, live_mode = true, dmypy = true },
+					pylint = { enabled = true },
+					pyflakes = { enabled = false },
+					pycodestyle = { enabled = false },
+				},
+			},
+		},
+	})
+	lspconfig.mypy.setup({ capabilities = capabilities })
 	lspconfig.lua_ls.setup({ capabilities = capabilities })
 	lspconfig.eslint.setup({ capabilities = capabilities })
 	lspconfig.marksman.setup({ capabilities = capabilities })
