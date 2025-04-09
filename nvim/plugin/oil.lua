@@ -28,6 +28,9 @@ local config = function()
 			end,
 			preview_split = "right",
 		},
+		win_options = {
+			signcolumn = "yes",
+		},
 	})
 
 	mappings.oil()
