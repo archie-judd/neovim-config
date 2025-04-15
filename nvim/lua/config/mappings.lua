@@ -6,7 +6,7 @@ local core_utils = require("utils.core")
 local dap = require("dap")
 local dap_utils = require("utils.dap")
 local dap_widgets = require("dap.ui.widgets")
-local diffview_utils = require("utils.diffview")
+local diffview = require("diffview")
 local github_link = require("github_link")
 local gitsigns = require("gitsigns")
 local maximise = require("maximise")
@@ -418,16 +418,11 @@ function M.dap()
 end
 
 function M.diffview()
-	vim.keymap.set(
-		"n",
-		"<Leader>gs",
-		diffview_utils.open_diffview,
-		{ silent = true, noremap = true, desc = "Diffview: open" }
-	)
+	vim.keymap.set("n", "<Leader>gs", diffview.open, { silent = true, noremap = true, desc = "Diffview: open" })
 	vim.keymap.set(
 		"n",
 		"<Leader>gh",
-		diffview_utils.open_diffview_file_history,
+		diffview.file_history,
 		{ silent = true, noremap = true, desc = "Diffview: open file history" }
 	)
 end

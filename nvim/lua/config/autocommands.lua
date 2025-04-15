@@ -219,6 +219,26 @@ function M.diffview()
 			})
 		end,
 	})
+
+	-- Close diffview when leaving a tab with diffview buffers - it can interfere with other plugins (like DAP and
+	-- codecompanion)
+	vim.api.nvim_create_autocmd("TabLeave", {
+		callback = function(event)
+			local tabpage = vim.api.nvim_get_current_tabpage()
+			local windows = vim.api.nvim_tabpage_list_wins(tabpage)
+
+			for _, win in ipairs(windows) do
+				local buf = vim.api.nvim_win_get_buf(win)
+				local buf_ft = vim.api.nvim_buf_get_option(buf, "filetype")
+
+				-- Check if the buffer is a Diffview buffer
+				if buf_ft == "DiffviewFiles" or buf_ft == "DiffviewFileHistory" then
+					diffview.close()
+					return
+				end
+			end
+		end,
+	})
 end
 
 function M.telescope()
