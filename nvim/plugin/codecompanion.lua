@@ -63,6 +63,7 @@ local function config()
 				},
 			},
 			inline = { adapter = "copilot" },
+			agent = { adapter = "copilot" },
 		},
 		display = {
 			chat = {
