@@ -1,4 +1,6 @@
 local codecompanion = require("codecompanion")
+local config = require("codecompanion.config")
+local context_utils = require("codecompanion.utils.context")
 
 local M = {}
 
@@ -30,6 +32,31 @@ function M.open(opts)
 				chat.ui:open()
 			end
 		end
+	end
+end
+
+---@param opts table
+function M.add(opts)
+	opts = opts or {}
+	local chat = codecompanion.last_chat()
+
+	if not chat then
+		local context = context_utils.get(vim.api.nvim_get_current_buf(), nil)
+		local content = table.concat(context.lines, "\n")
+		vim.cmd("normal! <Esc>")
+		chat = codecompanion.chat()
+		chat:add_buf_message({
+			role = config.constants.USER_ROLE,
+			content = "Here is some code from "
+				.. context.filename
+				.. ":\n\n```"
+				.. context.filetype
+				.. "\n"
+				.. content
+				.. "\n```\n",
+		})
+	else
+		codecompanion.add()
 	end
 end
 
