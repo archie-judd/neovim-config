@@ -31,6 +31,7 @@ function M.core()
 			vim.o.shiftwidth = 2
 			vim.o.tabstop = 2
 			vim.o.softtabstop = 2
+			vim.o.textwidth = 120
 		end,
 	})
 	vim.api.nvim_create_autocmd("FileType", {
@@ -50,6 +51,7 @@ function M.core()
 		pattern = { "typescript" },
 		callback = function(event)
 			vim.o.colorcolumn = "101"
+			vim.o.textwidth = 100
 			vim.o.tabstop = 2
 			vim.o.shiftwidth = 2
 			mappings.typescript()
@@ -59,6 +61,7 @@ function M.core()
 		pattern = "typescriptreact",
 		callback = function(event)
 			vim.o.colorcolumn = "101"
+			vim.o.textwidth = 100
 			vim.o.softtabstop = 2
 			vim.o.shiftwidth = 2
 			vim.o.expandtab = true
