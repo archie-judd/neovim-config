@@ -16,12 +16,21 @@ function M.core()
 		pattern = "python",
 		callback = function(event)
 			vim.o.colorcolumn = "89"
+			vim.o.expandtab = true
+			vim.o.shiftwidth = 4
+			vim.o.tabstop = 4
+			vim.o.softtabstop = 4
+			vim.o.textwidth = 88
 		end,
 	})
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "lua",
 		callback = function(event)
 			vim.o.colorcolumn = "121"
+			vim.opt_local.expandtab = true
+			vim.opt_local.shiftwidth = 2
+			vim.opt_local.tabstop = 2
+			vim.opt_local.softtabstop = 2
 		end,
 	})
 	vim.api.nvim_create_autocmd("FileType", {

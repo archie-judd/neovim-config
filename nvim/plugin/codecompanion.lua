@@ -109,7 +109,7 @@ local function config()
 					},
 					{
 						role = "user",
-						content = "@editor make the following changes to #buffer:  ",
+						content = "@editor make the following changes to #buffer{watch}:  ",
 					},
 				},
 				opts = {
