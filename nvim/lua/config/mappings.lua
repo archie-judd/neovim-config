@@ -443,26 +443,26 @@ function M.neotest()
 end
 
 function M.gitsigns(buffer)
-	vim.keymap.set("n", "]h", function()
+	vim.keymap.set("n", "]c", function()
 		if vim.wo.diff then
-			return "]h"
+			vim.cmd.normal({ "]c", bang = true })
+		else
+			gitsigns.nav_hunk("next")
 		end
-		vim.schedule(function()
-			gitsigns.next_hunk()
-			gitsigns.preview_hunk()
-		end)
-		return "<Ignore>"
 	end, { expr = true, buffer = buffer, desc = "Gitsigns: next hunk" })
-	vim.keymap.set("n", "[h", function()
+	vim.keymap.set("n", "[c", function()
 		if vim.wo.diff then
-			return "[h"
+			vim.cmd.normal({ "[c", bang = true })
+		else
+			gitsigns.nav_hunk("prev")
 		end
-		vim.schedule(function()
-			gitsigns.prev_hunk()
-			gitsigns.preview_hunk()
-		end)
-		return "<Ignore>"
-	end, { expr = true, buffer = buffer, desc = "Gitsigns: previous hunk" })
+	end, { expr = true, buffer = buffer, desc = "Gitsigns: prev hunk" })
+	vim.keymap.set(
+		"n",
+		"<Leader>hp",
+		gitsigns.preview_hunk,
+		{ silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: preview hunk" }
+	)
 	vim.keymap.set(
 		"n",
 		"<Leader>hs",
