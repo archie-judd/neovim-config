@@ -330,8 +330,8 @@ function M.dap()
 			dap.repl.open({ number = false, relativenumber = false }, "split")
 		end,
 	})
-	vim.api.nvim_create_autocmd("BufFilePost", {
-		pattern = "*\\[dap-terminal\\]*",
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = "dap-repl",
 		callback = function(event)
 			vim.keymap.set("n", "<C-q>", dap_utils.quit, {
 				buffer = event.buf,
@@ -339,7 +339,6 @@ function M.dap()
 				noremap = true,
 				desc = "Dap: quit debug session",
 			})
-			dap.repl.open({ number = false, relativenumber = false }, "split")
 		end,
 	})
 end
