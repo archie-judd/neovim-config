@@ -619,6 +619,9 @@ function M.codecompanion()
 		codecompanion_utils.add,
 		{ noremap = true, silent = true, desc = "CodeCompanion: Add selection to chat" }
 	)
+	vim.keymap.set({ "v" }, "<LocalLeader>n", function()
+		codecompanion_utils.add({ new = true })
+	end, { noremap = true, silent = true, desc = "CodeCompanion: Add selection to new chat" })
 	vim.keymap.set({ "n" }, "<LocalLeader>c", function()
 		codecompanion_utils.open({ new = false })
 	end, { noremap = true, silent = true, desc = "CodeCompanion: Open chat" })
