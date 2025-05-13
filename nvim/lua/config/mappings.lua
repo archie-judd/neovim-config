@@ -419,12 +419,9 @@ end
 
 function M.diffview()
 	vim.keymap.set("n", "<Leader>gs", diffview.open, { silent = true, noremap = true, desc = "Diffview: open" })
-	vim.keymap.set(
-		"n",
-		"<Leader>gh",
-		diffview.file_history,
-		{ silent = true, noremap = true, desc = "Diffview: open file history" }
-	)
+	vim.keymap.set("n", "<Leader>gh", function()
+		diffview.file_history(nil, "%")
+	end, { silent = true, noremap = true, desc = "Diffview: open file history" })
 end
 
 function M.neotest()
