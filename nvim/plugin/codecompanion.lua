@@ -103,7 +103,9 @@ local function config()
 						make some changes to a provided buffer. Keep your responses concise and 
             to the point. Don't include next-step suggestions. When the user asks 
             you a question about the buffer, edit it with your suggestions using 
-            your editor tool unless the user asks you to do otherwise.]],
+            your editor tool unless the user asks you to do otherwise. If you are 
+            asked to edit a function, make sure to include any decorators in the 
+            existing function when making your edits.]],
 					},
 					{
 						role = "user",
