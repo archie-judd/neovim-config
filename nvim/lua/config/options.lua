@@ -26,3 +26,6 @@ vim.g.clipboard = { -- OSC52 clipboard
 		["*"] = osc52.paste("*"),
 	},
 }
+
+-- Diagnostics
+vim.diagnostic.config({ float = { border = "rounded" } })
