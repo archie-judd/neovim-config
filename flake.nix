@@ -10,8 +10,16 @@
   outputs = { flake-utils, nixpkgs, nixpkgs-unstable, telescope-words, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
-        pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+        pkgs = import nixpkgs { system = system; };
+        pkgs-unstable = import nixpkgs-unstable {
+          system = system;
+          overlays = [
+            (self: super: {
+              nodejs = super.nodejs_22;
+              nodejs-slim = super.nodejs-slim_22;
+            })
+          ];
+        };
 
         neovim = pkgs.callPackage ./neovim.nix {
           pkgs = pkgs;
