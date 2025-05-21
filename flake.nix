@@ -10,20 +10,24 @@
   outputs = { flake-utils, nixpkgs, nixpkgs-unstable, telescope-words, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { system = system; };
+        node-overlay = (final: prev: {
+          nodejs = prev.nodejs_22;
+          nodejs-slim = prev.nodejs-slim_22;
+          nodejs_20 = prev.nodejs_22;
+          nodejs-slim_20 = prev.nodejs-slim_22;
+        });
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ node-overlay ];
+        };
         pkgs-unstable = import nixpkgs-unstable {
-          system = system;
-          overlays = [
-            (self: super: {
-              nodejs = super.nodejs_22;
-              nodejs-slim = super.nodejs-slim_22;
-            })
-          ];
+          inherit system;
+          overlays = [ node-overlay ];
         };
 
         neovim = pkgs.callPackage ./neovim.nix {
-          pkgs = pkgs;
-          pkgs-unstable = pkgs-unstable;
+          inherit pkgs;
+          inherit pkgs-unstable;
           telescope-words = telescope-words;
         };
 
