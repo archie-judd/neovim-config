@@ -22,7 +22,7 @@
           overlays = [ node-overlay ];
         };
         pkgs-unstable = import nixpkgs-unstable {
-          sysem = system;
+          system = system;
           overlays = [ node-overlay ];
         };
 
