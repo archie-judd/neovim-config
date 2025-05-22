@@ -121,7 +121,6 @@ in {
     withNodeJs = true;
     withRuby = false;
     extraPython3Packages = extraPython3Packages;
-    extraLuaPackages = extraLuaPackages;
   };
 
   extraPackages = extraPackages;
