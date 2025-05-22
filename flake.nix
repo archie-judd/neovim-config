@@ -18,7 +18,7 @@
           nodejs-slim_20 = prev.nodejs-slim_22;
         });
         pkgs = import nixpkgs {
-          sysem = system;
+          system = system;
           overlays = [ node-overlay ];
         };
         pkgs-unstable = import nixpkgs-unstable {
