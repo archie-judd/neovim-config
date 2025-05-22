@@ -109,7 +109,6 @@ let
   ];
 
   extraPython3Packages = pyPkgs: [ pyPkgs.debugpy ];
-  extraLuaPackages = luaPkgs: [ ];
 
 in {
 
