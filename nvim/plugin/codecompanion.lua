@@ -19,20 +19,16 @@ local function config()
 						modes = { n = "<NOP>", i = "<NOP>" },
 					},
 				},
-				agents = {
-					tools = {
-						["clipboard"] = {
-							callback = tools.module_dir .. "clipboard.lua",
-							description = [[
-							A tool for copying and pasting test to and from 
-							the clipboard buffer
-							]],
-						},
-						["lua_cmd_runner"] = {
-							callback = tools.module_dir .. "lua_cmd_runner.lua",
-							description = "A tool for executing lua commands",
-							opts = { user_approval = true },
-						},
+				tools = {
+					clipboard = {
+						callback = tools.module_dir .. "clipboard.lua",
+						description = "A tool for copying and pasting text to and from the clipboard",
+						opts = {},
+					},
+					lua_cmd_runner = {
+						callback = tools.module_dir .. "lua_cmd_runner.lua",
+						description = "A tool for executing lua commands",
+						opts = { requires_approval = true },
 					},
 				},
 				variables = {
@@ -46,8 +42,7 @@ local function config()
 					},
 					["gfiles"] = {
 						callback = "utils.codecompanion.variables.git_files",
-						description = [[Share the relative paths of all files in the git 
-						repository with the llm]],
+						description = "Share the relative paths of all files in the git repository with the llm",
 					},
 				},
 				slash_commands = {
@@ -99,13 +94,10 @@ local function config()
 				prompts = {
 					{
 						role = "system",
-						content = [[You are an experienced developer. You will be requested to 
-						make some changes to a provided buffer. Keep your responses concise and 
-            to the point. Don't include next-step suggestions. When the user asks 
-            you a question about the buffer, edit it with your suggestions using 
-            your editor tool unless the user asks you to do otherwise. If you are 
-            asked to edit a function, make sure to include any decorators in the 
-            existing function when making your edits.]],
+						[[You are an experienced developer. You will be requested to make some changes to a provided buffer. Keep 
+your responses concise and to the point. Don't include next-step suggestions. When the user asks you a question about 
+the buffer, edit it with your suggestions using your editor tool unless the user asks you to do otherwise. If you are 
+asked to edit a function, make sure to include any decorators in the existing function when making your edits.]],
 					},
 					{
 						role = "user",
@@ -128,18 +120,25 @@ local function config()
 				prompts = {
 					{
 						role = "system",
-						content = [[Generate a descriptive commit message for a given git diff. 
-						The message should be descriptive and under 60 characters. Use 
-						lua_cmd_runner to execute a git fugitive commit command in the command 
-						line with nvim_feedkeys.]],
+						content = function()
+							return [[
+Generate a descriptive commit message for a given git diff. The message should be descriptive and under 60 characters. 
+Use lua_cmd_runner to execute a git fugitive commit command in the command line with nvim_feedkeys.
+]]
+						end,
 					},
 					{
 						role = "user",
-						content = [[@lua_cmd_runner Here is the git diff: #sdiff.\n\nWrite a 
-						commit message and execute a git fugitive commit using vim.api.nvim_i 
-						`vim.api.nvim_feedkeys(":Git commit -m <commit-message>", "n", false)`. 
-						Set force to true to bypass approval, and ensure the user is in normal 
-						mode - you can use vim.cmd("stopinsert").]],
+						content = function()
+							vim.g.codecompanion_auto_tool_mode = true
+							return [[
+@lua_cmd_runner Here is the git diff: #sdiff. 
+
+Write a commit message and execute a git fugitive commit using the following commands: 
+
+`vim.cmd("stopinsert");vim.api.nvim_feedkeys(":Git commit -m <commit-message>", "n", false)`
+              ]]
+						end,
 					},
 				},
 				opts = {
