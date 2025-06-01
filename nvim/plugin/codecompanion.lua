@@ -1,6 +1,7 @@
 local autocommands = require("config.autocommands")
 local codecompanion = require("codecompanion")
 local mappings = require("config.mappings")
+local prompts = require("utils.codecompanion.prompts")
 local tools = require("utils.codecompanion.tools")
 
 local function config()
@@ -21,6 +22,7 @@ local function config()
 				},
 				tools = {
 					clipboard = {
+						-- change this to a module path when 15.13.0 (2025-06-01) is available
 						callback = tools.module_dir .. "clipboard.lua",
 						description = "A tool for copying and pasting text to and from the clipboard",
 						opts = {},
@@ -88,69 +90,8 @@ local function config()
 			},
 		},
 		prompt_library = {
-			["Edit current buffer"] = {
-				strategy = "chat",
-				description = "Edit the current buffer",
-				prompts = {
-					{
-						role = "system",
-						[[You are an experienced developer. You will be requested to make some changes to a provided buffer. Keep 
-your responses concise and to the point. Don't include next-step suggestions. When the user asks you a question about 
-the buffer, edit it with your suggestions using your editor tool unless the user asks you to do otherwise. If you are 
-asked to edit a function, make sure to include any decorators in the existing function when making your edits.]],
-					},
-					{
-						role = "user",
-						content = "@editor make the following changes to #buffer{watch}:  ",
-					},
-				},
-				opts = {
-					modes = { "n" },
-					is_slash_cmd = true,
-					short_name = "ecb",
-					auto_submit = false,
-					index = 1,
-					stop_context_insertion = true,
-					user_prompt = false,
-				},
-			},
-			["Generate a commit message"] = {
-				strategy = "chat",
-				description = "Generate a commit message",
-				prompts = {
-					{
-						role = "system",
-						content = function()
-							return [[
-Generate a descriptive commit message for a given git diff. The message should be descriptive and under 60 characters. 
-Use lua_cmd_runner to execute a git fugitive commit command in the command line with nvim_feedkeys.
-]]
-						end,
-					},
-					{
-						role = "user",
-						content = function()
-							vim.g.codecompanion_auto_tool_mode = true
-							return [[
-@lua_cmd_runner Here is the git diff: #sdiff. 
-
-Write a commit message and execute a git fugitive commit using the following commands: 
-
-`vim.cmd("stopinsert");vim.api.nvim_feedkeys(":Git commit -m <commit-message>", "n", false)`
-              ]]
-						end,
-					},
-				},
-				opts = {
-					modes = { "n" },
-					is_slash_cmd = true,
-					short_name = "gcm",
-					auto_submit = true,
-					index = 2,
-					stop_context_insertion = true,
-					user_prompt = false,
-				},
-			},
+			["Edit current buffer"] = prompts.edit_current_buffer,
+			["Describe git changes"] = prompts.describe_git_changes,
 		},
 	})
 	mappings.codecompanion()
