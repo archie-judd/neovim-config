@@ -10,21 +10,8 @@
   outputs = { flake-utils, nixpkgs, nixpkgs-unstable, telescope-words, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        # We need a node overlay because of: https://github.com/NixOS/nixpkgs/issues/402079
-        node-overlay = (final: prev: {
-          nodejs = prev.nodejs_22;
-          nodejs-slim = prev.nodejs-slim_22;
-          nodejs_20 = prev.nodejs_22;
-          nodejs-slim_20 = prev.nodejs-slim_22;
-        });
-        pkgs = import nixpkgs {
-          system = system;
-          overlays = [ node-overlay ];
-        };
-        pkgs-unstable = import nixpkgs-unstable {
-          system = system;
-          overlays = [ node-overlay ];
-        };
+        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 
         neovim = pkgs.callPackage ./neovim.nix {
           pkgs = pkgs;
@@ -40,4 +27,3 @@
 
       in { packages.default = app; });
 }
-
