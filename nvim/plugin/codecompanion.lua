@@ -91,7 +91,7 @@ local function config()
 		},
 		prompt_library = {
 			["Edit current buffer"] = prompts.edit_current_buffer,
-			["Describe git changes"] = prompts.describe_git_changes,
+			["suggest commits"] = prompts.suggest_commits,
 		},
 	})
 	mappings.codecompanion()
