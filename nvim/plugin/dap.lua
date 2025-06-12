@@ -7,7 +7,7 @@ local config = function()
 	-- set defaults
 	dap.defaults.fallback.exception_breakpoints = "default"
 	dap.defaults.fallback.terminal_win_cmd = dap_utils.open_terminal
-	dap.defaults.fallback.switchbuf = "usevisible,usetab,uselast"
+	dap.defaults.fallback.switchbuf = "usevisible,useopen,uselast"
 
 	-- python
 	local python_debugger_path = vim.g.python3_host_prog

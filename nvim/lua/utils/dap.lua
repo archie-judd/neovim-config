@@ -1,6 +1,5 @@
 local core_utils = require("utils.core")
 local dap = require("dap")
-local diffview = require("diffview")
 local neotest = require("neotest")
 
 local M = {}
@@ -27,7 +26,6 @@ end
 
 function M.start()
 	-- If diffview is open, close it before starting a debug session
-	diffview.close()
 	if not dap_is_active() then
 		vim.notify("Starting debug session", vim.log.levels.INFO)
 		vim.g.debugged_winnr = vim.api.nvim_get_current_win()
