@@ -10,7 +10,10 @@ local function config()
 		strategies = {
 			-- Change the default chat adapter
 			chat = {
-				adapter = "copilot",
+				adapter = {
+					name = "copilot",
+					model = "claude-sonnet-4",
+				},
 				keymaps = {
 					-- make unreachable ( I use my own functions )
 					send = {
@@ -60,7 +63,7 @@ local function config()
 				},
 			},
 			inline = { adapter = "copilot" },
-			agent = { adapter = "copilot" },
+			agent = { adapter = "copilot", model = "claude-sonnet-4" },
 		},
 		display = {
 			chat = {
