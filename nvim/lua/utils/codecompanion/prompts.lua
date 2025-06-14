@@ -6,12 +6,11 @@ M.edit_current_buffer = {
 			role = "system",
 			[[You are an experienced developer. You will be requested to make some changes to a provided buffer. Keep 
 your responses concise and to the point. Don't include next-step suggestions. When the user asks you a question about 
-the buffer, edit it with your suggestions using your editor tool unless the user asks you to do otherwise. If you are 
-asked to edit a function, make sure to include any decorators in the existing function when making your edits.]],
+the buffer, edit it with your suggestions using your editor tool unless the user asks you to do otherwise.]],
 		},
 		{
 			role = "user",
-			content = "@editor make the following changes to #buffer{watch}:  ",
+			content = "Here is the current buffer: #buffer\n\nUsing your @insert_edit_into_file tool, make the following change(s):\n\n",
 		},
 	},
 	opts = {

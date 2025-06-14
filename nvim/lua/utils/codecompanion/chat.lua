@@ -56,11 +56,19 @@ function M.add(opts)
 	})
 end
 
-function M.close()
+function M.hide()
 	local chat = codecompanion.last_chat()
 
 	if chat ~= nil and chat.ui:is_visible() then
 		chat.ui:hide()
+	end
+end
+
+function M.stop()
+	local chat = codecompanion.last_chat()
+
+	if chat ~= nil then
+		chat:stop()
 	end
 end
 

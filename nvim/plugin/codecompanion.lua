@@ -2,7 +2,6 @@ local autocommands = require("config.autocommands")
 local codecompanion = require("codecompanion")
 local mappings = require("config.mappings")
 local prompts = require("utils.codecompanion.prompts")
-local tools = require("utils.codecompanion.tools")
 
 local function config()
 	local WINDOW_WIDTH = 0.4
@@ -25,15 +24,17 @@ local function config()
 				},
 				tools = {
 					clipboard = {
-						-- change this to a module path when 15.13.0 (2025-06-01) is available
-						callback = tools.module_dir .. "clipboard.lua",
+						callback = "utils.codecompanion.tools.clipboard",
 						description = "A tool for copying and pasting text to and from the clipboard",
 						opts = {},
 					},
 					lua_cmd_runner = {
-						callback = tools.module_dir .. "lua_cmd_runner.lua",
+						callback = "utils.codecompanion.tools.lua_cmd_runner",
 						description = "A tool for executing lua commands",
 						opts = { requires_approval = true },
+					},
+					opts = {
+						wait_timeout = 120000, -- 2 minutes
 					},
 				},
 				variables = {

@@ -2,7 +2,6 @@ local codecompanion_utils = require("utils.codecompanion.chat")
 local core_utils = require("utils.core")
 local dap = require("dap")
 local dap_utils = require("utils.dap")
-local diff_utils = require("utils.diff")
 local diffview = require("diffview")
 local mappings = require("config.mappings")
 local maximise = require("maximise")
@@ -93,36 +92,6 @@ function M.core()
 			vim.highlight.on_yank()
 		end,
 	})
-
-	vim.api.nvim_create_autocmd("OptionSet", {
-		pattern = "diff",
-		callback = function(event)
-			-- Exclude diffview buffers
-			local bufname = vim.api.nvim_buf_get_name(event.buf)
-			if not string.match(bufname, "diffview") then
-				vim.keymap.set("n", "<Leader>cd", function()
-					diff_utils.close(1)
-				end, {
-					buffer = event.buf,
-					silent = true,
-					noremap = true,
-					desc = "Diff: close, keeping leftmost buffer",
-				})
-				vim.keymap.set("n", "[C", diff_utils.go_to_first_conflict, {
-					buffer = event.buf,
-					silent = true,
-					noremap = true,
-					desc = "Diff: move to first conflict and center",
-				})
-				vim.keymap.set("n", "]C", diff_utils.go_to_last_conflict, {
-					buffer = event.buf,
-					silent = true,
-					noremap = true,
-					desc = "Diff: move to last conflict and center",
-				})
-			end
-		end,
-	})
 end
 
 function M.oil()
@@ -210,23 +179,6 @@ function M.diffview()
 			vim.wo[winid].winfixbuf = true
 		end,
 	})
-	vim.api.nvim_create_autocmd("User", {
-		pattern = "DiffviewDiffBufWinEnter",
-		callback = function(event)
-			vim.keymap.set("n", "[C", diff_utils.go_to_first_conflict, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Diff: move to first conflict and center",
-			})
-			vim.keymap.set("n", "]C", diff_utils.go_to_last_conflict, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Diff: move to last conflict and center",
-			})
-		end,
-	})
 end
 
 function M.telescope()
@@ -255,8 +207,8 @@ function M.codecompanion()
 			vim.keymap.set(
 				{ "n", "i" },
 				"<C-q>",
-				codecompanion_utils.close,
-				{ buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: close chat" }
+				codecompanion_utils.hide,
+				{ buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: hide chat" }
 			)
 			vim.keymap.set(
 				{ "n", "i" },
