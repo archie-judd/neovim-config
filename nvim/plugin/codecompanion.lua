@@ -63,7 +63,7 @@ local function config()
 					},
 				},
 			},
-			inline = { adapter = "copilot" },
+			inline = { adapter = "copilot", model = "claude-sonnet-4" },
 			agent = { adapter = "copilot", model = "claude-sonnet-4" },
 		},
 		display = {
