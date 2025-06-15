@@ -38,7 +38,7 @@ function M.open(opts)
 end
 
 ---@param opts table
-function M.add(opts)
+function M.add_selection(opts)
 	opts = opts or {}
 	local context = context_utils.get(vim.api.nvim_get_current_buf(), nil)
 	local content = table.concat(context.lines, "\n")
@@ -53,6 +53,15 @@ function M.add(opts)
 			.. "\n"
 			.. content
 			.. "\n```\n",
+	})
+end
+
+function M.add_buffer(opts)
+	opts = opts or {}
+	local chat = M.open(opts)
+	chat:add_buf_message({
+		role = config.constants.USER_ROLE,
+		content = "Here is the file I am working on:\n\n#buffer \n\n",
 	})
 end
 
