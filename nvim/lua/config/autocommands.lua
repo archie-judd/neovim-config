@@ -1,3 +1,4 @@
+local codecompanion = require("codecompanion")
 local codecompanion_utils = require("utils.codecompanion.chat")
 local core_utils = require("utils.core")
 local dap = require("dap")
@@ -204,18 +205,22 @@ function M.codecompanion()
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "codecompanion",
 		callback = function(event)
-			vim.keymap.set(
-				{ "n", "i" },
-				"<C-q>",
-				codecompanion_utils.hide,
-				{ buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: hide chat" }
-			)
-			vim.keymap.set(
-				{ "n", "i" },
-				"<C-s>",
-				codecompanion_utils.submit,
-				{ buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: submit prompt" }
-			)
+			vim.keymap.set({ "n", "i" }, "<C-q>", function()
+				local chat = codecompanion.last_chat()
+
+				if chat ~= nil and chat.ui:is_visible() and chat.bufnr == event.buf then
+					chat.ui:hide()
+				else
+					core_utils.close_active_or_topmost_floating_window(true)
+				end
+			end, { buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: hide chat if open" })
+			vim.keymap.set({ "n", "i" }, "<C-s>", function()
+				local chat = codecompanion.last_chat()
+				if chat ~= nil then
+					chat:submit()
+					vim.cmd("stopinsert")
+				end
+			end, { buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: submit prompt" })
 		end,
 	})
 end

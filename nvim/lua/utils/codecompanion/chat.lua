@@ -4,14 +4,6 @@ local context_utils = require("codecompanion.utils.context")
 
 local M = {}
 
-function M.submit()
-	local chat = codecompanion.last_chat()
-	if chat ~= nil then
-		chat:submit()
-		vim.cmd("stopinsert")
-	end
-end
-
 ---@param opts table
 ---@return table
 function M.open(opts)
@@ -54,31 +46,6 @@ function M.add_selection(opts)
 			.. content
 			.. "\n```\n",
 	})
-end
-
-function M.add_buffer(opts)
-	opts = opts or {}
-	local chat = M.open(opts)
-	chat:add_buf_message({
-		role = config.constants.USER_ROLE,
-		content = "Here is the file I am working on:\n\n#buffer \n\n",
-	})
-end
-
-function M.hide()
-	local chat = codecompanion.last_chat()
-
-	if chat ~= nil and chat.ui:is_visible() then
-		chat.ui:hide()
-	end
-end
-
-function M.stop()
-	local chat = codecompanion.last_chat()
-
-	if chat ~= nil then
-		chat:stop()
-	end
 end
 
 return M
