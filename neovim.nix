@@ -46,13 +46,9 @@ let
     pkgs.vimPlugins.telescope-live-grep-args-nvim
     pkgs.vimPlugins.nvim-lspconfig
     pkgs.vimPlugins.neodev-nvim
-    pkgs.vimPlugins.nvim-cmp
-    pkgs.vimPlugins.cmp-nvim-lsp
     pkgs.vimPlugins.cmp-dap
-    pkgs.vimPlugins.cmp-cmdline
     pkgs.vimPlugins.blink-cmp
     pkgs.vimPlugins.blink-compat
-    pkgs.vimPlugins.lsp_signature-nvim
     pkgs.vimPlugins.vim-markdown-toc
     pkgs.vimPlugins.markdown-preview-nvim
     pkgs.vimPlugins.conform-nvim
