@@ -37,7 +37,7 @@ return {
 	},
 	system_prompt = [[### Clipboard tool ('clipboard')
 
-	    ## CONTEXT
+	  ### CONTEXT
 	  - You have access to a clipboard tool running within CodeCompanion, in Neovim.
 	  - You can use it to copy text to any register in Neovim.
 
