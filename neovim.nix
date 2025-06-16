@@ -40,6 +40,7 @@ let
     pkgs.vimPlugins.nvim-treesitter-parsers.sql
     pkgs.vimPlugins.nvim-treesitter-textobjects
     pkgs.vimPlugins.nvim-treesitter-parsers.diff
+    pkgs.vimPlugins.plenary-nvim
     pkgs.vimPlugins.catppuccin-nvim
     pkgs.vimPlugins.telescope-nvim
     pkgs.vimPlugins.telescope-live-grep-args-nvim
