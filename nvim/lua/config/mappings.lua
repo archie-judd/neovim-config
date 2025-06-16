@@ -1,7 +1,6 @@
-local cmp = require("cmp")
+local cmp_utils = require("utils.cmp")
 local codecompanion = require("codecompanion")
 local codecompanion_utils = require("utils.codecompanion.chat")
-local copilot_cmp = require("utils.copilot_cmp")
 local core_utils = require("utils.core")
 local dap = require("dap")
 local dap_utils = require("utils.dap")
@@ -539,56 +538,42 @@ end
 
 -- The mappings for copilot suggestions are also here to save my sanity
 function M.cmp()
-	vim.keymap.set({ "i", "c" }, "<C-y>", copilot_cmp.accept, {
+	vim.keymap.set({ "i", "c" }, "<C-y>", cmp_utils.accept, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp/Copilot: Accept suggestion",
 	})
-	vim.keymap.set({ "i", "c" }, "<C-p>", copilot_cmp.select_prev, {
+	vim.keymap.set({ "i", "c" }, "<C-p>", cmp_utils.select_prev, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp/Copilot: Prev suggestion",
 	})
-	vim.keymap.set({ "i", "c" }, "<C-n>", copilot_cmp.select_next, {
+	vim.keymap.set({ "i", "c" }, "<C-n>", cmp_utils.select_next, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp/Copilot: Next suggestion",
 	})
-	vim.keymap.set("i", "<C-e>", copilot_cmp.close, {
+	vim.keymap.set("i", "<C-e>", cmp_utils.close, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp/Copilot: Abort",
 	})
-	vim.keymap.set("i", "<C-f>", copilot_cmp.start, {
+	vim.keymap.set("i", "<C-f>", cmp_utils.start, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp/Copilot: Start",
 	})
-	vim.keymap.set("i", "<C-d>", function()
-		if cmp.visible() then
-			cmp.scroll_docs(4)
-		end
-	end, {
+	vim.keymap.set("i", "<C-d>", cmp_utils.scroll_documentation_down, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp: Scroll docs down",
 	})
-	vim.keymap.set("i", "<C-u>", function()
-		if cmp.visible() then
-			cmp.scroll_docs(4)
-		end
-	end, {
+	vim.keymap.set("i", "<C-u>", cmp_utils.scroll_documentation_up, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp: Scroll docs up",
 	})
-	vim.keymap.set("i", "<C-g>", function()
-		if cmp.visible_docs() then
-			cmp.close_docs()
-		else
-			cmp.open_docs()
-		end
-	end, {
+	vim.keymap.set("i", "<C-g>", cmp_utils.toggle_documentation, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp: Toggle docs",
