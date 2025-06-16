@@ -10,17 +10,17 @@
   outputs = { flake-utils, nixpkgs, nixpkgs-unstable, telescope-words, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        # Get the most recent release of codecompanion.nvim (as of 2025-06-14)
+        # Get V17.0.0 of codecompanion.nvim
         overlay = final: prev: {
           vimPlugins = prev.vimPlugins // {
             codecompanion-nvim = prev.vimUtils.buildVimPlugin {
               pname = "codecompanion.nvim";
-              version = "2025-06-14";
+              version = "2025-16-15";
               src = prev.fetchFromGitHub {
                 owner = "olimorris";
                 repo = "codecompanion.nvim";
-                rev = "a1a5431e7effefc83ee2422c633ac7ca11880bb5";
-                sha256 = "0h1wyv4l9dsbz2rsqsqjqxisa7k5l63l2b3y91g0kscybv1jy9hk";
+                rev = "621c734737801d9556cf0b50c27ef502a94b9cca";
+                sha256 = "13g8lj4f9z4wrcwcnddc5rmgly13269qi2jpx9a8bm93p8pgz12g";
               };
               dependencies = [ prev.vimPlugins.plenary-nvim ];
               checkInputs = [
