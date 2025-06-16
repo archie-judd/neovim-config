@@ -49,6 +49,7 @@ let
     pkgs.vimPlugins.cmp-dap
     pkgs.vimPlugins.blink-cmp
     pkgs.vimPlugins.blink-compat
+    pkgs.vimPlugins.lsp_signature-nvim
     pkgs.vimPlugins.vim-markdown-toc
     pkgs.vimPlugins.markdown-preview-nvim
     pkgs.vimPlugins.conform-nvim
