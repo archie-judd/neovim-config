@@ -30,6 +30,12 @@ local config = function()
 		},
 		win_options = {
 			signcolumn = "yes",
+			winhighlight = "Normal:Normal,NormalFloat:Normal",
+		},
+		preview_win = {
+			win_options = {
+				winhighlight = "Normal:Normal,NormalFloat:Normal",
+			},
 		},
 	})
 

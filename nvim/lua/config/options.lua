@@ -2,7 +2,6 @@ local osc52 = require("vim.ui.clipboard.osc52")
 
 -- Color-scheme
 vim.cmd.colorscheme("catppuccin-mocha")
-vim.api.nvim_set_hl(0, "NormalFloat", { fg = "none", bg = "none" }) -- fix oil background
 
 -- Options
 vim.opt.number = true
