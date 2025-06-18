@@ -92,16 +92,15 @@ local function config()
 					show_default_prompt_library = true,
 				},
 			},
-		},
-		prompt_library = {
-			["Edit current buffer"] = prompts.edit_current_buffer,
-			["suggest commits"] = prompts.suggest_commits,
+			prompt_library = {
+				["Edit current buffer"] = prompts.edit_current_buffer,
+				["suggest commits"] = prompts.suggest_commits,
+			},
 		},
 	})
-	mappings.codecompanion()
-	autocommands.codecompanion()
 	-- expand cc to CodeCompanion in the command lines
 	vim.cmd("cabbrev cc CodeCompanion")
+	mappings.codecompanion()
+	autocommands.codecompanion()
 end
-
 config()

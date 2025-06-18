@@ -1,5 +1,4 @@
 local blink = require("blink.cmp")
-local blink_cmp_config = require("blink.cmp.config")
 local cmp_dap = require("cmp_dap")
 local mappings = require("config.mappings")
 local usercommands = require("config.usercommands")
@@ -16,6 +15,7 @@ local function config()
 		cmdline = {
 			enabled = true,
 			keymap = { preset = "none" },
+			completion = { menu = { auto_show = true } },
 		},
 
 		term = { enabled = true, keymap = { preset = "none" } },
@@ -47,12 +47,23 @@ local function config()
 					module = "lazydev.integrations.blink",
 					score_offset = 100,
 				},
+				-- words = {
+				-- 	name = "blink-cmp-words",
+				-- 	module = "blink-cmp-words",
+				-- 	opts = {
+				-- 		thesaurus_filetypes = { "text" },
+				-- 		dictionary_filetypes = {},
+				-- 	},
+				-- },
 			},
 			per_filetype = {
 				["dap-repl"] = { "dap" },
 				dap_watches = { "dap" },
+				words = { "text" },
 			},
 		},
+
+		appearance = { nerd_font_variant = "normal" },
 
 		signature = { enabled = false }, -- Untill they implement permanent toggling
 	})

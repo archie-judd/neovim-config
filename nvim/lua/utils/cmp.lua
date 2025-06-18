@@ -1,5 +1,4 @@
 local cmp = require("blink.cmp")
-local cmp_config = require("blink.cmp.config")
 local suggestion = require("copilot.suggestion")
 
 local M = {}

@@ -7,6 +7,7 @@ local function is_in_git_repo()
 	return result == "true"
 end
 
+is_in_git_repo()
 ---@param file_path string
 ---@return boolean
 local function is_file_tracked(file_path)

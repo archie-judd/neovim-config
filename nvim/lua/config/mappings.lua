@@ -25,7 +25,7 @@ function M.core()
 	vim.g.mapleader = ";"
 
 	-- Close floating windows
-	vim.keymap.set({ "n", "i" }, "<C-q>", function()
+	vim.keymap.set({ "n" }, "<C-q>", function()
 		core_utils.close_active_or_topmost_floating_window(false)
 	end, { silent = true, noremap = true, desc = "Windows: close active or topmost floating window" })
 
@@ -553,7 +553,7 @@ function M.cmp()
 		silent = true,
 		desc = "Cmp/Copilot: Next suggestion",
 	})
-	vim.keymap.set("i", "<C-e>", cmp_utils.close, {
+	vim.keymap.set("i", "<C-q>", cmp_utils.close, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp/Copilot: Abort",
