@@ -15,12 +15,12 @@
           vimPlugins = prev.vimPlugins // {
             codecompanion-nvim = prev.vimUtils.buildVimPlugin {
               pname = "codecompanion.nvim";
-              version = "2025-16-15";
+              version = "2025-06-19";
               src = prev.fetchFromGitHub {
                 owner = "olimorris";
                 repo = "codecompanion.nvim";
-                rev = "621c734737801d9556cf0b50c27ef502a94b9cca";
-                sha256 = "13g8lj4f9z4wrcwcnddc5rmgly13269qi2jpx9a8bm93p8pgz12g";
+                rev = "dbefc41dba2f46720ecb6ecec34c0c5f80022f2b";
+                sha256 = "0497w205m831x2gx5w9fz1s42a08r75jj3yxj3r97fnffq8lzhrb";
               };
               dependencies = [ prev.vimPlugins.plenary-nvim ];
               checkInputs = [
