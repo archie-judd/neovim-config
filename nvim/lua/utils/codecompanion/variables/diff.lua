@@ -16,6 +16,7 @@ end
 ---@return nil
 function Variable:output()
 	local diff = vim.fn.system("git diff --no-ext-diff")
+	diff = string.format("```diff\n%s\n```", diff)
 	self.Chat:add_message({
 		role = config.constants.USER_ROLE,
 		content = diff,
