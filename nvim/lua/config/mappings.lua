@@ -610,12 +610,6 @@ function M.codecompanion()
 	vim.keymap.set({ "n" }, "<LocalLeader>c", function()
 		codecompanion_utils.open({ new = false })
 	end, { noremap = true, silent = true, desc = "CodeCompanion: Open chat" })
-	vim.keymap.set({ "n" }, "<LocalLeader>s", function()
-		local chat = codecompanion.last_chat()
-		if chat ~= nil then
-			chat:stop()
-		end
-	end, { noremap = true, silent = true, desc = "CodeCompanion: Stop chat" })
 	vim.keymap.set("n", "<LocalLeader>n", function()
 		codecompanion_utils.open({ new = true })
 	end, { noremap = true, silent = true, desc = "CodeCompanion: New chat" })
