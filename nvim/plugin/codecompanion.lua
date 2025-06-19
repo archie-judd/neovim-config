@@ -92,10 +92,10 @@ local function config()
 					show_default_prompt_library = true,
 				},
 			},
-			prompt_library = {
-				["Edit current buffer"] = prompts.edit_current_buffer,
-				["suggest commits"] = prompts.suggest_commits,
-			},
+		},
+		prompt_library = {
+			["Edit current buffer"] = prompts.edit_current_buffer,
+			["Suggest commits"] = prompts.suggest_commits,
 		},
 	})
 	-- expand cc to CodeCompanion in the command lines
