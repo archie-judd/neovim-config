@@ -44,7 +44,7 @@ function M.add_selection(opts)
 			.. context.filetype
 			.. "\n"
 			.. content
-			.. "\n```\n",
+			.. "\n```\n\n",
 	})
 end
 
