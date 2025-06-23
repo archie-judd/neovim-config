@@ -29,12 +29,12 @@ function M.open(opts)
 	return chat
 end
 
----@param opts table
+---@parac> opts table
 function M.add_selection(opts)
 	opts = opts or {}
 	local context = context_utils.get(vim.api.nvim_get_current_buf(), nil)
 	local content = table.concat(context.lines, "\n")
-	vim.cmd("normal! <Esc>")
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "nx", false)
 	local chat = M.open(opts)
 	chat:add_buf_message({
 		role = config.constants.USER_ROLE,
