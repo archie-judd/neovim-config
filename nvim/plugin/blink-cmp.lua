@@ -47,24 +47,25 @@ local function config()
 					module = "lazydev.integrations.blink",
 					score_offset = 100,
 				},
-				-- words = {
+				-- dictionary = {
 				-- 	name = "blink-cmp-words",
-				-- 	module = "blink-cmp-words",
-				-- 	opts = {
-				-- 		thesaurus_filetypes = { "text" },
-				-- 		dictionary_filetypes = {},
-				-- 	},
+				-- 	module = "blink-cmp-words.dictionary",
+				-- 	opts = {},
+				-- },
+				-- thesaurus = {
+				-- 	name = "blink-cmp-words",
+				-- 	module = "blink-cmp-words.thesaurus",
+				-- 	opts = {},
 				-- },
 			},
 			per_filetype = {
 				["dap-repl"] = { "dap" },
 				dap_watches = { "dap" },
-				words = { "text" },
+				-- text = { "thesaurus" },
+				-- markdown = { "thesaurus" },
 			},
 		},
-
 		appearance = { nerd_font_variant = "normal" },
-
 		signature = { enabled = false }, -- Untill they implement permanent toggling
 	})
 	usercommands.cmp()

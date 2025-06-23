@@ -9,8 +9,10 @@ function M.load_local_plugin(dir_path)
 		return
 	end
 	local dir_abs = vim.fn.fnamemodify(dir_path, ":p")
-	local parent = vim.fn.fnamemodify(dir_abs, ":h:h")
-	vim.opt.runtimepath:prepend(parent .. "/*")
+	vim.print(dir_abs)
+	local parent = vim.fn.fnamemodify(dir_abs, ":h")
+	vim.print(parent)
+	vim.opt.runtimepath:prepend(parent)
 end
 
 return M

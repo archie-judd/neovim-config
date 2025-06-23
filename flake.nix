@@ -5,9 +5,11 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     telescope-words.url =
       "github:archie-judd/telescope-words.nvim?ref=development";
+    blink-cmp-words.url = "github:archie-judd/blink-cmp-words?ref=development";
   };
 
-  outputs = { flake-utils, nixpkgs, nixpkgs-unstable, telescope-words, ... }:
+  outputs = { flake-utils, nixpkgs, nixpkgs-unstable, telescope-words
+    , blink-cmp-words, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         # Get V17.0.0 of codecompanion.nvim
@@ -60,6 +62,7 @@
           pkgs = pkgs;
           pkgs-unstable = pkgs-unstable;
           telescope-words = telescope-words;
+          blink-cmp-words = blink-cmp-words;
         };
 
         app = pkgs.writeShellApplication {

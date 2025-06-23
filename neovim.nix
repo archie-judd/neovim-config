@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, telescope-words }:
+{ pkgs, pkgs-unstable, telescope-words, blink-cmp-words }:
 
 let
 
@@ -70,6 +70,7 @@ let
     pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable
     pkgs-unstable.vimPlugins.diffview-nvim
     telescope-words.packages.${pkgs.system}.default
+    blink-cmp-words.packages.${pkgs.system}.default
   ];
 
   extraPackages = [
