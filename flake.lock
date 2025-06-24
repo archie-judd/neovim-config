@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1750719942,
-        "narHash": "sha256-QGppdBIQYD+u+hjiKlt0AJzwX3dVN2rRRRBuVemwmvg=",
+        "lastModified": 1750800837,
+        "narHash": "sha256-V6GzoVlWxCk14C8dF8XEIkWxCZsS43PrjYtdKn+NMrM=",
         "owner": "archie-judd",
         "repo": "blink-cmp-words",
-        "rev": "66d32bef04ec546fefe842b2a335e5ebf7f0e418",
+        "rev": "f6190f584075476ee9abd5aa736ef9085c9b2694",
         "type": "github"
       },
       "original": {
@@ -108,11 +108,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1750400657,
-        "narHash": "sha256-3vkjFnxCOP6vm5Pm13wC/Zy6/VYgei/I/2DWgW4RFeA=",
+        "lastModified": 1750622754,
+        "narHash": "sha256-kMhs+YzV4vPGfuTpD3mwzibWUE6jotw5Al2wczI0Pv8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "b2485d56967598da068b5a6946dadda8bfcbcd37",
+        "rev": "c7ab75210cb8cb16ddd8f290755d9558edde7ee1",
         "type": "github"
       },
       "original": {
