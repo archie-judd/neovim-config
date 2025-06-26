@@ -1,5 +1,4 @@
 local autocommands = require("config.autocommands")
-local utils = require("utils.lsp")
 
 local config = function()
 	autocommands.lspconfig()
@@ -15,12 +14,19 @@ local config = function()
 	vim.lsp.enable("emmet_language_server")
 
 	vim.lsp.config("ts_ls", {
-		commands = {
-			OrganizeTSImports = {
-				utils.tsserver_organize_imports,
-				description = "Organize Typescipt imports for current file",
-			},
-		},
+		on_attach = function(client, bufnr)
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				buffer = bufnr,
+				callback = function()
+					vim.lsp.buf.code_action({
+						context = {
+							only = { "source.organizeImports" },
+						},
+						apply = true,
+					})
+				end,
+			})
+		end,
 	})
 end
 
