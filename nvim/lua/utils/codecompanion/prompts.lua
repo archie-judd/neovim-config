@@ -36,7 +36,8 @@ Suggest a sequence of commits that make sense. Try to suggest the smallest numbe
 
 1. Commits should follow the Conventional Commit Specification.
 2. Commits should be listed in the order in which they should be applied.
-7. **IMPORTANT** make sense to format the response using the following rules:
+3. Under each commit, list the files that were changed in that commit.
+4. **IMPORTANT** make sense to format the response using the following rules:
 - Format your response with markdown.
 - Commits should appear in block-quotes under headered sections.
 ]]
