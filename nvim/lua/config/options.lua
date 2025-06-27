@@ -13,7 +13,7 @@ vim.opt.shortmess = "ctF" -- 'c' means 'don't show ins-completion mode messages'
 vim.opt.laststatus = 3 -- only one statusline
 vim.opt.backupcopy = "yes" -- when writing a file, make a copy of the original file in the backup location, instead of moving it (which can interfere with file watchers)
 vim.opt.shell = vim.env.SHELL
-vim.opt.shellcmdflag = "-c"
+vim.opt.shellcmdflag = "-ic"
 
 -- Clipboard
 vim.g.clipboard = { -- OSC52 clipboard

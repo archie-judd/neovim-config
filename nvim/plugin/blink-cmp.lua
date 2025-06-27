@@ -14,7 +14,12 @@ local function config()
 
 		cmdline = {
 			enabled = true,
-			keymap = { preset = "none" },
+			keymap = {
+				["C-y"] = { "accept" },
+				["C-e"] = { "cancel" },
+				["C-n"] = { "select_next" },
+				["C-p"] = { "select_prev" },
+			},
 			completion = { menu = { auto_show = true } },
 		},
 

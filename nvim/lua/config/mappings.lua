@@ -537,23 +537,24 @@ function M.typescript()
 end
 
 -- The mappings for copilot suggestions are also here to save my sanity
+-- Command line settings are in `blink-cmp.lua`
 function M.cmp()
-	vim.keymap.set({ "i", "c" }, "<C-y>", cmp_utils.accept, {
+	vim.keymap.set({ "i" }, "<C-y>", cmp_utils.accept, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp/Copilot: Accept suggestion",
 	})
-	vim.keymap.set({ "i", "c" }, "<C-p>", cmp_utils.select_prev, {
+	vim.keymap.set({ "i" }, "<C-p>", cmp_utils.select_prev, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp/Copilot: Prev suggestion",
 	})
-	vim.keymap.set({ "i", "c" }, "<C-n>", cmp_utils.select_next, {
+	vim.keymap.set({ "i" }, "<C-n>", cmp_utils.select_next, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp/Copilot: Next suggestion",
 	})
-	vim.keymap.set("i", "<C-q>", cmp_utils.close, {
+	vim.keymap.set("i", "<C-e>", cmp_utils.close, {
 		noremap = true,
 		silent = true,
 		desc = "Cmp/Copilot: Abort",
