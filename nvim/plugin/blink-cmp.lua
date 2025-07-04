@@ -87,8 +87,9 @@ local function config()
 				},
 			},
 			per_filetype = {
-				text = { "dictionary", "thesaurus" },
-				markdown = { "dictionary", "thesaurus" },
+				["dap-repl"] = { "dap" }, -- DAP REPL buffer
+				-- text = { "thesaurus" },
+				-- markdown = { "dictionary" },
 			},
 		},
 		appearance = { nerd_font_variant = "normal" },
