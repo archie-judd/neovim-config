@@ -5,7 +5,7 @@ local context_utils = require("codecompanion.utils.context")
 local M = {}
 
 ---@param opts table
----@return table
+---@return CodeCompanion.Chat
 function M.open(opts)
 	opts = opts or {}
 	local chat = codecompanion.last_chat()
@@ -29,7 +29,7 @@ function M.open(opts)
 	return chat
 end
 
----@parac> opts table
+---@param opts table
 function M.add_selection(opts)
 	opts = opts or {}
 	local context = context_utils.get(vim.api.nvim_get_current_buf(), nil)
@@ -38,13 +38,7 @@ function M.add_selection(opts)
 	local chat = M.open(opts)
 	chat:add_buf_message({
 		role = config.constants.USER_ROLE,
-		content = "Here is some code from "
-			.. context.filename
-			.. ":\n\n```"
-			.. context.filetype
-			.. "\n"
-			.. content
-			.. "\n```\n\n",
+		content = "```" .. context.filetype .. "\n" .. content .. "\n```\n\n",
 	})
 end
 
