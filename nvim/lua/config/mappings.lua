@@ -266,9 +266,15 @@ function M.telescope()
 	)
 	vim.keymap.set(
 		"n",
-		"<Leader>fc",
+		"<Leader>fd",
 		telescope.extensions.git_changed_files.git_changed_files,
 		{ silent = true, noremap = true, desc = "Telescope: find changed files" }
+	)
+	vim.keymap.set(
+		"n",
+		"<Leader>fc",
+		telescope.extensions.git_conflicts.git_conflicts,
+		{ silent = true, noremap = true, desc = "Telescope: find git conflicts" }
 	)
 	vim.keymap.set(
 		"n",
@@ -282,24 +288,6 @@ function M.telescope()
 		telescope.extensions.live_grep_args.live_grep_args,
 		{ silent = true, noremap = true, desc = "Telescope: live grep" }
 	)
-	vim.keymap.set(
-		"n",
-		"<Leader>fd",
-		telescope.extensions.telescope_words.search_dictionary_for_word_under_cursor,
-		{ silent = true, noremap = true, desc = "Telescope: search dictionary" }
-	)
-	vim.keymap.set(
-		"n",
-		"<Leader>ft",
-		telescope.extensions.telescope_words.search_thesaurus_for_word_under_cursor,
-		{ silent = true, noremap = true, desc = "Telescope: search thesaurus" }
-	)
-	vim.keymap.set("n", "<Leader>fn", function()
-		local notes_dir = os.getenv("HOME") .. "/workspaces/notes/"
-		telescope_builtin.find_files({
-			cwd = vim.fn.resolve(notes_dir),
-		})
-	end, { silent = true, noremap = true, desc = "Telescope: find files in notes" })
 end
 
 function M.oil()
