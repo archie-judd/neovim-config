@@ -57,7 +57,7 @@ local function make_entry(entry)
 	}
 end
 
-function M.git_conflicts()
+local function git_conflicts()
 	local conflicts = get_git_conflicts()
 
 	if #conflicts == 0 then
@@ -93,12 +93,9 @@ function M.git_conflicts()
 end
 
 -- Setup function
-function M.setup()
-	return telescope.register_extension({
-		exports = {
-			git_conflicts = M.git_conflicts,
-		},
-	})
-end
-
-return M
+return telescope.register_extension({
+	setup = function(ext_config, config) end,
+	exports = {
+		git_conflicts = git_conflicts,
+	},
+})
