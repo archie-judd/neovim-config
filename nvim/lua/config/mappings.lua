@@ -36,6 +36,11 @@ function M.core()
 		{ noremap = true, silent = true, desc = "Terminal: exit terminal mode" }
 	)
 
+	-- Move the the next or previous conflict
+
+	vim.keymap.set("n", "]x", utils.next_conflict, { desc = "Next merge conflict" })
+	vim.keymap.set("n", "[x", utils.prev_conflict, { desc = "Previous merge conflict" })
+
 	-- Delete unneeded default diagnosics mappings
 	vim.api.nvim_del_keymap("n", "<C-w>d")
 	vim.api.nvim_del_keymap("n", "<C-w><C-d>")
@@ -274,7 +279,7 @@ function M.telescope()
 		"n",
 		"<Leader>fc",
 		telescope.extensions.git_conflicts.git_conflicts,
-		{ silent = true, noremap = true, desc = "Telescope: find git conflicts" }
+		{ silent = true, noremap = true, desc = "Telescope: find git conflict" }
 	)
 	vim.keymap.set(
 		"n",

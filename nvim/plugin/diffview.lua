@@ -1,4 +1,3 @@
-local actions = require("diffview.actions")
 local autocommands = require("config.autocommands")
 local diffview = require("diffview")
 local mappings = require("config.mappings")
@@ -14,20 +13,6 @@ local config = function()
 			},
 		},
 		keymaps = {
-			view = {
-				{
-					"n",
-					"[c",
-					actions.prev_conflict,
-					{ desc = "In the merge-tool: jump to the previous conflict" },
-				},
-				{
-					"n",
-					"]c",
-					actions.next_conflict,
-					{ desc = "In the merge-tool: jump to the next conflict" },
-				},
-			},
 			file_panel = {
 				["-"] = false,
 			},

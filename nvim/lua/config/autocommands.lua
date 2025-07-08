@@ -1,5 +1,4 @@
 local codecompanion = require("codecompanion")
-local codecompanion_utils = require("utils.codecompanion.chat")
 local core_utils = require("utils.core")
 local dap = require("dap")
 local dap_utils = require("utils.dap")

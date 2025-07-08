@@ -124,4 +124,12 @@ function M.user_input_or_nil(prompt)
 	return input
 end
 
+function M.next_conflict()
+	vim.fn.search("^<<<<<<< ")
+end
+
+function M.prev_conflict()
+	vim.fn.search("^<<<<<<< ", "b")
+end
+
 return M
