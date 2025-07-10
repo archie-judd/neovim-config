@@ -38,17 +38,9 @@ local function config()
 					},
 				},
 				variables = {
-					["diff"] = {
+					["git_diff"] = {
 						callback = "utils.codecompanion.variables.diff",
 						description = "Share the git diff for unstaged files with the llm",
-					},
-					["sdiff"] = {
-						callback = "utils.codecompanion.variables.diff_staged",
-						description = "Share the git diff for staged files with the llm",
-					},
-					["gfiles"] = {
-						callback = "utils.codecompanion.variables.git_files",
-						description = "Share the relative paths of all files in the git repository with the llm",
 					},
 				},
 				slash_commands = {
