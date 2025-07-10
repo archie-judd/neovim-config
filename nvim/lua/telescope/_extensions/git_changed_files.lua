@@ -10,7 +10,7 @@ local function git_changed_files()
 	local cmd = {
 		"bash",
 		"-c",
-		"git diff --name-only && git diff --cached --name-only && git ls-files --others --exclude-standard",
+		"git status --porcelain | cut -c4-",
 	}
 
 	pickers
