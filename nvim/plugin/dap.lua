@@ -35,6 +35,7 @@ local config = function()
 	}
 
 	-- typescript / javscript
+	dap.defaults["pwa-node"].exception_breakpoints = { "raised", "uncaught" }
 	local js_debug_path = vim.fs.joinpath(
 		vim.fs.root(vim.fn.exepath("js-debug"), "lib"),
 		"lib/node_modules/js-debug/dist/src/dapDebugServer.js"
