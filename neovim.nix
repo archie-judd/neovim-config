@@ -67,6 +67,7 @@ let
     pkgs.vimPlugins.mini-surround
     pkgs.vimPlugins.mini-ai
     pkgs-unstable.vimPlugins.codecompanion-nvim # New features
+    pkgs-unstable.vimPlugins.codecompanion-history-nvim
     pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable
     pkgs-unstable.vimPlugins.diffview-nvim
     telescope-words.packages.${pkgs.system}.default

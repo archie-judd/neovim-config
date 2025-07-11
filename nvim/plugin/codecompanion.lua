@@ -89,6 +89,11 @@ local function config()
 			["Edit current buffer"] = prompts.edit_current_buffer,
 			["Suggest commits"] = prompts.suggest_commits,
 		},
+		extensions = {
+			history = {
+				enabled = true,
+			},
+		},
 	})
 	-- expand cc to CodeCompanion in the command lines
 	vim.cmd("cabbrev cc CodeCompanion")

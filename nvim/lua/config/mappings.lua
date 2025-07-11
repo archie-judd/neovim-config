@@ -613,6 +613,9 @@ function M.codecompanion()
 		codecompanion.actions,
 		{ noremap = true, silent = true, desc = "CodeCompanion: Open actions" }
 	)
+	vim.keymap.set("n", "<LocalLeader>fc", function()
+		vim.cmd("CodeCompanionHistory")
+	end, { noremap = true, silent = true, desc = "CodeCompanion: Find chats with telescope" })
 end
 
 function M.terminal()
