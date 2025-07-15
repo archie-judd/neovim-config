@@ -15,12 +15,12 @@ end
 function M.github_link()
 	vim.api.nvim_create_user_command("GitHubLink", function(opts)
 		---@type string | nil
-		local branch = opts.args
-		if branch == "" then
-			branch = nil
+		local rev = opts.args
+		if rev == "" then
+			rev = nil
 		end
 		local range = opts.range ~= 0
-		github_link.github_link({ branch = branch, remote = "origin", range = range })
+		github_link.github_link({ rev = rev, remote = "origin", range = range })
 	end, { nargs = "?", range = true })
 end
 
