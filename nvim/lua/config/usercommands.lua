@@ -20,7 +20,7 @@ function M.github_link()
 			branch = nil
 		end
 		local range = opts.range ~= 0
-		github_link.github_link({ branch = branch, range = range })
+		github_link.github_link({ branch = branch, remote = "origin", range = range })
 	end, { nargs = "?", range = true })
 end
 
