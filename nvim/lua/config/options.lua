@@ -1,8 +1,5 @@
 local osc52 = require("vim.ui.clipboard.osc52")
 
--- Color-scheme
-vim.cmd.colorscheme("catppuccin-mocha")
-
 -- Options
 vim.opt.number = true
 vim.opt.relativenumber = true
