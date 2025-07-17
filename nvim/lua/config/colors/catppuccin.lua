@@ -5,7 +5,7 @@ local config = function()
 		flavour = "mocha",
 		custom_highlights = function(colors)
 			return {
-				DiffText = { bg = "#5a4b34" },
+				DiffText = { bg = "#605955" },
 				DiffChange = { bg = "" },
 			}
 		end,
