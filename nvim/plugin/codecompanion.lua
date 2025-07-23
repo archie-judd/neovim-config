@@ -37,12 +37,6 @@ local function config()
 						wait_timeout = 120000, -- 2 minutes
 					},
 				},
-				variables = {
-					["git_diff"] = {
-						callback = "utils.codecompanion.variables.diff",
-						description = "Share the git diff for unstaged files with the llm",
-					},
-				},
 				slash_commands = {
 					["file"] = {
 						callback = "strategies.chat.slash_commands.file",
