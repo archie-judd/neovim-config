@@ -141,12 +141,25 @@ function M.diffview()
 			})
 			vim.keymap.set("n", "gr", function()
 				diffview.close()
-				diffview.open()
+				diffview.open({})
 			end, {
 				buffer = event.buf,
 				noremap = true,
 				silent = true,
 				desc = "Diffview: refresh",
+			})
+		end,
+	})
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = { "DiffviewFileHistory" },
+		callback = function(event)
+			vim.keymap.set("n", "<C-q>", function()
+				diffview.close()
+			end, {
+				buffer = event.buf,
+				noremap = true,
+				silent = true,
+				desc = "Diffview: close",
 			})
 		end,
 	})
@@ -162,17 +175,8 @@ function M.diffview()
 	vim.api.nvim_create_autocmd("BufWinEnter", {
 		pattern = "DiffviewFileHistoryPanel",
 		callback = function(event)
-			vim.print("DiffviewFileHistoryPanel")
 			local winid = vim.api.nvim_get_current_win()
 			vim.wo[winid].winfixbuf = true
-			vim.keymap.set("n", "<C-q>", function()
-				diffview.close()
-			end, {
-				buffer = event.buf,
-				noremap = true,
-				silent = true,
-				desc = "Diffview: close file history",
-			})
 		end,
 	})
 end
