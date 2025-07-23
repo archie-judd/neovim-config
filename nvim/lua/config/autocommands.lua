@@ -150,19 +150,6 @@ function M.diffview()
 			})
 		end,
 	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = { "DiffviewFileHistory" },
-		callback = function(event)
-			vim.keymap.set("n", "<C-q>", function()
-				diffview.close()
-			end, {
-				buffer = event.buf,
-				noremap = true,
-				silent = true,
-				desc = "Diffview: close file history",
-			})
-		end,
-	})
 	-- make sure we can't read buffers into the diffview file panel
 	vim.api.nvim_create_autocmd("BufWinEnter", {
 		pattern = "DiffviewFilePanel",
@@ -175,8 +162,17 @@ function M.diffview()
 	vim.api.nvim_create_autocmd("BufWinEnter", {
 		pattern = "DiffviewFileHistoryPanel",
 		callback = function(event)
+			vim.print("DiffviewFileHistoryPanel")
 			local winid = vim.api.nvim_get_current_win()
 			vim.wo[winid].winfixbuf = true
+			vim.keymap.set("n", "<C-q>", function()
+				diffview.close()
+			end, {
+				buffer = event.buf,
+				noremap = true,
+				silent = true,
+				desc = "Diffview: close file history",
+			})
 		end,
 	})
 end
