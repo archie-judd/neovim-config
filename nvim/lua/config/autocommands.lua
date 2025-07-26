@@ -45,6 +45,33 @@ function M.core()
 		end,
 	})
 	vim.api.nvim_create_autocmd("FileType", {
+		pattern = { "html", "htm", "xhtml", "xml", "svg" },
+		callback = function(event)
+			vim.o.colorcolumn = "120" -- Longer lines common in HTML
+			vim.o.tabstop = 2
+			vim.o.shiftwidth = 2
+			vim.o.expandtab = true
+		end,
+	})
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = { "css", "scss", "sass", "less" },
+		callback = function(event)
+			vim.o.colorcolumn = "80"
+			vim.o.tabstop = 2
+			vim.o.shiftwidth = 2
+			vim.o.expandtab = true
+		end,
+	})
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = { "javascript" },
+		callback = function(event)
+			vim.o.colorcolumn = "80"
+			vim.o.tabstop = 2
+			vim.o.shiftwidth = 2
+			vim.o.expandtab = true
+		end,
+	})
+	vim.api.nvim_create_autocmd("FileType", {
 		pattern = { "typescript" },
 		callback = function(event)
 			vim.o.colorcolumn = "101"
