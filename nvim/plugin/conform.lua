@@ -14,6 +14,8 @@ local config = function()
 			javascript = { "prettier" },
 			typescript = { "prettier" },
 			typescriptreact = { "prettier" },
+			css = { "prettier" },
+			html = { "prettier" },
 			json = function(bufnr)
 				if conform.get_formatter_info("prettier", bufnr).available then
 					return { "prettier" }
