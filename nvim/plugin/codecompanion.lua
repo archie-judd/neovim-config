@@ -60,6 +60,8 @@ local function config()
 					border = "single",
 					width = WINDOW_WIDTH,
 				},
+				intro_message = "",
+				show_token_count = true,
 				start_in_insert_mode = false,
 			},
 			debug_window = {
@@ -86,6 +88,9 @@ local function config()
 		extensions = {
 			history = {
 				enabled = true,
+				opts = {
+					auto_generate_title = true,
+				},
 			},
 		},
 	})
