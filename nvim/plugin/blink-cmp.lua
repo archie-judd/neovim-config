@@ -89,7 +89,7 @@ local function config()
 			per_filetype = {
 				["dap-repl"] = { "dap" }, -- DAP REPL buffer
 				-- text = { "thesaurus" },
-				-- markdown = { "dictionary" },
+				markdown = { "thesaurus" },
 			},
 		},
 		appearance = { nerd_font_variant = "normal" },

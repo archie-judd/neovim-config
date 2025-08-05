@@ -38,6 +38,7 @@ let
     pkgs.vimPlugins.nvim-treesitter-parsers.haskell
     pkgs.vimPlugins.nvim-treesitter-parsers.c
     pkgs.vimPlugins.nvim-treesitter-parsers.sql
+    pkgs.vimPlugins.nvim-treesitter-parsers.latex
     pkgs.vimPlugins.nvim-treesitter-textobjects
     pkgs.vimPlugins.nvim-treesitter-parsers.diff
     pkgs.vimPlugins.plenary-nvim
@@ -66,6 +67,7 @@ let
     pkgs.vimPlugins.render-markdown-nvim
     pkgs.vimPlugins.mini-surround
     pkgs.vimPlugins.mini-ai
+    pkgs.vimPlugins.vimtex
     pkgs-unstable.vimPlugins.codecompanion-nvim # New features
     pkgs-unstable.vimPlugins.codecompanion-history-nvim
     pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable

@@ -13,6 +13,7 @@ local config = function()
 	vim.lsp.enable("yamlls")
 	vim.lsp.enable("eslint")
 	vim.lsp.enable("emmet_language_server")
+	vim.lsp.enable("texlab")
 
 	vim.lsp.config("ts_ls", {
 		on_attach = function(client, bufnr)
