@@ -49,8 +49,8 @@ local function config()
 					},
 				},
 			},
-			inline = { adapter = "copilot", model = "claude-sonnet-4" },
-			agent = { adapter = "copilot", model = "claude-sonnet-4" },
+			inline = { adapter = { name = "copilot", model = "gpt-4o" } },
+			cmd = { adapter = { name = "copilot", model = "gpt-4o" } },
 		},
 		display = {
 			chat = {
