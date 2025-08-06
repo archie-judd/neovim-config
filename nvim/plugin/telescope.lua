@@ -55,6 +55,7 @@ local config = function()
 					},
 				},
 				layout_config = { preview_width = 0.65 },
+				similarity_depth = 3,
 			},
 		},
 		pickers = {
