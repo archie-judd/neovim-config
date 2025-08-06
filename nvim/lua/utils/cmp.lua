@@ -64,7 +64,6 @@ function M.toggle_documentation()
 end
 
 function M.toggle_signature()
-	vim.print("Toggling signature help")
 	vim.g.cmp_signature_help = not vim.g.cmp_signature_help
 	if vim.g.cmp_signature_help then
 		cmp.hide_signature()

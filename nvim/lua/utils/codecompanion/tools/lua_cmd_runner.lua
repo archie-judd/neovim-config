@@ -71,7 +71,6 @@ return {
 			if stdout and vim.tbl_isempty(stdout) then
 				message = string.format("%s\n\nNo output was returned.", message)
 			else
-				vim.print(stdout)
 				message = string.format("%s\n\nOutput:\n%s", message, stdout[1])
 			end
 			agent.chat:add_tool_output(self, message)
