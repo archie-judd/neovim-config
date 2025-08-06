@@ -11,7 +11,7 @@ local function config()
 			chat = {
 				adapter = {
 					name = "copilot",
-					model = "claude-sonnet-4",
+					model = "gpt-4o",
 				},
 				keymaps = {
 					-- make unreachable ( I use my own functions )
