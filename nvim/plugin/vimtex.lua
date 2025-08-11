@@ -5,6 +5,20 @@ local config = function()
 		vim.g.vimtex_view_method = "zathura"
 	end
 	vim.g.vimtex_compiler_method = "latexmk"
+	vim.g.vimtex_compiler_latexmk = {
+		aux_dir = "aux",
+		out_dir = "out",
+		callback = 1,
+		continuous = 1,
+		executable = "latexmk",
+		hooks = {},
+		options = {
+			"-verbose",
+			"-file-line-error",
+			"-synctex=1",
+			"-interaction=nonstopmode",
+		},
+	}
 end
 
 config()
