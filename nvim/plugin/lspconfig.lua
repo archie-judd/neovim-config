@@ -17,53 +17,63 @@ local config = function()
 
 	vim.lsp.config("ts_ls", {
 		on_attach = function(client, bufnr)
-			-- This happens asynchronously, so we need to ensure we don't register the autocmd multiple times.
-			-- We also add a handler to write the file after organizing imports.
-			local organizing = false
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				buffer = bufnr,
 				callback = function()
-					if organizing then
-						return
-					end
-
-					organizing = true
-					local range_params = vim.lsp.util.make_range_params(nil, "utf-8")
+					local line_count = vim.api.nvim_buf_line_count(bufnr)
 					local params = {
-						textDocument = range_params.textDocument,
-						range = range_params.range,
+						textDocument = {
+							uri = vim.uri_from_bufnr(bufnr),
+						},
+						range = {
+							start = { line = 0, character = 0 },
+							["end"] = { line = line_count, character = 0 },
+						},
 						context = {
 							only = { "source.organizeImports" },
 							diagnostics = {},
 						},
 					}
-					vim.lsp.buf_request(
-						bufnr,
-						"textDocument/codeAction",
-						params,
-						-- Callback handler to write the file after organizing imports
-						function(err, result, _)
-							if err then
-								organizing = false
-								pcall(vim.cmd.write)
-								return
-							end
-							if result then
-								for _, action in ipairs(result) do
+
+					local result = vim.lsp.buf_request_sync(bufnr, "textDocument/codeAction", params, 3000)
+
+					local actions_applied = 0
+					if result then
+						for client_id, response in pairs(result) do
+							if response.result and #response.result > 0 then
+								for _, action in ipairs(response.result) do
 									if action.edit then
 										vim.lsp.util.apply_workspace_edit(action.edit, "utf-8")
+										actions_applied = actions_applied + 1
 									elseif action.command then
-										vim.lsp.buf_request_sync(0, "workspace/executeCommand", action.command)
+										local res = vim.lsp.buf_request_sync(
+											bufnr,
+											"workspace/executeCommand",
+											action.command,
+											1000
+										)
+										if res and res[client_id] and res[client_id].result then
+											actions_applied = actions_applied + 1
+										elseif not res or not res[client_id] or res[client_id].error then
+											vim.notify(
+												"Failed to execute command: "
+													.. (
+														res and res[client_id] and res[client_id].error.message
+														or "Unknown error"
+													),
+												vim.log.levels.ERROR
+											)
+										end
 									end
 								end
+							elseif response.error then
+								vim.notify(
+									"Import organization failed: " .. response.error.message,
+									vim.log.levels.ERROR
+								)
 							end
-							organizing = false
-							vim.schedule(function()
-								pcall(vim.cmd.write)
-							end)
 						end
-					)
-					return true
+					end
 				end,
 			})
 		end,
