@@ -1,6 +1,16 @@
 local nvim_treesitter_configs = require("nvim-treesitter.configs")
 
 local config = function()
+	vim.treesitter.query.set(
+		"markdown",
+		"textobjects",
+		[[;extends
+    (fenced_code_block) @fenced_code_block.outer
+
+    (fenced_code_block
+       (code_fence_content) @fenced_code_block.inner)
+    ]]
+	)
 	nvim_treesitter_configs.setup({
 		textobjects = {
 			select = {
@@ -15,6 +25,8 @@ local config = function()
 					["if"] = { query = "@function.inner", desc = "Treesitter: select function inner" },
 					["aC"] = { query = "@class.outer", desc = "Treesitter: select class outer" },
 					["iC"] = { query = "@class.inner", desc = "Treesitter: select class inner" },
+					["ab"] = { query = "@fenced_code_block.outer", desc = "Treesitter: select block outer" },
+					["ib"] = { query = "@fenced_code_block.inner", desc = "Treesitter: select block outer" },
 					["as"] = {
 						query = "@scope",
 						query_group = "locals",

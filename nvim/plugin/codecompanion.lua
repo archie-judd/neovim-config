@@ -101,6 +101,8 @@ local function config()
 	})
 	-- expand cc to CodeCompanion in the command lines
 	vim.cmd("cabbrev cc CodeCompanion")
+	-- register the markdown language for CodeCompanion
+	-- vim.treesitter.language.register("markdown", "codecompanion")
 	mappings.codecompanion()
 	autocommands.codecompanion()
 end
