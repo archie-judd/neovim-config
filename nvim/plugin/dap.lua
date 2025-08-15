@@ -63,6 +63,7 @@ local config = function()
 			skipFiles = { "<node_internals>/**", "node_modules/**" },
 			sourceMaps = true,
 			console = "integratedTerminal",
+			outputCapture = "none", -- to stop capturing output and sending it to the repl
 		},
 		{
 			-- Debug using ts-node (not node), with the transpile-only option, to skip type checking
@@ -78,6 +79,7 @@ local config = function()
 				"${workspaceFolder}/node_modules/**",
 			},
 			console = "integratedTerminal",
+			outputCapture = "none", -- to stop capturing output and sending it to the repl
 		},
 		{
 			-- Debug .test.ts files with jest
@@ -92,6 +94,7 @@ local config = function()
 				"${file}",
 			},
 			console = "integratedTerminal",
+			outputCapture = "none", -- to stop capturing output and sending it to the repl
 		},
 	}
 	mappings.dap()
