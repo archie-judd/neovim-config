@@ -459,7 +459,7 @@ function M.gitsigns(buffer)
 		"n",
 		"<Leader>hs",
 		gitsigns.stage_hunk,
-		{ silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: stage hunk" }
+		{ silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: stage/unstage hunk" }
 	)
 	vim.keymap.set(
 		"n",
@@ -468,17 +468,11 @@ function M.gitsigns(buffer)
 		{ silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: reset hunk" }
 	)
 	vim.keymap.set("v", "<Leader>hs", function()
-		gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-	end, { silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: stage hunk" })
+		gitsigns.stage_hunk({ vim.fn.line("'<"), vim.fn.line("'>") })
+	end, { silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: stage/unstage selection" })
 	vim.keymap.set("v", "<Leader>hr", function()
-		gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-	end, { silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: reset hunk" })
-	vim.keymap.set(
-		"n",
-		"<Leader>hu",
-		gitsigns.undo_stage_hunk,
-		{ silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: undo stage hunk" }
-	)
+		gitsigns.reset_hunk({ vim.fn.line("'<."), vim.fn.line("'>") })
+	end, { silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: reset selection" })
 	vim.keymap.set("n", "<Leader>gb", function()
 		gitsigns.blame_line({ full = true })
 	end, { silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: line blame" })
