@@ -26,6 +26,22 @@ local config = function()
 	vim.lsp.enable("texlab")
 
 	vim.lsp.config("ts_ls", {
+		settings = {
+			typescript = {
+				format = {
+					tabSize = 2,
+					indentSize = 2,
+					convertTabsToSpaces = true, -- Use tabs, not spaces
+				},
+			},
+			javascript = {
+				format = {
+					tabSize = 2,
+					indentSize = 2,
+					convertTabsToSpaces = true,
+				},
+			},
+		},
 		on_attach = function(client, bufnr)
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				buffer = bufnr,

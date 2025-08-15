@@ -77,6 +77,7 @@ function M.core()
 			vim.o.colorcolumn = "101"
 			vim.o.tabstop = 2
 			vim.o.shiftwidth = 2
+			vim.o.expandtab = true
 			mappings.typescript()
 		end,
 	})
