@@ -119,7 +119,9 @@ local make_github_link = function(remote_url, commit, file_path, lines)
 
 	if lines ~= nil then
 		local lines_str = "L" .. lines.start
-		if lines.start ~= lines["end"] then
+		if lines.start == lines["end"] then
+			url = string.format("%s#%s", url, lines_str)
+		elseif lines.start ~= lines["end"] then
 			lines_str = lines_str .. "-L" .. lines["end"]
 			url = string.format("%s#%s", url, lines_str)
 		end
