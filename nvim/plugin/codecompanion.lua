@@ -2,6 +2,7 @@ local autocommands = require("config.autocommands")
 local codecompanion = require("codecompanion")
 local mappings = require("config.mappings")
 local prompts = require("utils.codecompanion.prompts")
+local providers = require("codecompanion.providers")
 
 local function config()
 	local WINDOW_WIDTH = 0.4
@@ -71,7 +72,7 @@ local function config()
 			},
 			diff = {
 				enabled = true,
-				provider = "default",
+				provider = "inline",
 			},
 			action_palette = {
 				provider = "telescope",
