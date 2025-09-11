@@ -15,7 +15,6 @@ local telescope = require("telescope")
 local telescope_builtin = require("telescope.builtin")
 local terminal = require("terminal")
 local utils = require("utils.core")
-local yank_utils = require("utils.yank")
 
 -- It's useful to have core mappings in one file, so accidental remaps can be easily spotted.
 local M = {}
@@ -154,44 +153,6 @@ function M.core()
 	-- Inserting new lines
 	vim.keymap.set("n", "<Leader>o", "jO<Esc>k", { silent = true, noremap = true, desc = "Insert line: below" })
 	vim.keymap.set("n", "<Leader>O", "ko<Esc>j", { silent = true, noremap = true, desc = "Insert line: above" })
-
-	-- Yanking filepaths
-	vim.keymap.set(
-		"n",
-		"<Leader>yp",
-		yank_utils.yank_abs_filepath_to_unnamed_register,
-		{ silent = true, noremap = true, desc = "Yank: yank absolute filepath to the unnamed register" }
-	)
-	vim.keymap.set(
-		"n",
-		"<Leader>yp+",
-		yank_utils.yank_abs_filepath_to_system_register,
-		{ silent = true, noremap = true, desc = "Yank: yank absolute filepath to the system register" }
-	)
-	vim.keymap.set(
-		"n",
-		"<Leader>yr",
-		yank_utils.yank_rel_filepath_to_unnamed_register,
-		{ silent = true, noremap = true, desc = "Yank: yank relative filepath to the unnamed register" }
-	)
-	vim.keymap.set(
-		"n",
-		"<Leader>yr+",
-		yank_utils.yank_rel_filepath_to_system_register,
-		{ silent = true, noremap = true, desc = "Yank: yank relative filename to the system register" }
-	)
-	vim.keymap.set(
-		"n",
-		"<Leader>yn",
-		yank_utils.yank_filename_to_unnamed_register,
-		{ silent = true, noremap = true, desc = "Yank: yank filename to the unnamed register" }
-	)
-	vim.keymap.set(
-		"n",
-		"<Leader>yn+",
-		yank_utils.yank_filename_to_system_register,
-		{ silent = true, noremap = true, desc = "Yank: yank filename to the system register" }
-	)
 end
 
 ---@param bufnr integer

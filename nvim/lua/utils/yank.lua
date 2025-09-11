@@ -1,33 +1,39 @@
 M = {}
 
-function M.yank_abs_filepath_to_unnamed_register()
+--- Yank the current file absolute path to the specified register.
+--- Defaults to the system clipboard register if none is provided.
+--- @param register string|nil
+function M.yank_abs_filepath(register)
+	if register == nil then
+		register = "+"
+	end
 	local file_path = vim.fn.expand("%:p")
-	vim.fn.setreg("", file_path)
+	vim.fn.setreg(register, file_path)
+	vim.notify("Yanked '" .. file_path .. "' to register " .. register, vim.log.levels.INFO)
 end
 
-function M.yank_abs_filepath_to_system_register()
-	local file_path = vim.fn.expand("%:p")
-	vim.fn.setreg("+", file_path)
-end
-
-function M.yank_rel_filepath_to_unnamed_register()
+--- Yank the current file path relative to the current working directory to the specified register.
+--- Defaults to the system clipboard register if none is provided.
+--- @param register string|nil
+function M.yank_rel_filepath(register)
+	if register == nil then
+		register = "+"
+	end
 	local file_path = vim.fn.expand("%:.")
-	vim.fn.setreg("", file_path)
+	vim.fn.setreg(register, file_path)
+	vim.notify("Yanked '" .. file_path .. "' to register " .. register, vim.log.levels.INFO)
 end
 
-function M.yank_rel_filepath_to_system_register()
-	local file_name = vim.fn.expand("%:.")
-	vim.fn.setreg("+", file_name)
-end
-
-function M.yank_filename_to_unnamed_register()
+--- Yank the current file name (without path) to the specified register.
+--- Defaults to the system clipboard register if none is provided.
+--- @param register string|nil
+function M.yank_filename(register)
+	if register == nil then
+		register = "+"
+	end
 	local file_name = vim.fn.expand("%:t")
-	vim.fn.setreg("", file_name)
-end
-
-function M.yank_filename_to_system_register()
-	local file_name = vim.fn.expand("%:t")
-	vim.fn.setreg("+", file_name)
+	vim.fn.setreg(register, file_name)
+	vim.notify("Yanked '" .. file_name .. "' to register " .. register, vim.log.levels.INFO)
 end
 
 return M

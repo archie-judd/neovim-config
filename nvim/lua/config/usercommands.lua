@@ -1,5 +1,6 @@
 local clear_registers = require("clear_registers")
 local github_link = require("github_link")
+local yank_utils = require("utils.yank")
 
 local M = {}
 
@@ -34,6 +35,33 @@ function M.clear_registers()
 		end
 		clear_registers.clear_registers(unpack(registers))
 	end, { nargs = 1 })
+end
+
+function M.yank_filepath()
+	---@param yank_function fun(register: string | nil): nil
+	---@return fun(opts: { args: string | nil }): nil
+	local function mk_yank_with_register(yank_function)
+		-- zero or one argument (the register)
+		return function(opts)
+			local register = opts.args
+			if register == "" then
+				register = nil
+			end
+			yank_function(register)
+		end
+	end
+
+	vim.api.nvim_create_user_command(
+		"YankAbsFilepath",
+		mk_yank_with_register(yank_utils.yank_abs_filepath),
+		{ nargs = "?" }
+	)
+	vim.api.nvim_create_user_command(
+		"YankRelFilepath",
+		mk_yank_with_register(yank_utils.yank_rel_filepath),
+		{ nargs = "?" }
+	)
+	vim.api.nvim_create_user_command("YankFilename", mk_yank_with_register(yank_utils.yank_filename), { nargs = "?" })
 end
 
 return M
