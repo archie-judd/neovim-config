@@ -2,7 +2,6 @@ local autocommands = require("config.autocommands")
 local codecompanion = require("codecompanion")
 local mappings = require("config.mappings")
 local prompts = require("utils.codecompanion.prompts")
-local providers = require("codecompanion.providers")
 
 local function config()
 	local WINDOW_WIDTH = 0.4
@@ -36,6 +35,12 @@ local function config()
 					},
 					opts = {
 						wait_timeout = 120000, -- 2 minutes
+					},
+				},
+				variables = {
+					["staged_diff"] = {
+						callback = "utils.codecompanion.variables.staged_diff",
+						description = "Share the output of `git diff --cached` with the LLM",
 					},
 				},
 				slash_commands = {
