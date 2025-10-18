@@ -72,7 +72,6 @@ local function config()
 			},
 			per_filetype = {
 				["dap-repl"] = { "dap" },
-				markdown = { "thesaurus" },
 			},
 		},
 		appearance = { nerd_font_variant = "normal" },
