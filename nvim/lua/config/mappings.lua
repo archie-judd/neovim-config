@@ -400,14 +400,14 @@ function M.gitsigns(buffer)
 		if vim.wo.diff then
 			vim.cmd.normal({ "]c", bang = true })
 		else
-			gitsigns.nav_hunk("next")
+			gitsigns.nav_hunk("next", { target = "all" })
 		end
 	end, { silent = true, buffer = buffer, desc = "Gitsigns: next hunk" })
 	vim.keymap.set("n", "[c", function()
 		if vim.wo.diff then
 			vim.cmd.normal({ "[c", bang = true })
 		else
-			gitsigns.nav_hunk("prev")
+			gitsigns.nav_hunk("prev", { target = "all" })
 		end
 	end, { silent = true, buffer = buffer, desc = "Gitsigns: prev hunk" })
 	vim.keymap.set(
