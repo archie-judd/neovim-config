@@ -12,9 +12,50 @@
     , blink-cmp-words, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
+        overlay = final: prev: {
+          vimPlugins = prev.vimPlugins // {
+            codecompanion-nvim = prev.vimUtils.buildVimPlugin {
+              pname = "codecompanion.nvim";
+              version = "2025-11-11";
+              src = prev.fetchFromGitHub {
+                owner = "archie-judd";
+                repo = "codecompanion.nvim";
+                rev = "fix-load-user-slash-commands";
+                sha256 = "sha256-0WrwPTe44qsljco5tK7VyQ9SSFBYFpNzZYfa08X5yCY";
+              };
+              dependencies = [ prev.vimPlugins.plenary-nvim ];
+              checkInputs = [
+                # Optional completion
+                prev.vimPlugins.blink-cmp
+                prev.vimPlugins.nvim-cmp
+                # Optional pickers
+                prev.vimPlugins.fzf-lua
+                prev.vimPlugins.mini-nvim
+                prev.vimPlugins.snacks-nvim
+                prev.vimPlugins.telescope-nvim
+              ];
+              nvimSkipModules = [
+                # Requires setup call
+                "codecompanion.actions.static"
+                "codecompanion.actions.init"
+                # Test
+                "minimal"
+              ];
+              meta.homepage =
+                "https://github.com/archie-judd/codecompanion.nvim/";
+              meta.hydraPlatforms = [ ];
+            };
+          };
+        };
 
-        pkgs = import nixpkgs { inherit system; };
-        pkgs-unstable = import nixpkgs-unstable { inherit system; };
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ overlay ];
+        };
+        pkgs-unstable = import nixpkgs-unstable {
+          inherit system;
+          overlays = [ overlay ];
+        };
 
         neovim = pkgs.callPackage ./neovim.nix {
           pkgs = pkgs;
