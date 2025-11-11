@@ -53,6 +53,15 @@ local function config()
 							provider = "telescope",
 						},
 					},
+					["git_changed"] = {
+						callback = "utils.codecompanion.slash_commands.git_changed_files",
+						description = "Select a changed file within the git repository",
+						opts = {
+							contains_code = true,
+							max_lines = 1000,
+							provider = "telescope",
+						},
+					},
 				},
 			},
 			inline = { adapter = { name = "copilot", model = "gpt-4o" } },
