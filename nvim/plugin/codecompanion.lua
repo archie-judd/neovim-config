@@ -52,6 +52,11 @@ local function config()
 							max_lines = 1000,
 							provider = "telescope",
 						},
+						keymaps = {
+							modes = {
+								n = { "<Space>f" },
+							},
+						},
 					},
 					["git_changed"] = {
 						callback = "utils.codecompanion.slash_commands.git_changed_files",
@@ -60,6 +65,18 @@ local function config()
 							contains_code = true,
 							max_lines = 1000,
 							provider = "telescope",
+						},
+						keymaps = {
+							modes = {
+								n = { "<Space>g" },
+							},
+						},
+					},
+					["buffer"] = {
+						keymaps = {
+							modes = {
+								n = { "<Space>b" },
+							},
 						},
 					},
 				},
