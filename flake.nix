@@ -15,13 +15,13 @@
         overlay = final: prev: {
           vimPlugins = prev.vimPlugins // {
             codecompanion-nvim = prev.vimUtils.buildVimPlugin {
-              pname = "codecompanion.nvim";
-              version = "2025-11-11";
+              pname = "codecompanion-custom";
+              version = "2025-11-12";
               src = prev.fetchFromGitHub {
-                owner = "archie-judd";
+                owner = "olimorris";
                 repo = "codecompanion.nvim";
-                rev = "fix-load-user-slash-commands";
-                sha256 = "sha256-0WrwPTe44qsljco5tK7VyQ9SSFBYFpNzZYfa08X5yCY";
+                rev = "47e6e1d24864d2bf8ace8904eff7a41bdf1d3126";
+                sha256 = "sha256-1h8nyVJcwRO8l5nQHGE3MTZkHz68x+RF112mfYwdgZw=";
               };
               dependencies = [ prev.vimPlugins.plenary-nvim ];
               checkInputs = [
@@ -42,9 +42,17 @@
                 "minimal"
               ];
               meta.homepage =
-                "https://github.com/archie-judd/codecompanion.nvim/";
+                "https://github.com/olimorris/codecompanion.nvim/";
               meta.hydraPlatforms = [ ];
             };
+            # We need to override the history plugin to depend on our custom codecompanion (otherwise it provides the original one, causing conflicts).
+            codecompanion-history-nvim =
+              prev.vimPlugins.codecompanion-history-nvim.overrideAttrs (old: {
+                dependencies = builtins.filter
+                  (dep: dep != prev.vimPlugins.codecompanion-nvim)
+                  (old.dependencies or [ ])
+                  ++ [ final.vimPlugins.codecompanion-nvim ];
+              });
           };
         };
 
@@ -70,5 +78,13 @@
           runtimeInputs = neovim.extraPackages;
         };
 
-      in { packages.default = app; });
+      in {
+        packages.default = app;
+
+        codecompanion-rev =
+          pkgs-unstable.vimPlugins.codecompanion-nvim.src.rev or "unknown";
+        codecompanion-sha =
+          pkgs-unstable.vimPlugins.codecompanion-nvim.src.outputHash or "unknown";
+
+      });
 }

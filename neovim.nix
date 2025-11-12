@@ -67,7 +67,7 @@ let
     pkgs.vimPlugins.render-markdown-nvim
     pkgs.vimPlugins.vimtex
     pkgs.vimPlugins.mini-ai
-    pkgs-unstable.vimPlugins.codecompanion-nvim # New features
+    pkgs-unstable.vimPlugins.codecompanion-nvim
     pkgs-unstable.vimPlugins.codecompanion-history-nvim
     pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable
     pkgs-unstable.vimPlugins.diffview-nvim
