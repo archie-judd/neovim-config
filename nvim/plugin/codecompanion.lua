@@ -45,7 +45,7 @@ local function config()
 				},
 				slash_commands = {
 					["file"] = {
-						callback = "strategies.chat.slash_commands.file",
+						callback = "strategies.chat.slash_commands.catalog.file",
 						description = "Insert a file",
 						opts = {
 							contains_code = true,
