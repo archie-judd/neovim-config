@@ -88,7 +88,6 @@ let
     pkgs.vscode-langservers-extracted # eslint language server
     # python
     pkgs.pyright
-    pkgs.pytest
     # bash
     pkgs.bash-language-server # lsp
     pkgs.shfmt # formatter
@@ -120,7 +119,7 @@ in {
   # We use .override to change the python3 argument that callPackage provided (from the default
   # python3 to python312). Then we call the resulting function with neovim-unwrapped and our
   # desired wrapper configuration parameters.
-  package = (pkgs.wrapNeovimUnstable.override { python3 = pkgs.python312; })
+  package = (pkgs.wrapNeovimUnstable.override { python3 = pkgs.python313; })
     pkgs.neovim-unwrapped {
       # These parameters go to the 'wrapper' function
       withPython3 = true;
