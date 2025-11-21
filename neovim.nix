@@ -88,6 +88,7 @@ let
     pkgs.vscode-langservers-extracted # eslint language server
     # python
     pkgs.pyright
+    pkgs.pytest
     # bash
     pkgs.bash-language-server # lsp
     pkgs.shfmt # formatter
@@ -113,18 +114,23 @@ let
   extraPython3Packages = pyPkgs: [ pyPkgs.debugpy ];
 
 in {
-
-  package = pkgs-unstable.neovim.override {
-    configure = {
-      packages.all.start = plugins;
-      customRC = customRC;
+  # wrapNeovimUnstable is a curried function that is partially applied by callPackage here:
+  # https://github.com/NixOS/nixpkgs/blob/a8d610af3f1a5fb71e23e08434d8d61a466fc942/pkgs/top-level/all-packages.nix
+  # and defined here: https://github.com/NixOS/nixpkgs/blob/a8d610af3f1a5fb71e23e08434d8d61a466fc942/pkgs/applications/editors/neovim/wrapper.nix
+  # We use .override to change the python3 argument that callPackage provided (from the default
+  # python3 to python312). Then we call the resulting function with neovim-unwrapped and our
+  # desired wrapper configuration parameters.
+  package = (pkgs.wrapNeovimUnstable.override { python3 = pkgs.python312; })
+    pkgs.neovim-unwrapped {
+      # These parameters go to the 'wrapper' function
+      withPython3 = true;
+      withNodeJs = true;
+      withRuby = false;
+      withPerl = false;
+      extraPython3Packages = extraPython3Packages;
+      plugins = plugins;
+      neovimRcContent = customRC;
     };
-    withPython3 = true;
-    withNodeJs = true;
-    withRuby = false;
-    extraPython3Packages = extraPython3Packages;
-  };
-
   extraPackages = extraPackages;
 }
 
