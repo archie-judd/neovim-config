@@ -5,12 +5,13 @@ local prompts = require("utils.codecompanion.prompts")
 
 local function config()
 	local WINDOW_WIDTH = 0.4
-	local DEFAULT_ADAPTER = { name = "copilot", model = "gpt-5-mini" }
+	local DEFAULT_ADAPTER = "copilot"
+	local DEFAULT_MODEL = "gpt-5-mini"
 	codecompanion.setup({
 		strategies = {
 			-- Change the default chat adapter
 			chat = {
-				adapter = DEFAULT_ADAPTER,
+				adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL },
 				keymaps = {
 					-- make unreachable ( I use my own functions )
 					send = {
@@ -79,8 +80,8 @@ local function config()
 					},
 				},
 			},
-			inline = { adapter = DEFAULT_ADAPTER },
-			cmd = { adapter = DEFAULT_ADAPTER },
+			inline = { adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL } },
+			cmd = { adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL } },
 		},
 		display = {
 			chat = {
@@ -121,10 +122,10 @@ local function config()
 				opts = {
 					auto_generate_title = true,
 					title_generation_opts = {
-						adapter = "copilot",
-						model = "gpt-4o",
+						adapter = DEFAULT_ADAPTER,
+						model = DEFAULT_MODEL,
 					},
-					summary_generation_opts = { adapter = "copilot", model = "gpt-4o" },
+					summary_generation_opts = { adapter = DEFAULT_ADAPTER, model = DEFAULT_MODEL },
 				},
 			},
 		},
