@@ -12,7 +12,6 @@ local config = function()
 	-- python
 	local python_debugger_path = vim.g.python3_host_prog
 	local python_path = vim.fn.exepath("python") ~= "" and vim.fn.exepath("python") or vim.fn.exepath("python3") -- use the path for "python", if it exists, else use the path for "python3"
-	dap.defaults.python.exception_breakpoints = "userUnhandled" -- I found I needed this to get pytest + debugpy to stop on exceptions, see here: https://github.com/microsoft/debugpy/issues/111
 	dap.adapters.python = {
 		type = "executable",
 		command = python_debugger_path,
@@ -31,7 +30,7 @@ local config = function()
 			console = "integratedTerminal",
 			pythonPath = python_path,
 			env = { PYTHONPATH = "${workspaceFolder}", MPLBACKEND = "Agg" },
-			justMyCode = false, -- enable debugging of third party packages
+			justMyCode = true,
 		},
 	}
 

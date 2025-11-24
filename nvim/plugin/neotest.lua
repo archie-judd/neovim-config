@@ -9,9 +9,17 @@ local config = function()
 			neotest_python({
 				dap = {
 					cwd = "${workspaceFolder}",
-					env = { PYTHONPATH = "${workspaceFolder}", MPLBACKEND = "Agg" },
+					env = {
+						PYTHONPATH = "${workspaceFolder}",
+						MPLBACKEND = "Agg",
+						-- Disable Python 3.12+ sys.monitoring optimization (PEP 669).
+						-- This forces debugpy to use the legacy sys.settrace mechanism,
+						-- ensuring the debugger pauses at the source of the error
+						-- rather than inside Pytest's internal context manager.
+						PYDEVD_USE_SYS_MONITORING = "0",
+					},
 					console = "integratedTerminal",
-					justMyCode = false, -- enable debugging of third party packages
+					justMyCode = true,
 				},
 				runner = "pytest",
 				args = { "-s" }, -- disable output capture
