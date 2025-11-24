@@ -11,9 +11,10 @@ local config = function()
 					cwd = "${workspaceFolder}",
 					env = { PYTHONPATH = "${workspaceFolder}", MPLBACKEND = "Agg" },
 					console = "integratedTerminal",
-					justMyCode = true, -- enable debugging of third party packages
+					justMyCode = false, -- enable debugging of third party packages
 				},
 				runner = "pytest",
+				args = { "-s" }, -- disable output capture
 				python = python_path,
 			}),
 		},
