@@ -61,6 +61,7 @@ let
     pkgs.vimPlugins.lualine-nvim
     pkgs.vimPlugins.neotest
     pkgs.vimPlugins.neotest-python
+    pkgs.vimPlugins.neotest-vitest
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
     pkgs.vimPlugins.indent-blankline-nvim

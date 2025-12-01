@@ -1,6 +1,7 @@
 local mappings = require("config.mappings")
 local neotest = require("neotest")
 local neotest_python = require("neotest-python")
+local neotest_vitest = require("neotest-vitest")
 
 local config = function()
 	local python_path = vim.fn.exepath("python") ~= "" and vim.fn.exepath("python") or vim.fn.exepath("python3")
@@ -25,6 +26,7 @@ local config = function()
 				args = { "-s" }, -- disable output capture
 				python = python_path,
 			}),
+			neotest_vitest({}),
 		},
 	})
 	mappings.neotest()
