@@ -73,8 +73,8 @@ let
     pkgs.vimPlugins.codecompanion-history-nvim
     pkgs.vimPlugins.oil-nvim # Floating preview was not in stable
     pkgs.vimPlugins.diffview-nvim
-    telescope-words.packages.${pkgs.system}.default
-    blink-cmp-words.packages.${pkgs.system}.default
+    telescope-words.packages.${pkgs.stdenv.hostPlatform.system}.default
+    blink-cmp-words.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   extraPackages = [
