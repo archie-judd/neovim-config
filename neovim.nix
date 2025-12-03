@@ -45,6 +45,7 @@ let
     pkgs.vimPlugins.catppuccin-nvim
     pkgs.vimPlugins.telescope-nvim
     pkgs.vimPlugins.telescope-live-grep-args-nvim
+    pkgs.vimPlugins.telescope-fzf-native-nvim
     pkgs.vimPlugins.nvim-lspconfig
     pkgs.vimPlugins.lazydev-nvim
     pkgs.vimPlugins.cmp-dap
