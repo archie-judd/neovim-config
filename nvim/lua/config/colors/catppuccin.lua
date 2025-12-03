@@ -9,6 +9,10 @@ local config = function()
 				DiffChange = { bg = "#605955" },
 			}
 		end,
+		float = {
+			transparent = true, -- Make the float background the same as the normal background
+			solid = false,
+		},
 	})
 end
 
