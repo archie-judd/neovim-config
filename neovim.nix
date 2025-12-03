@@ -69,10 +69,10 @@ let
     pkgs.vimPlugins.render-markdown-nvim
     pkgs.vimPlugins.vimtex
     pkgs.vimPlugins.mini-ai
-    pkgs-unstable.vimPlugins.codecompanion-nvim
-    pkgs-unstable.vimPlugins.codecompanion-history-nvim
-    pkgs-unstable.vimPlugins.oil-nvim # Floating preview was not in stable
-    pkgs-unstable.vimPlugins.diffview-nvim
+    pkgs.vimPlugins.codecompanion-nvim
+    pkgs.vimPlugins.codecompanion-history-nvim
+    pkgs.vimPlugins.oil-nvim # Floating preview was not in stable
+    pkgs.vimPlugins.diffview-nvim
     telescope-words.packages.${pkgs.system}.default
     blink-cmp-words.packages.${pkgs.system}.default
   ];
@@ -106,7 +106,7 @@ let
     # yml
     pkgs.yaml-language-server
     # debugging
-    pkgs-unstable.vscode-js-debug
+    pkgs.vscode-js-debug
     # lua
     pkgs.lua-language-server
     pkgs.stylua
