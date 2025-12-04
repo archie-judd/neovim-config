@@ -6,14 +6,24 @@
     telescope-words.url =
       "github:archie-judd/telescope-words.nvim?ref=development";
     blink-cmp-words.url = "github:archie-judd/blink-cmp-words?ref=development";
+    nvim-treesitter-main.url = "github:iofq/nvim-treesitter-main";
   };
 
   outputs = { flake-utils, nixpkgs, nixpkgs-unstable, telescope-words
-    , blink-cmp-words, ... }:
+    , blink-cmp-words, nvim-treesitter-main, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; };
-        pkgs-unstable = import nixpkgs-unstable { inherit system; };
+        overlays = import ./overlays.nix {
+          nvim-treesitter-main = nvim-treesitter-main;
+        };
+        pkgs = import nixpkgs {
+          system = system;
+          overlays = overlays;
+        };
+        pkgs-unstable = import nixpkgs-unstable {
+          system = system;
+          overlays = overlays;
+        };
 
         neovim = pkgs.callPackage ./neovim.nix {
           pkgs = pkgs;
@@ -28,13 +38,5 @@
           runtimeInputs = neovim.extraPackages;
         };
 
-      in {
-        packages.default = app;
-
-        codecompanion-rev =
-          pkgs-unstable.vimPlugins.codecompanion-nvim.src.rev or "unknown";
-        codecompanion-sha =
-          pkgs-unstable.vimPlugins.codecompanion-nvim.src.outputHash or "unknown";
-
-      });
+      in { packages.default = app; });
 }

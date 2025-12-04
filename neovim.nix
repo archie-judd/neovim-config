@@ -23,24 +23,7 @@ let
 
   plugins = [
     pkgs.vimPlugins.nvim-treesitter
-    pkgs.vimPlugins.nvim-treesitter-parsers.python
-    pkgs.vimPlugins.nvim-treesitter-parsers.markdown
-    pkgs.vimPlugins.nvim-treesitter-parsers.javascript
-    pkgs.vimPlugins.nvim-treesitter-parsers.typescript
-    pkgs.vimPlugins.nvim-treesitter-parsers.lua
-    pkgs.vimPlugins.nvim-treesitter-parsers.vim
-    pkgs.vimPlugins.nvim-treesitter-parsers.vimdoc
-    pkgs.vimPlugins.nvim-treesitter-parsers.json
-    pkgs.vimPlugins.nvim-treesitter-parsers.html
-    pkgs.vimPlugins.nvim-treesitter-parsers.nix
-    pkgs.vimPlugins.nvim-treesitter-parsers.yaml
-    pkgs.vimPlugins.nvim-treesitter-parsers.bash
-    pkgs.vimPlugins.nvim-treesitter-parsers.haskell
-    pkgs.vimPlugins.nvim-treesitter-parsers.c
-    pkgs.vimPlugins.nvim-treesitter-parsers.sql
-    pkgs.vimPlugins.nvim-treesitter-parsers.latex
     pkgs.vimPlugins.nvim-treesitter-textobjects
-    pkgs.vimPlugins.nvim-treesitter-parsers.diff
     pkgs.vimPlugins.plenary-nvim
     pkgs.vimPlugins.catppuccin-nvim
     pkgs.vimPlugins.telescope-nvim
@@ -60,9 +43,9 @@ let
     pkgs.vimPlugins.vim-fugitive
     pkgs.vimPlugins.gitsigns-nvim
     pkgs.vimPlugins.lualine-nvim
-    pkgs.vimPlugins.neotest
-    pkgs.vimPlugins.neotest-python
-    pkgs.vimPlugins.neotest-vitest
+    pkgs-unstable.vimPlugins.neotest
+    pkgs-unstable.vimPlugins.neotest-python
+    pkgs-unstable.vimPlugins.neotest-vitest
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
     pkgs.vimPlugins.indent-blankline-nvim
@@ -121,8 +104,9 @@ in {
   # We use .override to change the python3 argument that callPackage provided (from the default
   # python3 to python312). Then we call the resulting function with neovim-unwrapped and our
   # desired wrapper configuration parameters.
-  package = (pkgs.wrapNeovimUnstable.override { python3 = pkgs.python313; })
-    pkgs.neovim-unwrapped {
+  package =
+    (pkgs-unstable.wrapNeovimUnstable.override { python3 = pkgs.python313; })
+    pkgs-unstable.neovim-unwrapped {
       # These parameters go to the 'wrapper' function
       withPython3 = true;
       withNodeJs = true;

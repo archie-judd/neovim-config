@@ -120,6 +120,19 @@ function M.core()
 			vim.highlight.on_yank()
 		end,
 	})
+	vim.api.nvim_create_autocmd("FileType", {
+		callback = function(event)
+			local buf = event.buf
+			local filetype = vim.bo[buf].filetype
+			local lang = vim.treesitter.language.get_lang(filetype)
+			if lang then
+				local ok, parser = pcall(vim.treesitter.get_parser, buf, lang)
+				if ok and parser then
+					vim.treesitter.start(buf, lang)
+				end
+			end
+		end,
+	})
 end
 
 function M.oil()

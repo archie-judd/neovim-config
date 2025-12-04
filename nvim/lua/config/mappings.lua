@@ -11,6 +11,7 @@ local gitsigns = require("gitsigns")
 local maximise = require("maximise")
 local neotest = require("neotest")
 local oil = require("oil")
+local select = require("nvim-treesitter-textobjects.select")
 local telescope = require("telescope")
 local telescope_builtin = require("telescope.builtin")
 local terminal = require("terminal")
@@ -575,6 +576,52 @@ end
 
 function M.terminal()
 	vim.keymap.set("n", "<leader>tt", terminal.open, { noremap = true, silent = true, desc = "Terminal: open" })
+end
+
+function M.textobjects()
+	vim.keymap.set({ "x", "o" }, "al", function()
+		select.select_textobject("@loop.outer", "textobjects")
+	end, { desc = "Treesitter: select loop outer" })
+
+	vim.keymap.set({ "x", "o" }, "il", function()
+		select.select_textobject("@loop.inner", "textobjects")
+	end, { desc = "Treesitter: select loop inner" })
+
+	vim.keymap.set({ "x", "o" }, "ic", function()
+		select.select_textobject("@conditional.inner", "textobjects")
+	end, { desc = "Treesitter: select conditional inner" })
+
+	vim.keymap.set({ "x", "o" }, "ac", function()
+		select.select_textobject("@conditional.outer", "textobjects")
+	end, { desc = "Treesitter: select conditional outer" })
+
+	vim.keymap.set({ "x", "o" }, "af", function()
+		select.select_textobject("@function.outer", "textobjects")
+	end, { desc = "Treesitter: select function outer" })
+
+	vim.keymap.set({ "x", "o" }, "if", function()
+		select.select_textobject("@function.inner", "textobjects")
+	end, { desc = "Treesitter: select function inner" })
+
+	vim.keymap.set({ "x", "o" }, "aC", function()
+		select.select_textobject("@class.outer", "textobjects")
+	end, { desc = "Treesitter: select class outer" })
+
+	vim.keymap.set({ "x", "o" }, "iC", function()
+		select.select_textobject("@class.inner", "textobjects")
+	end, { desc = "Treesitter: select class inner" })
+
+	vim.keymap.set({ "x", "o" }, "ab", function()
+		select.select_textobject("@fenced_code_block.outer", "textobjects")
+	end, { desc = "Treesitter: select block outer" })
+
+	vim.keymap.set({ "x", "o" }, "ib", function()
+		select.select_textobject("@fenced_code_block.inner", "textobjects")
+	end, { desc = "Treesitter: select block inner" })
+
+	vim.keymap.set({ "x", "o" }, "as", function()
+		select.select_textobject("@scope", "locals")
+	end, { desc = "Treesitter: select locals in scope" })
 end
 
 return M
