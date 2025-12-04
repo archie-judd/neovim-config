@@ -43,9 +43,9 @@ let
     pkgs.vimPlugins.vim-fugitive
     pkgs.vimPlugins.gitsigns-nvim
     pkgs.vimPlugins.lualine-nvim
-    pkgs-unstable.vimPlugins.neotest
-    pkgs-unstable.vimPlugins.neotest-python
-    pkgs-unstable.vimPlugins.neotest-vitest
+    pkgs.vimPlugins.neotest
+    pkgs.vimPlugins.neotest-python
+    pkgs.vimPlugins.neotest-vitest
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
     pkgs.vimPlugins.indent-blankline-nvim
@@ -54,7 +54,7 @@ let
     pkgs.vimPlugins.mini-ai
     pkgs.vimPlugins.codecompanion-nvim
     pkgs.vimPlugins.codecompanion-history-nvim
-    pkgs.vimPlugins.oil-nvim # Floating preview was not in stable
+    pkgs.vimPlugins.oil-nvim
     pkgs.vimPlugins.diffview-nvim
     telescope-words.packages.${pkgs.stdenv.hostPlatform.system}.default
     blink-cmp-words.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -104,9 +104,8 @@ in {
   # We use .override to change the python3 argument that callPackage provided (from the default
   # python3 to python312). Then we call the resulting function with neovim-unwrapped and our
   # desired wrapper configuration parameters.
-  package =
-    (pkgs-unstable.wrapNeovimUnstable.override { python3 = pkgs.python313; })
-    pkgs-unstable.neovim-unwrapped {
+  package = (pkgs.wrapNeovimUnstable.override { python3 = pkgs.python313; })
+    pkgs.neovim-unwrapped {
       # These parameters go to the 'wrapper' function
       withPython3 = true;
       withNodeJs = true;
