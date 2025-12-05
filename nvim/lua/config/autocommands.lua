@@ -1,4 +1,5 @@
 local codecompanion = require("codecompanion")
+local conform = require("conform")
 local core_utils = require("utils.core")
 local dap = require("dap")
 local dap_utils = require("utils.dap")
@@ -336,6 +337,35 @@ function M.dap()
 				noremap = true,
 				desc = "Dap: quit debug session",
 			})
+		end,
+	})
+end
+
+function M.conform()
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		desc = "Format before save",
+		pattern = "*",
+		group = vim.api.nvim_create_augroup("FormatConfig", { clear = true }),
+		callback = function(ev)
+			local conform_opts = { bufnr = ev.buf, lsp_format = "fallback", timeout_ms = 2000 }
+			local client = vim.lsp.get_clients({ name = "ts_ls", bufnr = ev.buf })[1]
+
+			if not client then
+				conform.format(conform_opts)
+				return
+			end
+
+			local request_result = client:request_sync("workspace/executeCommand", {
+				command = "_typescript.organizeImports",
+				arguments = { vim.api.nvim_buf_get_name(ev.buf) },
+			})
+
+			if request_result and request_result.err then
+				vim.notify(request_result.err.message, vim.log.levels.ERROR)
+				return
+			end
+
+			conform.format(conform_opts)
 		end,
 	})
 end

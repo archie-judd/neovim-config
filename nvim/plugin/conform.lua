@@ -1,3 +1,4 @@
+local autocommands = require("config.autocommands")
 local conform = require("conform")
 
 local config = function()
@@ -38,6 +39,7 @@ local config = function()
 			},
 		},
 	})
+	autocommands.conform()
 end
 
 config()
