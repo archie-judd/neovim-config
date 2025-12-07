@@ -1,10 +1,10 @@
-local actions = require("oil.actions")
-local autocommands = require("config.autocommands")
-local layout = require("oil.layout")
-local mappings = require("config.mappings")
-local oil = require("oil")
-
 local config = function()
+	local actions = require("oil.actions")
+	local autocommands = require("config.autocommands")
+	local layout = require("oil.layout")
+	local mappings = require("config.mappings")
+	local oil = require("oil")
+	
 	oil.setup({
 		keymaps = { ["<C-p>"] = false, ["<C-y>"] = actions.select },
 		float = {

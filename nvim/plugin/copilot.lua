@@ -1,6 +1,6 @@
-local copilot = require("copilot")
-
 local config = function()
+	local copilot = require("copilot")
+
 	copilot.setup({
 		suggestion = {
 			enabled = true,

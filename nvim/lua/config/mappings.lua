@@ -1,26 +1,8 @@
-local cmp_utils = require("utils.cmp")
-local codecompanion = require("codecompanion")
-local codecompanion_utils = require("utils.codecompanion.chat")
-local core_utils = require("utils.core")
-local dap = require("dap")
-local dap_utils = require("utils.dap")
-local dap_widgets = require("dap.ui.widgets")
-local diffview_utils = require("utils.diffview")
-local github_link = require("github_link")
-local gitsigns = require("gitsigns")
-local maximise = require("maximise")
-local neotest = require("neotest")
-local oil = require("oil")
-local select = require("nvim-treesitter-textobjects.select")
-local telescope = require("telescope")
-local telescope_builtin = require("telescope.builtin")
-local terminal = require("terminal")
-local utils = require("utils.core")
-
 -- It's useful to have core mappings in one file, so accidental remaps can be easily spotted.
 local M = {}
 
 function M.core()
+	local core_utils = require("utils.core")
 	-- Set mapleader
 	vim.g.mapleader = ";"
 
@@ -38,8 +20,8 @@ function M.core()
 
 	-- Move the the next or previous conflict
 
-	vim.keymap.set("n", "]x", utils.next_conflict, { desc = "Next merge conflict" })
-	vim.keymap.set("n", "[x", utils.prev_conflict, { desc = "Previous merge conflict" })
+	vim.keymap.set("n", "]x", core_utils.next_conflict, { desc = "Next merge conflict" })
+	vim.keymap.set("n", "[x", core_utils.prev_conflict, { desc = "Previous merge conflict" })
 
 	-- Delete unneeded default diagnosics mappings
 	vim.api.nvim_del_keymap("n", "<C-w>d")
@@ -158,6 +140,8 @@ end
 
 ---@param bufnr integer
 function M.lspconfig(bufnr)
+	local telescope_builtin = require("telescope.builtin")
+
 	vim.keymap.set(
 		"n",
 		"<C-]>",
@@ -201,6 +185,9 @@ function M.lspconfig(bufnr)
 end
 
 function M.telescope()
+	local telescope_builtin = require("telescope.builtin")
+	local telescope = require("telescope")
+
 	vim.keymap.set(
 		"n",
 		"<Leader>fk",
@@ -258,6 +245,8 @@ function M.telescope()
 end
 
 function M.oil()
+	local oil = require("oil")
+
 	vim.keymap.set("n", "-", oil.open_float, { noremap = true, silent = true, desc = "Oil: open parent directory" })
 	vim.keymap.set("n", "_", function()
 		oil.open_float(vim.fn.getcwd())
@@ -265,6 +254,12 @@ function M.oil()
 end
 
 function M.dap()
+	local dap = require("dap")
+	local dap_utils = require("utils.dap")
+	local dap_widgets = require("dap.ui.widgets")
+	local telescope = require("telescope")
+	local core_utils = require("utils.core")
+
 	vim.g.maplocalleader = ","
 	vim.keymap.set(
 		"n",
@@ -305,9 +300,9 @@ function M.dap()
 
 	vim.keymap.set("n", "<LocalLeader>z", function()
 		dap.set_breakpoint(
-			utils.user_input_or_nil("Condition (default is always stop): "),
-			utils.user_input_or_nil("Number of hits to trigger (default is zero): "),
-			utils.user_input_or_nil("Log message (default is none): ")
+			core_utils.user_input_or_nil("Condition (default is always stop): "),
+			core_utils.user_input_or_nil("Number of hits to trigger (default is zero): "),
+			core_utils.user_input_or_nil("Log message (default is none): ")
 		)
 	end, {
 		silent = false,
@@ -372,6 +367,8 @@ function M.dap()
 end
 
 function M.diffview()
+	local diffview_utils = require("utils.diffview")
+
 	vim.keymap.set(
 		"n",
 		"<Leader>gs",
@@ -387,6 +384,8 @@ function M.diffview()
 end
 
 function M.neotest()
+	local neotest = require("neotest")
+
 	vim.g.maplocalleader = ","
 	vim.keymap.set(
 		"n",
@@ -397,6 +396,8 @@ function M.neotest()
 end
 
 function M.gitsigns(buffer)
+	local gitsigns = require("gitsigns")
+
 	vim.keymap.set("n", "]c", function()
 		if vim.wo.diff then
 			vim.cmd.normal({ "]c", bang = true })
@@ -485,9 +486,22 @@ function M.typescript()
 	})
 end
 
+function M.quickfix()
+	vim.keymap.set("qf", "<C-q>", function()
+		vim.api.nvim_buf_delete(0, { force = true })
+	end, {
+		buffer = true,
+		silent = true,
+		noremap = true,
+		desc = "Quickfix: close",
+	})
+end
+
 -- The mappings for copilot suggestions are also here to save my sanity
 -- Command line settings are in `blink-cmp.lua`
 function M.cmp()
+	local cmp_utils = require("utils.cmp")
+
 	vim.keymap.set({ "i" }, "<C-y>", cmp_utils.accept, {
 		noremap = true,
 		silent = true,
@@ -531,6 +545,8 @@ function M.cmp()
 end
 
 function M.maximise()
+	local maximise = require("maximise")
+
 	vim.keymap.set("n", "<Leader>z", maximise.toggle_maximise, {
 		silent = true,
 		noremap = true,
@@ -539,6 +555,8 @@ function M.maximise()
 end
 
 function M.github_link()
+	local github_link = require("github_link")
+
 	vim.keymap.set({ "n", "v" }, "<Leader>gl", github_link.github_link, {
 		silent = true,
 		noremap = true,
@@ -547,6 +565,9 @@ function M.github_link()
 end
 
 function M.codecompanion()
+	local codecompanion = require("codecompanion")
+	local codecompanion_utils = require("utils.codecompanion.chat")
+
 	vim.g.maplocalleader = " "
 	vim.keymap.set(
 		{ "v" },
@@ -575,10 +596,14 @@ function M.codecompanion()
 end
 
 function M.terminal()
+	local terminal = require("terminal")
+
 	vim.keymap.set("n", "<leader>tt", terminal.open, { noremap = true, silent = true, desc = "Terminal: open" })
 end
 
 function M.textobjects()
+	local select = require("nvim-treesitter-textobjects.select")
+
 	vim.keymap.set({ "x", "o" }, "al", function()
 		select.select_textobject("@loop.outer", "textobjects")
 	end, { desc = "Treesitter: select loop outer" })

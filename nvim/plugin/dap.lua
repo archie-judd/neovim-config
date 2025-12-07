@@ -1,9 +1,9 @@
-local autocommands = require("config.autocommands")
-local dap = require("dap")
-local dap_utils = require("utils.dap")
-local mappings = require("config.mappings")
-
 local config = function()
+	local autocommands = require("config.autocommands")
+	local dap = require("dap")
+	local dap_utils = require("utils.dap")
+	local mappings = require("config.mappings")
+	
 	-- set defaults
 	dap.defaults.fallback.exception_breakpoints = "default"
 	dap.defaults.fallback.terminal_win_cmd = dap_utils.open_terminal

@@ -1,3 +1,5 @@
+local M = {}
+
 M.edit_current_buffer = {
 	strategy = "chat",
 	description = "Edit the current buffer",

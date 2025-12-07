@@ -1,148 +1,15 @@
-local codecompanion = require("codecompanion")
-local conform = require("conform")
-local core_utils = require("utils.core")
-local dap = require("dap")
-local dap_utils = require("utils.dap")
-local diffview = require("diffview")
-local mappings = require("config.mappings")
-local maximise = require("maximise")
-local oil = require("oil")
-local terminal = require("terminal")
-
 local M = {}
 
 function M.core()
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "python",
-		callback = function(event)
-			vim.o.colorcolumn = "89"
-			vim.o.expandtab = true
-			vim.o.shiftwidth = 4
-			vim.o.tabstop = 4
-			vim.o.softtabstop = 4
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "lua",
-		callback = function(event)
-			vim.o.colorcolumn = "121"
-			vim.o.expandtab = true
-			vim.o.shiftwidth = 2
-			vim.o.tabstop = 2
-			vim.o.softtabstop = 2
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "qf",
-		callback = function(event)
-			vim.keymap.set("n", "<C-q>", function()
-				vim.api.nvim_buf_delete(event.buf, { force = true })
-			end, {
-				buffer = event.buf,
-				silent = true,
-				noremap = true,
-				desc = "Quickfix: close",
-			})
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = { "html", "htm", "xhtml", "xml", "svg" },
-		callback = function(event)
-			vim.o.colorcolumn = "120" -- Longer lines common in HTML
-			vim.o.tabstop = 2
-			vim.o.shiftwidth = 2
-			vim.o.expandtab = true
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = { "css", "scss", "sass", "less" },
-		callback = function(event)
-			vim.o.colorcolumn = "80"
-			vim.o.tabstop = 2
-			vim.o.shiftwidth = 2
-			vim.o.expandtab = true
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = { "javascript" },
-		callback = function(event)
-			vim.o.colorcolumn = "80"
-			vim.o.tabstop = 2
-			vim.o.shiftwidth = 2
-			vim.o.expandtab = true
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = { "typescript" },
-		callback = function(event)
-			vim.o.colorcolumn = "101"
-			vim.o.tabstop = 2
-			vim.o.shiftwidth = 2
-			vim.o.expandtab = true
-			mappings.typescript()
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "typescriptreact",
-		callback = function(event)
-			vim.o.colorcolumn = "101"
-			vim.o.softtabstop = 2
-			vim.o.shiftwidth = 2
-			vim.o.expandtab = true
-			mappings.typescript()
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "haskell",
-		callback = function(event)
-			vim.o.tabstop = 8
-			vim.o.softtabstop = 2
-			vim.o.shiftwidth = 2
-			vim.o.colorcolumn = "101"
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "nix",
-		callback = function(event)
-			vim.o.tabstop = 2
-			vim.o.shiftwidth = 2
-		end,
-	})
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "markdown",
-		callback = function()
-			vim.cmd("setlocal spell spelllang=en_gb")
-			mappings.markdown_preview()
-			mappings.vim_markdown_toc()
-		end,
-	})
 	vim.api.nvim_create_autocmd("TextYankPost", {
 		callback = function(event)
 			vim.highlight.on_yank()
 		end,
 	})
-	vim.api.nvim_create_autocmd("FileType", {
-		callback = function(event)
-			local buf = event.buf
-			local filetype = vim.bo[buf].filetype
-			local lang = vim.treesitter.language.get_lang(filetype)
-			if lang then
-				local ok, parser = pcall(vim.treesitter.get_parser, buf, lang)
-				if ok and parser then
-					vim.treesitter.start(buf, lang)
-				end
-			end
-		end,
-	})
 end
 
 function M.oil()
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "oil",
-		callback = function(event)
-			vim.o.colorcolumn = ""
-		end,
-	})
+	local oil = require("oil")
 	-- Disabling preview until https://github.com/stevearc/oil.nvim/issues/435 is resolved
 	vim.api.nvim_create_autocmd("User", {
 		pattern = "OilEnter",
@@ -170,6 +37,7 @@ function M.eyeliner()
 end
 
 function M.diffview()
+	local diffview = require("diffview")
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = { "DiffviewFiles" },
 		callback = function(event)
@@ -224,6 +92,7 @@ function M.diffview()
 end
 
 function M.telescope()
+	local core_utils = require("utils.core")
 	vim.api.nvim_create_autocmd("User", {
 		pattern = { "TelescopeFindPre" },
 		callback = function(event)
@@ -234,6 +103,7 @@ function M.telescope()
 end
 
 function M.lspconfig()
+	local mappings = require("config.mappings")
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 		callback = function(event)
@@ -243,6 +113,8 @@ function M.lspconfig()
 end
 
 function M.codecompanion()
+	local codecompanion = require("codecompanion")
+	local core_utils = require("utils.core")
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "codecompanion",
 		callback = function(event)
@@ -267,6 +139,7 @@ function M.codecompanion()
 end
 
 function M.maximise()
+	local maximise = require("maximise")
 	vim.api.nvim_create_autocmd("WinLeave", {
 		callback = function()
 			maximise.restore_if_maximised()
@@ -275,6 +148,7 @@ function M.maximise()
 end
 
 function M.terminal()
+	local terminal = require("terminal")
 	vim.api.nvim_create_autocmd("BufEnter", {
 		pattern = "*",
 		callback = function(event)
@@ -316,6 +190,8 @@ function M.terminal()
 end
 
 function M.dap()
+	local dap = require("dap")
+	local dap_utils = require("utils.dap")
 	vim.api.nvim_create_autocmd("BufFilePost", {
 		pattern = "*\\[dap-terminal\\]*",
 		callback = function(event)
@@ -342,6 +218,7 @@ function M.dap()
 end
 
 function M.conform()
+	local conform = require("conform")
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		desc = "Format before save",
 		pattern = "*",

@@ -1,9 +1,9 @@
-local blink = require("blink.cmp")
-local cmp_dap = require("cmp_dap")
-local mappings = require("config.mappings")
-local usercommands = require("config.usercommands")
-
 local function config()
+	local blink = require("blink.cmp")
+	local cmp_dap = require("cmp_dap")
+	local mappings = require("config.mappings")
+	local usercommands = require("config.usercommands")
+
 	blink.setup({
 		enabled = function()
 			return (vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt" or cmp_dap.is_dap_buffer())

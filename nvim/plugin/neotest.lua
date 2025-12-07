@@ -1,9 +1,9 @@
-local mappings = require("config.mappings")
-local neotest = require("neotest")
-local neotest_python = require("neotest-python")
-local neotest_vitest = require("neotest-vitest")
-
 local config = function()
+	local mappings = require("config.mappings")
+	local neotest = require("neotest")
+	local neotest_python = require("neotest-python")
+	local neotest_vitest = require("neotest-vitest")
+	
 	local python_path = vim.fn.exepath("python") ~= "" and vim.fn.exepath("python") or vim.fn.exepath("python3")
 	neotest.setup({
 		adapters = {

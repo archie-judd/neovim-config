@@ -1,9 +1,9 @@
-local autocommands = require("config.autocommands")
-local codecompanion = require("codecompanion")
-local mappings = require("config.mappings")
-local prompts = require("utils.codecompanion.prompts")
-
 local function config()
+	local autocommands = require("config.autocommands")
+	local codecompanion = require("codecompanion")
+	local mappings = require("config.mappings")
+	local prompts = require("utils.codecompanion.prompts")
+	
 	local WINDOW_WIDTH = 0.4
 	local DEFAULT_ADAPTER = "copilot"
 	local DEFAULT_MODEL = "gpt-5-mini"

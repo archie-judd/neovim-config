@@ -1,7 +1,3 @@
-local clear_registers = require("clear_registers")
-local github_link = require("github_link")
-local yank_utils = require("utils.yank")
-
 local M = {}
 
 function M.cmp()
@@ -14,6 +10,7 @@ function M.cmp()
 end
 
 function M.github_link()
+	local github_link = require("github_link")
 	vim.api.nvim_create_user_command("GitHubLink", function(opts)
 		---@type string | nil
 		local rev = opts.args
@@ -26,6 +23,7 @@ function M.github_link()
 end
 
 function M.clear_registers()
+	local clear_registers = require("clear_registers")
 	vim.api.nvim_create_user_command("ClearRegisters", function(opts)
 		---@type table<string>
 		local registers = {}
@@ -38,6 +36,8 @@ function M.clear_registers()
 end
 
 function M.yank_filepath()
+	local yank_utils = require("utils.yank")
+
 	---@param yank_function fun(register: string | nil): nil
 	---@return fun(opts: { args: string | nil }): nil
 	local function mk_yank_with_register(yank_function)

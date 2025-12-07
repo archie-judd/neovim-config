@@ -1,7 +1,7 @@
-local mappings = require("config.mappings")
-local textobjects = require("nvim-treesitter-textobjects")
-
 local config = function()
+	local mappings = require("config.mappings")
+	local textobjects = require("nvim-treesitter-textobjects")
+	
 	vim.treesitter.query.set(
 		"markdown",
 		"textobjects",

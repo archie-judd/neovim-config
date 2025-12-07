@@ -1,7 +1,7 @@
-local autocommands = require("config.autocommands")
-local conform = require("conform")
-
 local config = function()
+	local autocommands = require("config.autocommands")
+	local conform = require("conform")
+	
 	conform.setup({
 		formatters_by_ft = {
 			lua = { "stylua" },
