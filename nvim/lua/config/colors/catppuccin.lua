@@ -1,6 +1,5 @@
-local catppuccin = require("catppuccin")
-
 local config = function()
+	local catppuccin = require("catppuccin")
 	catppuccin.setup({
 		flavour = "mocha",
 		custom_highlights = function(colors)
