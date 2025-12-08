@@ -11,14 +11,12 @@ let
     '';
   };
 
-  # This is written as vimscript, so we use an embedded lua block.
   # 1. Add our config to neovim's runtimepath
   # 2. Source the init.lua file
   customRC = ''
-    lua <<EOF
     vim.opt.runtimepath:prepend("${nvimConfig}")
+    vim.opt.runtimepath:append("${nvimConfig}/after")
     dofile("${nvimConfig}/init.lua")
-    EOF
   '';
 
   plugins = [
@@ -113,7 +111,7 @@ in {
       withPerl = false;
       extraPython3Packages = extraPython3Packages;
       plugins = plugins;
-      neovimRcContent = customRC;
+      luaRcContent = customRC;
     };
   extraPackages = extraPackages;
 }
