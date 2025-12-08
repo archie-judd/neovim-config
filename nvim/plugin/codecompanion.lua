@@ -136,17 +136,28 @@ local function config()
 	-- expand cc to CodeCompanion in the command lines
 	vim.cmd("cabbrev cc CodeCompanion")
 	-- register the markdown language for CodeCompanion
-	-- vim.treesitter.language.register("markdown", "codecompanion")
+	vim.treesitter.language.register("markdown", "codecompanion")
 	mappings.codecompanion()
 	autocommands.codecompanion()
 end
 
 local function lazy_load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
+
+	local function action()
+		require("utils.codecompanion.chat").open({ new = true })
+	end
+
 	vim.g.maplocalleader = CODECOMPANION_LEADER
-	lazy_load_util.lazy_keymap({ "n" }, "<LocalLeader>c", function()
-		config()
-	end, { desc = "Lazy load: codecompanion", silent = true, noremap = true }, "codecompanion")
+
+	lazy_load_util.lazy_keymap(
+		"codecompanion",
+		{ "n" },
+		"<LocalLeader>c",
+		{ desc = "Lazy load: codecompanion", silent = true, noremap = true },
+		config,
+		action
+	)
 end
 
 lazy_load_on_keymap()

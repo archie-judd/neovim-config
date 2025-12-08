@@ -109,10 +109,21 @@ end
 
 local function lazy_load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
+
 	vim.g.maplocalleader = DAP_LEADER
-	lazy_load_util.lazy_keymap({ "n" }, "<LocalLeader>d", function()
-		config()
-	end, { desc = "Lazy load: dap", silent = true, noremap = true }, "dap")
+
+	local function action()
+		require("utils.dap").start()
+	end
+
+	lazy_load_util.lazy_keymap(
+		"dap",
+		{ "n" },
+		"<LocalLeader>d",
+		{ desc = "Lazy load: dap", silent = true, noremap = true },
+		config,
+		action
+	)
 end
 
 lazy_load_on_keymap()

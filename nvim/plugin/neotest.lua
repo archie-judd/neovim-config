@@ -36,9 +36,19 @@ end
 
 local function lazy_load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
-	lazy_load_util.lazy_keymap({ "n" }, "<Leader>rt", function()
-		config()
-	end, { desc = "Lazy load: neotest", silent = true, noremap = true }, "neotest")
+
+	local function action()
+		require("neotest").run.run()
+	end
+
+	lazy_load_util.lazy_keymap(
+		"neotest",
+		{ "n" },
+		"<Leader>rt",
+		{ desc = "Lazy load: neotest", silent = true, noremap = true },
+		config,
+		action
+	)
 end
 
 lazy_load_on_keymap()
