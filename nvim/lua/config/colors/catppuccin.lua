@@ -12,6 +12,16 @@ local config = function()
 			transparent = true, -- Make the float background the same as the normal background
 			solid = false,
 		},
+		default_integrations = false,
+		integrations = {
+			blink_cmp = {
+				style = "bordered",
+			},
+			gitsigns = { enabled = true, transparent = false },
+			telescope = { enabled = true },
+			dap = true,
+			diffview = true,
+		},
 	})
 end
 
