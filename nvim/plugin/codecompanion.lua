@@ -143,21 +143,8 @@ end
 
 local function load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
-
-	local function action()
-		require("utils.codecompanion.chat").open({ new = true })
-	end
-
 	vim.g.maplocalleader = CODECOMPANION_LEADER
-
-	lazy_load_util.load_plugin_on_keymap(
-		"codecompanion",
-		{ "n" },
-		"<LocalLeader>c",
-		{ desc = "Lazy load: codecompanion", silent = true, noremap = true },
-		config,
-		action
-	)
+	lazy_load_util.load_plugin_on_keymap(config, "codecompanion", { "n", "v" }, { "<LocalLeader>c", "<LocalLeader>n" })
 end
 
 load_on_keymap()

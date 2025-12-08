@@ -4,9 +4,8 @@ local config = function()
 	local neotest_python = require("neotest-python")
 	local neotest_vitest = require("neotest-vitest")
 
-	vim.g.maplocalleader = ","
-
 	local python_path = vim.fn.exepath("python") ~= "" and vim.fn.exepath("python") or vim.fn.exepath("python3")
+
 	neotest.setup({
 		adapters = {
 			neotest_python({
@@ -36,19 +35,7 @@ end
 
 local function load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
-
-	local function action()
-		require("neotest").run.run()
-	end
-
-	lazy_load_util.load_plugin_on_keymap(
-		"neotest",
-		{ "n" },
-		"<Leader>rt",
-		{ desc = "Lazy load: neotest", silent = true, noremap = true },
-		config,
-		action
-	)
+	lazy_load_util.load_plugin_on_keymap(config, "neotest", { "n" }, { "<Leader>rt" })
 end
 
 load_on_keymap()

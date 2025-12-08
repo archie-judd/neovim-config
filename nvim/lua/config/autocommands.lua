@@ -152,7 +152,7 @@ function M.terminal()
 	vim.api.nvim_create_autocmd("BufEnter", {
 		pattern = "*",
 		callback = function(event)
-			if event.buf == vim.g.term_buffer then
+			if event.buf == terminal.state.term_buffer then
 				vim.keymap.set(
 					{ "n", "t" },
 					"<C-q>",
@@ -169,7 +169,7 @@ function M.terminal()
 			vim.wo.number = false
 			vim.wo.relativenumber = false
 			vim.wo.signcolumn = "no"
-			if event.buf == vim.g.term_buffer then
+			if event.buf == terminal.state.term_buffer then
 				vim.keymap.set({ "n", "t" }, "<C-q>", function()
 					terminal.close()
 				end, { buffer = event.buf, noremap = true, silent = true, desc = "Termninal: close" })

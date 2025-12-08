@@ -21,4 +21,9 @@ local config = function()
 	})
 end
 
-vim.defer_fn(config, 100)
+local function load_on_event()
+	local lazy_load_utils = require("utils.lazy_load")
+	lazy_load_utils.load_plugin_on_event(config, "copilot", { "InsertEnter", "TextChanged", "TextChangedI" }, nil)
+end
+
+load_on_event()

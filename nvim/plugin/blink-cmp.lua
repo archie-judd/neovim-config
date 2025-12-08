@@ -81,4 +81,9 @@ local function config()
 	mappings.cmp()
 end
 
-vim.defer_fn(config, 100)
+local function load_on_event()
+	local lazy_load_util = require("utils.lazy_load")
+	lazy_load_util.load_plugin_on_event(config, "blink.cmp", "InsertEnter", nil)
+end
+
+load_on_event()

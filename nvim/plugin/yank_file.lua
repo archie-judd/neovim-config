@@ -4,4 +4,4 @@ local config = function()
 	usercommands.yank_filepath()
 end
 
-return config()
+config()

@@ -11,4 +11,4 @@ local config = function()
 	})
 end
 
-vim.defer_fn(config, 1000)
+vim.defer_fn(config, 0)

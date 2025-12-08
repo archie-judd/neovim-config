@@ -22,4 +22,9 @@ local config = function()
 	autocommands.diffview()
 end
 
-vim.defer_fn(config, 0)
+local function load_on_keymap()
+	local lazy_load_util = require("utils.lazy_load")
+	lazy_load_util.load_plugin_on_keymap(config, "diffview", { "n" }, { "<Leader>gs", "<Leader>gh" })
+end
+
+load_on_keymap()
