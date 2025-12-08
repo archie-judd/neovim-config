@@ -1,9 +1,12 @@
+local CODECOMPANION_LEADER = " "
+
 local function config()
 	local autocommands = require("config.autocommands")
 	local codecompanion = require("codecompanion")
 	local mappings = require("config.mappings")
 	local prompts = require("utils.codecompanion.prompts")
-	
+
+	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
 	local DEFAULT_ADAPTER = "copilot"
 	local DEFAULT_MODEL = "gpt-5-mini"
@@ -137,4 +140,13 @@ local function config()
 	mappings.codecompanion()
 	autocommands.codecompanion()
 end
-config()
+
+local function lazy_load_on_keymap()
+	local lazy_load_util = require("utils.lazy_load")
+	vim.g.maplocalleader = CODECOMPANION_LEADER
+	lazy_load_util.lazy_keymap({ "n" }, "<LocalLeader>c", function()
+		config()
+	end, { desc = "Lazy load: codecompanion", silent = true, noremap = true }, "codecompanion")
+end
+
+lazy_load_on_keymap()

@@ -1,9 +1,13 @@
+local DAP_LEADER = ","
+
 local config = function()
 	local autocommands = require("config.autocommands")
 	local dap = require("dap")
 	local dap_utils = require("utils.dap")
 	local mappings = require("config.mappings")
-	
+
+	vim.g.maplocalleader = DAP_LEADER
+
 	-- set defaults
 	dap.defaults.fallback.exception_breakpoints = "default"
 	dap.defaults.fallback.terminal_win_cmd = dap_utils.open_terminal
@@ -101,4 +105,12 @@ local config = function()
 	autocommands.dap()
 end
 
-config()
+local function lazy_load_on_keymap()
+	local lazy_load_util = require("utils.lazy_load")
+	vim.g.maplocalleader = DAP_LEADER
+	lazy_load_util.lazy_keymap({ "n" }, "<LocalLeader>d", function()
+		config()
+	end, { desc = "Lazy load: dap", silent = true, noremap = true }, "dap")
+end
+
+lazy_load_on_keymap()

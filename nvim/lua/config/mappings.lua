@@ -260,7 +260,6 @@ function M.dap()
 	local telescope = require("telescope")
 	local core_utils = require("utils.core")
 
-	vim.g.maplocalleader = ","
 	vim.keymap.set(
 		"n",
 		"<LocalLeader>d",
@@ -386,7 +385,6 @@ end
 function M.neotest()
 	local neotest = require("neotest")
 
-	vim.g.maplocalleader = ","
 	vim.keymap.set(
 		"n",
 		"<Leader>rt",
@@ -568,7 +566,6 @@ function M.codecompanion()
 	local codecompanion = require("codecompanion")
 	local codecompanion_utils = require("utils.codecompanion.chat")
 
-	vim.g.maplocalleader = " "
 	vim.keymap.set(
 		{ "v" },
 		"<LocalLeader>c",
