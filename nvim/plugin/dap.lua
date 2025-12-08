@@ -110,7 +110,7 @@ end
 local function load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
 	vim.g.maplocalleader = DAP_LEADER
-	lazy_load_util.load_plugin_on_keymap(config, "dap", { "n" }, { "<LocalLeader>d", "<LocalLeader>b" })
+	lazy_load_util.load_plugin_on_keymaps(config, "dap", { n = { "<LocalLeader>d", "<LocalLeader>b" } })
 end
 
 load_on_keymap()

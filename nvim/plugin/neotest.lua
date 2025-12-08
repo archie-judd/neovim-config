@@ -35,7 +35,7 @@ end
 
 local function load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
-	lazy_load_util.load_plugin_on_keymap(config, "neotest", { "n" }, { "<Leader>rt" })
+	lazy_load_util.load_plugin_on_keymaps(config, "neotest", { n = { "<Leader>rt" } })
 end
 
 load_on_keymap()

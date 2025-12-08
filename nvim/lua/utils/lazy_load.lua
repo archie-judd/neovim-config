@@ -4,22 +4,20 @@ local loaded = {}
 
 ---@param config_fn function
 ---@param plugin_name string
----@param modes string | string[]
----@param lhses string[] | string
-function M.load_plugin_on_keymap(config_fn, plugin_name, modes, lhses)
+---@param keymaps table<string, string[]>
+function M.load_plugin_on_keymaps(config_fn, plugin_name, keymaps)
 	---@type string[]
-	local keys_list = type(lhses) == "table" and lhses or { lhses }
-
-	for _, lhs in ipairs(keys_list) do
-		vim.keymap.set(modes, lhs, function()
-			if not loaded[plugin_name] then
-				config_fn()
-				loaded[plugin_name] = true
-			end
-			local keys = vim.api.nvim_replace_termcodes(lhs, true, false, true)
-			local mode = vim.api.nvim_get_mode().mode
-			vim.api.nvim_feedkeys(keys, mode, false)
-		end, { silent = true, desc = "Lazy load " .. plugin_name })
+	for mode, lhses in pairs(keymaps) do
+		for _, lhs in ipairs(lhses) do
+			vim.keymap.set(mode, lhs, function()
+				if not loaded[plugin_name] then
+					config_fn()
+					loaded[plugin_name] = true
+				end
+				local keys = vim.api.nvim_replace_termcodes(lhs, true, false, true)
+				vim.api.nvim_feedkeys(keys, "m", false)
+			end, { silent = true, desc = "Lazy load " .. plugin_name })
+		end
 	end
 end
 

@@ -144,7 +144,11 @@ end
 local function load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
 	vim.g.maplocalleader = CODECOMPANION_LEADER
-	lazy_load_util.load_plugin_on_keymap(config, "codecompanion", { "n", "v" }, { "<LocalLeader>c", "<LocalLeader>n" })
+	lazy_load_util.load_plugin_on_keymaps(
+		config,
+		"codecompanion",
+		{ n = { "<LocalLeader>c", "<LocalLeader>n" }, v = { "<LocalLeader>c", "LocalLeader<n>" } }
+	)
 end
 
 load_on_keymap()
