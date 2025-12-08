@@ -81,4 +81,4 @@ local function config()
 	mappings.cmp()
 end
 
-config()
+vim.defer_fn(config, 100)

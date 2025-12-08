@@ -34,14 +34,14 @@ local config = function()
 	mappings.neotest()
 end
 
-local function lazy_load_on_keymap()
+local function load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
 
 	local function action()
 		require("neotest").run.run()
 	end
 
-	lazy_load_util.lazy_keymap(
+	lazy_load_util.load_plugin_on_keymap(
 		"neotest",
 		{ "n" },
 		"<Leader>rt",
@@ -51,4 +51,4 @@ local function lazy_load_on_keymap()
 	)
 end
 
-lazy_load_on_keymap()
+load_on_keymap()

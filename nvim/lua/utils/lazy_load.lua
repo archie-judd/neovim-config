@@ -8,7 +8,7 @@ local loaded = {}
 ---@param keymap_opts vim.keymap.set.Opts | nil
 ---@param config_fn function The function to call to configure the plugin
 ---@param action_fn function | nil An optional function to execute after loading the plugin
-function M.lazy_keymap(plugin_name, modes, keys, keymap_opts, config_fn, action_fn)
+function M.load_plugin_on_keymap(plugin_name, modes, keys, keymap_opts, config_fn, action_fn)
 	vim.keymap.set(modes, keys, function()
 		if not loaded[plugin_name] then
 			config_fn()

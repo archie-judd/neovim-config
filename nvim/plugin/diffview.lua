@@ -2,7 +2,7 @@ local config = function()
 	local autocommands = require("config.autocommands")
 	local diffview = require("diffview")
 	local mappings = require("config.mappings")
-	
+
 	diffview.setup({
 		file_panel = {
 			listing_style = "list",
@@ -22,4 +22,4 @@ local config = function()
 	autocommands.diffview()
 end
 
-config()
+vim.defer_fn(config, 0)

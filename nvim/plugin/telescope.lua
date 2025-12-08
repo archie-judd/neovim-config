@@ -86,4 +86,4 @@ local config = function()
 	autocommands.telescope()
 end
 
-config()
+vim.defer_fn(config, 0)

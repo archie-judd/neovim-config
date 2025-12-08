@@ -107,7 +107,7 @@ local config = function()
 	telescope.load_extension("dap")
 end
 
-local function lazy_load_on_keymap()
+local function load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
 
 	vim.g.maplocalleader = DAP_LEADER
@@ -116,7 +116,7 @@ local function lazy_load_on_keymap()
 		require("utils.dap").start()
 	end
 
-	lazy_load_util.lazy_keymap(
+	lazy_load_util.load_plugin_on_keymap(
 		"dap",
 		{ "n" },
 		"<LocalLeader>d",
@@ -126,4 +126,4 @@ local function lazy_load_on_keymap()
 	)
 end
 
-lazy_load_on_keymap()
+load_on_keymap()

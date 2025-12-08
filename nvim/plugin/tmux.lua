@@ -1,6 +1,6 @@
 local config = function()
 	local tmux = require("tmux")
-	
+
 	tmux.setup({
 		copy_sync = { enable = false },
 		resize = {
@@ -11,4 +11,4 @@ local config = function()
 	})
 end
 
-config()
+vim.defer_fn(config, 1000)

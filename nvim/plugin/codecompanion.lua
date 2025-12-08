@@ -141,7 +141,7 @@ local function config()
 	autocommands.codecompanion()
 end
 
-local function lazy_load_on_keymap()
+local function load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
 
 	local function action()
@@ -150,7 +150,7 @@ local function lazy_load_on_keymap()
 
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 
-	lazy_load_util.lazy_keymap(
+	lazy_load_util.load_plugin_on_keymap(
 		"codecompanion",
 		{ "n" },
 		"<LocalLeader>c",
@@ -160,4 +160,4 @@ local function lazy_load_on_keymap()
 	)
 end
 
-lazy_load_on_keymap()
+load_on_keymap()
