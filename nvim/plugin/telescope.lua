@@ -4,7 +4,7 @@ local config = function()
 	local mappings = require("config.mappings")
 	local telescope = require("telescope")
 	local word_actions = require("telescope-words.actions")
-	
+
 	telescope.setup({
 		defaults = {
 			path_display = { "truncate" },
@@ -81,10 +81,7 @@ local config = function()
 	})
 	telescope.load_extension("live_grep_args")
 	telescope.load_extension("fzf")
-	telescope.load_extension("telescope_words")
 	telescope.load_extension("git_changed_files")
-	telescope.load_extension("git_conflicts")
-	telescope.load_extension("dap")
 	mappings.telescope()
 	autocommands.telescope()
 end
