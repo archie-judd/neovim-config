@@ -16,7 +16,6 @@ local config = function()
 		},
 		panel = {
 			enabled = false,
-			auto_refresh = true,
 		},
 	})
 end
