@@ -11,6 +11,8 @@ local function is_client_ready(client_name)
 end
 
 local config = function()
+	vim.lsp.set_log_level("warn")
+
 	autocommands.lspconfig()
 
 	vim.lsp.enable("pyright")
@@ -26,6 +28,9 @@ local config = function()
 	vim.lsp.enable("texlab")
 
 	vim.lsp.config("ts_ls", {
+		cmd_env = {
+			NODE_OPTIONS = "--max-old-space-size=8192",
+		},
 		settings = {
 			typescript = {
 				format = {
