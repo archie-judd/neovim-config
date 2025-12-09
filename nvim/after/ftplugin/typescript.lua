@@ -1,3 +1,4 @@
+vim.print("Loaded typescript ftplugin")
 local mappings = require("config.mappings")
 
 vim.opt_local.colorcolumn = "101"
