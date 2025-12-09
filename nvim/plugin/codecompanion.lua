@@ -147,7 +147,7 @@ local function load_on_keymap()
 	lazy_load_util.load_plugin_on_keymaps(
 		config,
 		"codecompanion",
-		{ n = { "<LocalLeader>c", "<LocalLeader>n" }, v = { "<LocalLeader>c", "LocalLeader<n>" } }
+		{ n = { "<LocalLeader>c", "<LocalLeader>n" }, v = { "<LocalLeader>c", "<LocalLeader>n" } }
 	)
 end
 
