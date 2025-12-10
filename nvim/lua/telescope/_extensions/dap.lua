@@ -62,7 +62,7 @@ local get_frame_finder = function(frames)
 				filename = frame.source.path,
 				lnum = frame.line,
 				display = make_display_frame,
-				ordinal = frame.id,
+				ordinal = tostring(frame.id),
 			}
 			return entry
 		end,
