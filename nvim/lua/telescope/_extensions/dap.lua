@@ -116,7 +116,7 @@ local get_breakpoint_finder = function(results)
 				lnum = result.lnum,
 				breakpoint = result,
 				display = make_breakpoint_display,
-				ordinal = 1,
+				ordinal = result.filename .. ":" .. result.lnum,
 			}
 			return entry
 		end,
