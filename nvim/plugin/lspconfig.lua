@@ -29,7 +29,7 @@ local config = function()
 
 	vim.lsp.config("ts_ls", {
 		cmd_env = {
-			NODE_OPTIONS = "--max-old-space-size=8192",
+			NODE_OPTIONS = "--max-old-space-size=16384",
 		},
 		settings = {
 			typescript = {
