@@ -32,11 +32,23 @@
           blink-cmp-words = blink-cmp-words;
         };
 
-        app = pkgs.writeShellApplication {
+        nvim = pkgs.writeShellApplication {
           name = "nvim";
           text = ''${neovim.package}/bin/nvim "$@"'';
           runtimeInputs = neovim.extraPackages;
         };
 
-      in { packages.default = app; });
+        # A script to run neovim with a custom configuration use like nvim-rtp <path-to-nvim-config>
+        nvim-rtp = pkgs.writeShellApplication {
+          name = "nvim-rtp";
+          text = builtins.readFile ./scripts/nvim-rtp.sh;
+          runtimeInputs = [ nvim ];
+        };
+
+      in {
+        packages = {
+          default = nvim;
+          nvim-rtp = nvim-rtp;
+        };
+      });
 }
