@@ -255,7 +255,7 @@ end
 
 function M.dap()
 	local dap = require("dap")
-	local dap_utils = require("utils.dap")
+	local dap_utils = require("plugin_config.dap.utils")
 	local dap_widgets = require("dap.ui.widgets")
 	local telescope = require("telescope")
 	local core_utils = require("utils.core")
@@ -366,7 +366,7 @@ function M.dap()
 end
 
 function M.diffview()
-	local diffview_utils = require("utils.diffview")
+	local diffview_utils = require("plugin_config.diffview")
 
 	vim.keymap.set(
 		"n",
@@ -498,7 +498,7 @@ end
 -- The mappings for copilot suggestions are also here to save my sanity
 -- Command line settings are in `blink-cmp.lua`
 function M.cmp()
-	local cmp_utils = require("utils.cmp")
+	local cmp_utils = require("plugin_config.cmp")
 
 	vim.keymap.set({ "i" }, "<C-y>", cmp_utils.accept, {
 		noremap = true,
@@ -543,7 +543,7 @@ function M.cmp()
 end
 
 function M.maximise()
-	local maximise = require("maximise")
+	local maximise = require("plugin_config.maximise")
 
 	vim.keymap.set("n", "<Leader>z", maximise.toggle_maximise, {
 		silent = true,
@@ -553,7 +553,7 @@ function M.maximise()
 end
 
 function M.github_link()
-	local github_link = require("github_link")
+	local github_link = require("plugin_config.github_link")
 
 	vim.keymap.set({ "n", "v" }, "<Leader>gl", github_link.github_link, {
 		silent = true,
@@ -564,7 +564,7 @@ end
 
 function M.codecompanion()
 	local codecompanion = require("codecompanion")
-	local codecompanion_utils = require("utils.codecompanion.chat")
+	local codecompanion_utils = require("plugin_config.codecompanion.utils")
 
 	vim.keymap.set(
 		{ "v" },
@@ -593,7 +593,7 @@ function M.codecompanion()
 end
 
 function M.terminal()
-	local terminal = require("terminal")
+	local terminal = require("plugin_config.terminal")
 
 	vim.keymap.set("n", "<leader>tt", terminal.open, { noremap = true, silent = true, desc = "Terminal: open" })
 end

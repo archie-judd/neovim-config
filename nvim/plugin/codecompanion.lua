@@ -4,7 +4,7 @@ local function config()
 	local autocommands = require("config.autocommands")
 	local codecompanion = require("codecompanion")
 	local mappings = require("config.mappings")
-	local prompts = require("utils.codecompanion.prompts")
+	local prompts = require("plugin_config.codecompanion.prompts")
 
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
