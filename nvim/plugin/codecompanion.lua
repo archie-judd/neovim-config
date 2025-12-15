@@ -26,7 +26,7 @@ local function config()
 				},
 				tools = {
 					clipboard = {
-						callback = "utils.codecompanion.tools.clipboard",
+						callback = "plugin_config.codecompanion.tools.clipboard",
 						description = "A tool for copying and pasting text to and from the clipboard",
 						opts = {},
 					},
@@ -41,7 +41,7 @@ local function config()
 				},
 				variables = {
 					["staged_diff"] = {
-						callback = "utils.codecompanion.variables.staged_diff",
+						callback = "plugin_config.codecompanion.variables.staged_diff",
 						description = "Share the output of `git diff --cached` with the LLM",
 					},
 				},
@@ -61,7 +61,7 @@ local function config()
 						},
 					},
 					["git_changed"] = {
-						callback = "utils.codecompanion.slash_commands.git_changed_files",
+						callback = "plugin_config.codecompanion.slash_commands.git_changed_files",
 						description = "Select a changed file within the git repository",
 						opts = {
 							contains_code = true,
