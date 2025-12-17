@@ -30,7 +30,7 @@ local git_changed_files = function(SlashCommand)
 	local cmd = {
 		"bash",
 		"-c",
-		"git status --porcelain -u | grep -v '^.D' | cut -c4-",
+		"git status --porcelain -u | grep -v '^D' | cut -c4-",
 	}
 
 	pickers
