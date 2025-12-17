@@ -3,6 +3,9 @@ local dap = require("dap")
 local M = {}
 
 local function build_sls_invoke_local_args()
+	vim.fn.input({
+		prompt = "Ensure you have set custom.esbuild.sourcemap to true in serverless.yml. Press Enter to continue.",
+	})
 	local stage
 	local region
 	vim.ui.select({
@@ -42,6 +45,7 @@ local function build_sls_invoke_local_args()
 		region,
 		"--function",
 		function_name,
+		"--verbose",
 	}
 	if event_path ~= "" then
 		table.insert(args, "--path")
@@ -117,6 +121,18 @@ function M.setup()
 			},
 			console = "integratedTerminal",
 			outputCapture = "none",
+		},
+		{
+			type = "pwa-node",
+			request = "attach",
+			name = "Attach to port",
+			port = function()
+				vim.fn.input({
+					prompt = "Port: ",
+					default = "9229",
+				})
+			end,
+			skipFiles = { "<node_internals>/**", "**/node_modules/**" },
 		},
 		{
 			type = "pwa-node",
