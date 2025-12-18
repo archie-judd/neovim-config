@@ -51,6 +51,7 @@ local function build_sls_invoke_local_args()
 		table.insert(args, "--path")
 		table.insert(args, event_path)
 	end
+	vim.cmd("redraw")
 	vim.notify("SLS Invoke Local Args: " .. table.concat(args, " "), vim.log.levels.INFO)
 	return args
 end
@@ -121,18 +122,6 @@ function M.setup()
 			},
 			console = "integratedTerminal",
 			outputCapture = "none",
-		},
-		{
-			type = "pwa-node",
-			request = "attach",
-			name = "Attach to port",
-			port = function()
-				vim.fn.input({
-					prompt = "Port: ",
-					default = "9229",
-				})
-			end,
-			skipFiles = { "<node_internals>/**", "**/node_modules/**" },
 		},
 		{
 			type = "pwa-node",
