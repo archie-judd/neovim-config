@@ -16,10 +16,6 @@ local config = function()
 	dap.defaults.fallback.terminal_win_cmd = dap_utils.open_terminal
 	dap.defaults.fallback.switchbuf = "usevisible,useopen,uselast"
 
-	dap.listeners.after.event_stopped["notify"] = function()
-		vim.notify("Debugger paused", vim.log.levels.WARN)
-	end
-
 	dap_python.setup()
 	dap_pwa_node.setup()
 	mappings.dap()
