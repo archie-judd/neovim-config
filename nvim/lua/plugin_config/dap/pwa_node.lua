@@ -2,6 +2,52 @@ local dap = require("dap")
 
 local M = {}
 
+local args_cache = {}
+
+local function args_to_string(args)
+	return table.concat(args, " ")
+end
+
+---@return table|nil
+local function maybe_get_cached_sls_invoke_args()
+	local args = nil
+	local use_cached_args = false
+	vim.ui.select({
+		"Yes",
+		"No",
+	}, {
+		prompt = "Use cached SLS Invoke Local Args? ",
+	}, function(item, _)
+		use_cached_args = item == "Yes"
+	end)
+	if use_cached_args then
+		local arg_strings = {}
+		for idx, cached_args in ipairs(args_cache) do
+			table.insert(arg_strings, idx, args_to_string(cached_args))
+		end
+		vim.ui.select(arg_strings, {
+			prompt = "Select cached args: ",
+		}, function(_, idx)
+			args = args_cache[idx]
+		end)
+		return args
+	end
+end
+
+local function cache_args(args)
+	local args_string = args_to_string(args)
+	local is_duplicate = false
+	for _, cached in ipairs(args_cache) do
+		if args_to_string(cached) == args_string then
+			is_duplicate = true
+			break
+		end
+	end
+	if not is_duplicate then
+		table.insert(args_cache, args)
+	end
+end
+
 local function build_sls_invoke_local_args()
 	vim.fn.input({
 		prompt = "Ensure you have set custom.esbuild.sourcemap to true in serverless.yml. Press Enter to continue.",
@@ -32,7 +78,6 @@ local function build_sls_invoke_local_args()
 	})
 	local event_path = vim.fn.input({
 		prompt = "Event File Path (or empty for no event): ",
-		default = "event.json",
 	})
 	local args = {
 		"invoke",
@@ -51,13 +96,25 @@ local function build_sls_invoke_local_args()
 		table.insert(args, "--path")
 		table.insert(args, event_path)
 	end
+	cache_args(args)
 	vim.cmd("redraw")
 	vim.notify("SLS Invoke Local Args: " .. table.concat(args, " "), vim.log.levels.INFO)
 	return args
 end
 
+local function get_sls_invoke_local_args()
+	local args = nil
+	if #args_cache > 0 then
+		args = maybe_get_cached_sls_invoke_args()
+	end
+	if args == nil then
+		args = build_sls_invoke_local_args()
+	end
+	return args
+end
+
 function M.setup()
-	dap.defaults["pwa-node"].exception_breakpoints = { "raised", "uncaught" }
+	dap.defaults["pwa-node"].exception_breakpoints = { "uncaught", "caught" }
 	local js_debug_path = vim.fs.joinpath(
 		vim.fs.root(vim.fn.exepath("js-debug"), "lib"),
 		"lib/node_modules/js-debug/dist/src/dapDebugServer.js"
@@ -110,7 +167,7 @@ function M.setup()
 			cwd = "${workspaceFolder}",
 			runtimeExecutable = "node",
 			program = "${workspaceFolder}/node_modules/serverless/bin/serverless.js",
-			args = build_sls_invoke_local_args,
+			args = get_sls_invoke_local_args,
 			sourceMaps = true,
 			outFiles = {
 				"${workspaceFolder}/.esbuild/.build/**/*.js",
