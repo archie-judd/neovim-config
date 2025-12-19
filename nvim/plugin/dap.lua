@@ -21,6 +21,7 @@ local config = function()
 	mappings.dap()
 	autocommands.dap()
 	telescope.load_extension("dap")
+	vim.api.nvim_exec_autocmds("User", { pattern = "DapLoaded" }) -- notify that dap has been loaded (for other plugins to hook into)
 end
 
 local function load_on_keymap()

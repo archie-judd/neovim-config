@@ -35,6 +35,7 @@ end
 
 local function load_on_keymap()
 	local lazy_load_util = require("utils.lazy_load")
+	lazy_load_util.load_plugin_on_event(config, "neotest", "User", "DapLoaded") -- load neotest when dap is loaded
 	lazy_load_util.load_plugin_on_keymaps(config, "neotest", { n = { "<Leader>rt" } })
 end
 

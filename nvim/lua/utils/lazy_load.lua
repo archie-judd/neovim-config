@@ -35,11 +35,13 @@ end
 
 ---@param config_fn function
 ---@param plugin_name string
----@param event any
-function M.load_plugin_on_event(config_fn, plugin_name, event)
-	local group = vim.api.nvim_create_augroup("lazy_load" .. plugin_name, { clear = true })
+---@param event string | string[]
+---@param pattern string | string[] | nil
+function M.load_plugin_on_event(config_fn, plugin_name, event, pattern)
+	local group = vim.api.nvim_create_augroup("LazyLoad" .. plugin_name, { clear = true })
 
 	vim.api.nvim_create_autocmd(event, {
+		pattern = pattern,
 		group = group,
 		once = true,
 		callback = function()
