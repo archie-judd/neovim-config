@@ -23,6 +23,7 @@
         p.sql
         p.latex
         p.diff
+        p.xml
       ]);
       nvim-treesitter-textobjects =
         p.nvim-treesitter-textobjects.overrideAttrs {
