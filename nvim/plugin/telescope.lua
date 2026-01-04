@@ -50,20 +50,20 @@ local config = function()
 				case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 				-- the default case_mode is "smart_case"
 			},
-			telescope_words = {
-				mappings = {
-					n = {
-						["<C-y>"] = word_actions.replace_word_under_cursor,
-						["<CR>"] = word_actions.replace_word_under_cursor,
-					},
-					i = {
-						["<C-y>"] = word_actions.replace_word_under_cursor,
-						["<CR>"] = word_actions.replace_word_under_cursor,
-					},
-				},
-				layout_config = { preview_width = 0.65 },
-				similarity_depth = 3,
-			},
+			-- telescope_words = {
+			-- 	mappings = {
+			-- 		n = {
+			-- 			["<C-y>"] = word_actions.replace_word_under_cursor,
+			-- 			["<CR>"] = word_actions.replace_word_under_cursor,
+			-- 		},
+			-- 		i = {
+			-- 			["<C-y>"] = word_actions.replace_word_under_cursor,
+			-- 			["<CR>"] = word_actions.replace_word_under_cursor,
+			-- 		},
+			-- 	},
+			-- 	layout_config = { preview_width = 0.65 },
+			-- 	similarity_depth = 3,
+			-- },
 		},
 		pickers = {
 			buffers = {
