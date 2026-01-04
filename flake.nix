@@ -32,10 +32,19 @@
           blink-cmp-words = blink-cmp-words;
         };
 
+        # Slim version for resource-constrained systems (e.g., Raspberry Pi)
+        neovim-slim = pkgs.callPackage ./neovim-slim.nix { pkgs = pkgs; };
+
         nvim = pkgs.writeShellApplication {
           name = "nvim";
           text = ''${neovim.package}/bin/nvim "$@"'';
           runtimeInputs = neovim.extraPackages;
+        };
+
+        nvim-slim = pkgs.writeShellApplication {
+          name = "nvim";
+          text = ''${neovim-slim.package}/bin/nvim "$@"'';
+          runtimeInputs = neovim-slim.extraPackages;
         };
 
         # A script to run neovim with a custom configuration use like nvim-rtp <path-to-nvim-config>
@@ -48,6 +57,7 @@
       in {
         packages = {
           default = nvim;
+          nvim-slim = nvim-slim;
           nvim-rtp = nvim-rtp;
         };
       });
