@@ -55,7 +55,7 @@ let
   ];
 
 in {
-  package = (pkgs.wrapNeovimUnstable.override) pkgs.neovim-unwrapped {
+  package = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
     withPython3 = false;
     withNodeJs = false;
     withRuby = false;
