@@ -16,9 +16,16 @@
         overlays = import ./overlays.nix {
           nvim-treesitter-main = nvim-treesitter-main;
         };
+        overlays-slim = import ./overlays-slim.nix {
+          nvim-treesitter-main = nvim-treesitter-main;
+        };
         pkgs = import nixpkgs {
           system = system;
           overlays = overlays;
+        };
+        pkgs-slim = import nixpkgs {
+          system = system;
+          overlays = overlays-slim;
         };
         pkgs-unstable = import nixpkgs-unstable {
           system = system;
@@ -33,7 +40,8 @@
         };
 
         # Slim version for resource-constrained systems (e.g., Raspberry Pi)
-        neovim-slim = pkgs.callPackage ./neovim-slim.nix { pkgs = pkgs; };
+        neovim-slim =
+          pkgs-slim.callPackage ./neovim-slim.nix { pkgs = pkgs-slim; };
 
         nvim = pkgs.writeShellApplication {
           name = "nvim";
