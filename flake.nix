@@ -16,16 +16,9 @@
         overlays = import ./overlays.nix {
           nvim-treesitter-main = nvim-treesitter-main;
         };
-        overlays-slim = import ./overlays-slim.nix {
-          nvim-treesitter-main = nvim-treesitter-main;
-        };
         pkgs = import nixpkgs {
           system = system;
           overlays = overlays;
-        };
-        pkgs-slim = import nixpkgs {
-          system = system;
-          overlays = overlays-slim;
         };
         pkgs-unstable = import nixpkgs-unstable {
           system = system;
@@ -39,20 +32,10 @@
           blink-cmp-words = blink-cmp-words;
         };
 
-        # Slim version for resource-constrained systems (e.g., Raspberry Pi)
-        neovim-slim =
-          pkgs-slim.callPackage ./neovim-slim.nix { pkgs = pkgs-slim; };
-
         nvim = pkgs.writeShellApplication {
           name = "nvim";
           text = ''${neovim.package}/bin/nvim "$@"'';
           runtimeInputs = neovim.extraPackages;
-        };
-
-        nvim-slim = pkgs.writeShellApplication {
-          name = "nvim";
-          text = ''${neovim-slim.package}/bin/nvim "$@"'';
-          runtimeInputs = neovim-slim.extraPackages;
         };
 
         # A script to run neovim with a custom configuration use like nvim-rtp <path-to-nvim-config>
@@ -65,7 +48,6 @@
       in {
         packages = {
           default = nvim;
-          nvim-slim = nvim-slim;
           nvim-rtp = nvim-rtp;
         };
       });
