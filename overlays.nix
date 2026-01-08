@@ -29,8 +29,6 @@
         p.nvim-treesitter-textobjects.overrideAttrs {
           dependencies = [ f.nvim-treesitter ];
         };
-      neotest =
-        p.neotest.overrideAttrs { dependencies = [ f.nvim-treesitter ]; };
     });
   })
 ]
