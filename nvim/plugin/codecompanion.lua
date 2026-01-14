@@ -9,7 +9,7 @@ local function config()
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
 	local DEFAULT_ADAPTER = "copilot"
-	local DEFAULT_MODEL = "gpt-5-mini"
+	local DEFAULT_MODEL = "claude-haiku-4.5"
 	codecompanion.setup({
 		strategies = {
 			-- Change the default chat adapter
