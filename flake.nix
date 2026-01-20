@@ -13,8 +13,8 @@
     , blink-cmp-words, nvim-treesitter-main, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        overlays = import ./overlays.nix {
-          nvim-treesitter-main = nvim-treesitter-main;
+        overlays = import ./overlays-new.nix {
+          # nvim-treesitter-main = nvim-treesitter-main;
         };
         pkgs = import nixpkgs {
           system = system;

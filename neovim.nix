@@ -19,9 +19,32 @@ let
     dofile("${nvimConfig}/init.lua")
   '';
 
+  tresitterWithParsers = pkgs-unstable.vimPlugins.nvim-treesitter.withPlugins
+    (p: [
+      p.python
+      p.markdown
+      p.javascript
+      p.typescript
+      p.tsx
+      p.lua
+      p.vim
+      p.vimdoc
+      p.json
+      p.html
+      p.nix
+      p.yaml
+      p.bash
+      p.haskell
+      p.c
+      p.sql
+      p.latex
+      p.diff
+      p.xml
+    ]);
+
   plugins = [
-    pkgs.vimPlugins.nvim-treesitter
-    pkgs.vimPlugins.nvim-treesitter-textobjects
+    tresitterWithParsers
+    pkgs-unstable.vimPlugins.nvim-treesitter-textobjects
     pkgs.vimPlugins.plenary-nvim
     pkgs.vimPlugins.catppuccin-nvim
     pkgs.vimPlugins.telescope-nvim
@@ -41,8 +64,8 @@ let
     pkgs.vimPlugins.vim-fugitive
     pkgs.vimPlugins.gitsigns-nvim
     pkgs.vimPlugins.lualine-nvim
-    pkgs.vimPlugins.neotest
-    pkgs.vimPlugins.neotest-python
+    pkgs-unstable.vimPlugins.neotest
+    pkgs-unstable.vimPlugins.neotest-python
     pkgs.vimPlugins.neotest-vitest
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
