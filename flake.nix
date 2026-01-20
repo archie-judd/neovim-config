@@ -6,16 +6,13 @@
     telescope-words.url =
       "github:archie-judd/telescope-words.nvim?ref=development";
     blink-cmp-words.url = "github:archie-judd/blink-cmp-words?ref=development";
-    nvim-treesitter-main.url = "github:iofq/nvim-treesitter-main";
   };
 
   outputs = { flake-utils, nixpkgs, nixpkgs-unstable, telescope-words
-    , blink-cmp-words, nvim-treesitter-main, ... }:
+    , blink-cmp-words, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        overlays = import ./overlays-new.nix {
-          # nvim-treesitter-main = nvim-treesitter-main;
-        };
+        overlays = import ./overlays.nix { };
         pkgs = import nixpkgs {
           system = system;
           overlays = overlays;

@@ -19,8 +19,8 @@ let
     dofile("${nvimConfig}/init.lua")
   '';
 
-  tresitterWithParsers = pkgs-unstable.vimPlugins.nvim-treesitter.withPlugins
-    (p: [
+  tresitterUnstableWithParsers =
+    pkgs-unstable.vimPlugins.nvim-treesitter.withPlugins (p: [
       p.python
       p.markdown
       p.javascript
@@ -43,8 +43,11 @@ let
     ]);
 
   plugins = [
-    tresitterWithParsers
+    tresitterUnstableWithParsers
     pkgs-unstable.vimPlugins.nvim-treesitter-textobjects
+    pkgs-unstable.vimPlugins.neotest
+    pkgs-unstable.vimPlugins.neotest-python
+    pkgs-unstable.vimPlugins.neotest-vitest
     pkgs.vimPlugins.plenary-nvim
     pkgs.vimPlugins.catppuccin-nvim
     pkgs.vimPlugins.telescope-nvim
@@ -64,9 +67,6 @@ let
     pkgs.vimPlugins.vim-fugitive
     pkgs.vimPlugins.gitsigns-nvim
     pkgs.vimPlugins.lualine-nvim
-    pkgs-unstable.vimPlugins.neotest
-    pkgs-unstable.vimPlugins.neotest-python
-    pkgs.vimPlugins.neotest-vitest
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
     pkgs.vimPlugins.indent-blankline-nvim
