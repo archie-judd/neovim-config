@@ -21,25 +21,26 @@ let
 
   tresitterUnstableWithParsers =
     pkgs-unstable.vimPlugins.nvim-treesitter.withPlugins (p: [
-      p.python
-      p.markdown
       p.javascript
       p.typescript
       p.tsx
+      p.html
+      p.css
+      p.json
+      p.c
+      p.python
+      p.haskell
+      p.nix
+      p.bash
       p.lua
       p.vim
       p.vimdoc
-      p.json
-      p.html
-      p.nix
       p.yaml
-      p.bash
-      p.haskell
-      p.c
       p.sql
+      p.xml
+      p.markdown
       p.latex
       p.diff
-      p.xml
     ]);
 
   plugins = [
