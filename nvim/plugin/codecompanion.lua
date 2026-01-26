@@ -11,7 +11,7 @@ local function config()
 	local DEFAULT_ADAPTER = "copilot"
 	local DEFAULT_MODEL = "claude-haiku-4.5"
 	codecompanion.setup({
-		strategies = {
+		interactions = {
 			-- Change the default chat adapter
 			chat = {
 				adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL },
