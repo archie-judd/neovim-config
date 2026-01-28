@@ -49,6 +49,9 @@ let
     pkgs-unstable.vimPlugins.neotest
     pkgs-unstable.vimPlugins.neotest-python
     pkgs-unstable.vimPlugins.neotest-vitest
+    # claude models weren't loading in stable nixpkgs (version was 2025-11-20)
+    pkgs-unstable.vimPlugins.codecompanion-nvim
+    pkgs-unstable.vimPlugins.codecompanion-history-nvim
     pkgs.vimPlugins.plenary-nvim
     pkgs.vimPlugins.catppuccin-nvim
     pkgs.vimPlugins.telescope-nvim
@@ -74,8 +77,6 @@ let
     pkgs.vimPlugins.render-markdown-nvim
     pkgs.vimPlugins.vimtex
     pkgs.vimPlugins.mini-ai
-    pkgs.vimPlugins.codecompanion-nvim
-    pkgs.vimPlugins.codecompanion-history-nvim
     pkgs.vimPlugins.oil-nvim
     pkgs.vimPlugins.diffview-nvim
     telescope-words.packages.${pkgs.stdenv.hostPlatform.system}.default
