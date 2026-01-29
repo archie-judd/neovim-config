@@ -2,7 +2,7 @@ local Path = require("plenary.path")
 
 local action_state = require("telescope.actions.state")
 local actions = require("telescope.actions")
-local chat_helpers = require("codecompanion.strategies.chat.helpers")
+local chat_helpers = require("codecompanion.interactions.chat.helpers")
 local conf = require("telescope.config")
 local config = require("codecompanion.config")
 local finders = require("telescope.finders")

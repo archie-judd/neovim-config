@@ -12,7 +12,7 @@ the buffer, edit it with your suggestions using your editor tool unless the user
 		},
 		{
 			role = "user",
-			content = "Here is the current buffer: #buffer\n\nUsing your @insert_edit_into_file tool, make the following change(s):\n\n",
+			content = "Here is the current buffer: #{buffer}\n\nUsing your @{insert_edit_into_file} tool, make the following change(s):\n\n",
 		},
 	},
 	opts = {
@@ -50,7 +50,7 @@ Suggest a sequence of commits that make sense. Try to suggest the smallest numbe
 			content = function()
 				vim.g.codecompanion_auto_tool_mode = true
 				return [[
-Here is the git diff: #diff 
+Here is the git diff: #{staged_diff} 
 
 Suggest a sequence of commits that make sense given the diff.
 ]]
