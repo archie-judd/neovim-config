@@ -116,7 +116,6 @@ local function config()
 		},
 		prompt_library = {
 			["Edit current buffer"] = prompts.edit_current_buffer,
-			["Suggest commits"] = prompts.suggest_commits,
 		},
 		extensions = {
 			history = {

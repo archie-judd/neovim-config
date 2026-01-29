@@ -26,46 +26,4 @@ the buffer, edit it with your suggestions using your editor tool unless the user
 	},
 }
 
-M.suggest_commits = {
-	strategy = "chat",
-	description = "Suggest a commit sequence given a git diff",
-	prompts = {
-		{
-			role = "system",
-			content = function()
-				return [[
-Suggest a sequence of commits that make sense. Try to suggest the smallest number of commits with the following considerations:
-
-1. Commits should follow the Conventional Commit Specification.
-2. Commits should be listed in the order in which they should be applied.
-3. Under each commit, list the files that were changed in that commit.
-4. **IMPORTANT** make sense to format the response using the following rules:
-- Format your response with markdown.
-- Commits should appear in block-quotes under headered sections.
-]]
-			end,
-		},
-		{
-			role = "user",
-			content = function()
-				vim.g.codecompanion_auto_tool_mode = true
-				return [[
-Here is the git diff: #{staged_diff} 
-
-Suggest a sequence of commits that make sense given the diff.
-]]
-			end,
-		},
-	},
-	opts = {
-		modes = { "n" },
-		is_slash_cmd = true,
-		short_name = "commits",
-		auto_submit = true,
-		index = 2,
-		stop_context_insertion = true,
-		user_prompt = false,
-	},
-}
-
 return M
