@@ -1,20 +1,43 @@
 local CODECOMPANION_LEADER = " "
 
 local function config()
-	local autocommands = require("config.autocommands")
 	local codecompanion = require("codecompanion")
+	local autocommands = require("config.autocommands")
 	local mappings = require("config.mappings")
 	local prompts = require("plugin_config.codecompanion.prompts")
 
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
-	local DEFAULT_ADAPTER = "copilot"
-	local DEFAULT_MODEL = "claude-haiku-4.5"
+
+	local default_adapter
+	if os.getenv("ANTHROPIC_API_KEY") ~= nil then
+		default_adapter = { name = "anthropic", model = "claude-haiku-4.5" }
+	else
+		default_adapter = { name = "copilot", model = "claude-haiku-4.5" }
+	end
+
 	codecompanion.setup({
+		adapters = {
+			acp = {
+				opts = {
+					show_presets = false,
+					show_model_choices = true,
+				},
+				claude_code = "claude_code",
+			},
+			http = {
+				opts = {
+					show_presets = false,
+					show_model_choices = true,
+				},
+				copilot = "copilot",
+				anthropic = "anthropic",
+			},
+		},
 		interactions = {
 			-- Change the default chat adapter
 			chat = {
-				adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL },
+				adapter = default_adapter,
 				keymaps = {
 					-- make unreachable ( I use my own functions )
 					send = {
@@ -82,8 +105,6 @@ local function config()
 					},
 				},
 			},
-			inline = { adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL } },
-			cmd = { adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL } },
 		},
 		display = {
 			chat = {
@@ -123,16 +144,15 @@ local function config()
 				opts = {
 					auto_generate_title = true,
 					title_generation_opts = {
-						adapter = DEFAULT_ADAPTER,
-						model = DEFAULT_MODEL,
+						adapter = default_adapter.name,
+						model = default_adapter.model,
 					},
-					summary_generation_opts = { adapter = DEFAULT_ADAPTER, model = DEFAULT_MODEL },
+					summary_generation_opts = { adapter = default_adapter.name, model = default_adapter.model },
 				},
 			},
 		},
 	})
 	-- expand cc to CodeCompanion in the command lines
-	vim.cmd("cabbrev cc CodeCompanion")
 	-- register the markdown language for CodeCompanion
 	vim.treesitter.language.register("markdown", "codecompanion")
 	mappings.codecompanion()
