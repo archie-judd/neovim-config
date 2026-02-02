@@ -10,8 +10,9 @@ local function config()
 	local WINDOW_WIDTH = 0.4
 
 	local default_adapter
-	if os.getenv("ANTHROPIC_API_KEY") ~= nil then
-		default_adapter = { name = "anthropic", model = "claude-haiku-4.5" }
+	local anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
+	if anthropic_api_key ~= nil and anthropic_api_key ~= "" then
+		default_adapter = { name = "anthropic", model = "claude-haiku-4-5" }
 	else
 		default_adapter = { name = "copilot", model = "claude-haiku-4.5" }
 	end
