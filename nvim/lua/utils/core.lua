@@ -54,19 +54,13 @@ function M.close_active_or_topmost_floating_window(force)
 		end
 
 		table.sort(windows_with_zindex, function(a, b)
-			return a.zindex < b.zindex
+			return a.zindex > b.zindex
 		end)
 		if #windows_with_zindex > 0 then
 			local first = windows_with_zindex[1]
 			vim.api.nvim_win_close(first.win, force)
 		end
 	end
-end
-
----@return string
-function M.get_char_under_cursor()
-	local position = vim.api.nvim_win_get_cursor(0)
-	return string.sub(vim.api.nvim_get_current_line(), position[2], position[2])
 end
 
 ---@param pattern string

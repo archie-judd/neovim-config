@@ -45,13 +45,13 @@ return {
 		setup = function(self, agent)
 			local cmd = vim.trim(self.args.cmd)
 			local lua_cmd = function(self)
-				local success, res = pcall(load(cmd))
-				local status = nil
-				if success then
-					status = "success"
-				else
-					status = "error"
+				local chunk, load_err = load(cmd)
+				if not chunk then
+					return { status = "error", data = "Syntax error: " .. tostring(load_err) }
 				end
+				
+				local success, res = pcall(chunk)
+				local status = success and "success" or "error"
 				return { status = status, data = res }
 			end
 			table.insert(self.cmds, lua_cmd)
@@ -66,17 +66,31 @@ return {
 			agent.chat:add_tool_output(self, "The user declined to run the cmd")
 		end,
 		success = function(self, agent, cmd, stdout)
-			local cmds = vim.iter(vim.split(cmd.cmd, ";")):flatten():join("\n")
-			local message = string.format("**Lua Cmd Runner Tool**: Ran the following commands:\n\n%s", cmds)
-			if stdout and vim.tbl_isempty(stdout) then
+			local message = string.format("**Lua Cmd Runner Tool**: Ran the following command:\n\n%s", self.args.cmd)
+			
+			if not stdout or vim.tbl_isempty(stdout) then
 				message = string.format("%s\n\nNo output was returned.", message)
 			else
-				message = string.format("%s\n\nOutput:\n%s", message, stdout[1])
+				local output = stdout[1]
+				local formatted_output
+				if output == nil then
+					formatted_output = "nil"
+				elseif type(output) == "table" then
+					formatted_output = "```lua\n" .. vim.inspect(output) .. "\n```"
+				else
+					formatted_output = tostring(output)
+				end
+				message = string.format("%s\n\nOutput:\n%s", message, formatted_output)
 			end
 			agent.chat:add_tool_output(self, message)
 		end,
 		error = function(self, agent, cmd, stderr, stdout)
-			return vim.notify("An error occurred", vim.log.levels.ERROR)
+			local error_msg = "An error occurred"
+			if stderr and not vim.tbl_isempty(stderr) then
+				error_msg = error_msg .. ": " .. tostring(stderr[1])
+			end
+			agent.chat:add_tool_output(self, error_msg)
+			return vim.notify(error_msg, vim.log.levels.ERROR)
 		end,
 	},
 }

@@ -54,7 +54,7 @@ local function config()
 						opts = {},
 					},
 					lua_cmd_runner = {
-						callback = "utils.codecompanion.tools.lua_cmd_runner",
+						callback = "plugin_config.codecompanion.tools.lua_cmd_runner",
 						description = "A tool for executing lua commands",
 						opts = { requires_approval = true },
 					},
