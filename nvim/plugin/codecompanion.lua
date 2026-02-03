@@ -8,7 +8,6 @@ local function config()
 
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
-
 	local DEFAULT_ADAPTER = { name = "copilot", model = "claude-haiku-4.5" }
 
 	codecompanion.setup({
@@ -44,7 +43,7 @@ local function config()
 						callback = utils.close_chat,
 					},
 					change_adapter = {
-						modes = { n = "<C-a>", i = "<C-a>" },
+						modes = { n = "ga" },
 						callback = utils.change_chat_adapter,
 					},
 				},
@@ -143,6 +142,7 @@ local function config()
 			history = {
 				enabled = true,
 				opts = {
+					expiration_days = 7,
 					auto_generate_title = true,
 					title_generation_opts = {
 						adapter = DEFAULT_ADAPTER.name,
