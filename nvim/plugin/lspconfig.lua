@@ -1,16 +1,6 @@
-local autocommands = require("config.autocommands")
-
-local function is_client_ready(client_name)
-	local buf_clients = vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })
-	for _, client in ipairs(buf_clients) do
-		if client.name == client_name and client.initialized then
-			return true
-		end
-	end
-	return false
-end
-
 local config = function()
+	local autocommands = require("config.autocommands")
+	local lspconfig_utils = require("lib.plugin.lspconfig")
 	vim.lsp.set_log_level("warn")
 
 	autocommands.lspconfig()
@@ -54,7 +44,7 @@ local config = function()
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				buffer = bufnr,
 				callback = function()
-					if is_client_ready(client.name) then
+					if lspconfig_utils.is_client_ready(client.name) then
 						vim.lsp.buf.code_action({
 							filter = function(action)
 								return action.kind and action.kind:match("^source%.fixAll%.eslint")

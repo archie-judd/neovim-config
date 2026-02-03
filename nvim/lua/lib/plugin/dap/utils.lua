@@ -1,4 +1,4 @@
-local core_utils = require("utils.core")
+local core_utils = require("lib.core")
 local dap = require("dap")
 local neotest = require("neotest")
 

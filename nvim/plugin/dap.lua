@@ -3,9 +3,9 @@ local DAP_LEADER = ","
 local config = function()
 	local autocommands = require("config.autocommands")
 	local dap = require("dap")
-	local dap_utils = require("plugin_config.dap.utils")
-	local dap_python = require("plugin_config.dap.python")
-	local dap_pwa_node = require("plugin_config.dap.pwa_node")
+	local dap_utils = require("lib.plugin.dap.utils")
+	local dap_python = require("lib.plugin.dap.python")
+	local dap_pwa_node = require("lib.plugin.dap.pwa_node")
 	local mappings = require("config.mappings")
 	local telescope = require("telescope")
 
@@ -25,7 +25,7 @@ local config = function()
 end
 
 local function load_on_keymap()
-	local lazy_load_util = require("utils.lazy_load")
+	local lazy_load_util = require("lib.lazy_load")
 	vim.g.maplocalleader = DAP_LEADER
 	lazy_load_util.load_plugin_on_keymaps(config, "dap", { n = { "<LocalLeader>d", "<LocalLeader>b" } })
 end

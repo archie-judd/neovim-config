@@ -37,7 +37,7 @@ function M.eyeliner()
 end
 
 function M.diffview()
-	local diffview = require("plugin_config.diffview")
+	local diffview = require("lib.plugin.diffview")
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = { "DiffviewFiles" },
 		callback = function(event)
@@ -92,7 +92,7 @@ function M.diffview()
 end
 
 function M.telescope()
-	local core_utils = require("utils.core")
+	local core_utils = require("lib.core")
 	vim.api.nvim_create_autocmd("User", {
 		pattern = { "TelescopeFindPre" },
 		callback = function(event)
@@ -113,7 +113,7 @@ function M.lspconfig()
 end
 
 function M.maximise()
-	local maximise = require("plugin_config.maximise")
+	local maximise = require("lib.plugin.maximise")
 	vim.api.nvim_create_autocmd("WinLeave", {
 		callback = function()
 			maximise.restore_if_maximised()
@@ -122,7 +122,7 @@ function M.maximise()
 end
 
 function M.terminal()
-	local terminal = require("plugin_config.terminal")
+	local terminal = require("lib.plugin.terminal")
 	vim.api.nvim_create_autocmd("BufEnter", {
 		pattern = "*",
 		callback = function(event)
@@ -165,7 +165,7 @@ end
 
 function M.dap()
 	local dap = require("dap")
-	local dap_utils = require("plugin_config.dap.utils")
+	local dap_utils = require("lib.plugin.dap.utils")
 	vim.api.nvim_create_autocmd("BufFilePost", {
 		pattern = "*\\[dap-terminal\\]*",
 		callback = function(event)

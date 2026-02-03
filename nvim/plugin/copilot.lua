@@ -21,7 +21,7 @@ local config = function()
 end
 
 local function load_on_event()
-	local lazy_load_utils = require("utils.lazy_load")
+	local lazy_load_utils = require("lib.lazy_load")
 	lazy_load_utils.load_plugin_on_event(config, "copilot", { "InsertEnter", "TextChanged", "TextChangedI" }, nil)
 end
 

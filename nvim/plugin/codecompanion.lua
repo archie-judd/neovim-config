@@ -3,8 +3,8 @@ local CODECOMPANION_LEADER = " "
 local function config()
 	local codecompanion = require("codecompanion")
 	local mappings = require("config.mappings")
-	local prompts = require("plugin_config.codecompanion.prompts")
-	local utils = require("plugin_config.codecompanion.utils")
+	local prompts = require("lib.plugin.codecompanion.prompts")
+	local utils = require("lib.plugin.codecompanion.utils")
 
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
@@ -159,7 +159,7 @@ local function config()
 end
 
 local function load_on_keymap()
-	local lazy_load_util = require("utils.lazy_load")
+	local lazy_load_util = require("lib.lazy_load")
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	lazy_load_util.load_plugin_on_keymaps(
 		config,

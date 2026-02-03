@@ -1,4 +1,4 @@
-local core_utils = require("utils.core")
+local core_utils = require("lib.core")
 local diffview = require("diffview")
 
 local M = {}

@@ -119,11 +119,11 @@ function M.user_input_or_nil(prompt)
 end
 
 function M.next_conflict()
-	vim.fn.search("^<<<<<<< ")
+	vim.fn.search("^<<<<<<< ", "w")
 end
 
 function M.prev_conflict()
-	vim.fn.search("^<<<<<<< ", "b")
+	vim.fn.search("^<<<<<<< ", "wb")
 end
 
 return M

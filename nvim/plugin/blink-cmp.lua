@@ -82,7 +82,7 @@ local function config()
 end
 
 local function load_on_event()
-	local lazy_load_util = require("utils.lazy_load")
+	local lazy_load_util = require("lib.lazy_load")
 	lazy_load_util.load_plugin_on_event(config, "blink.cmp", "InsertEnter", nil)
 end
 
