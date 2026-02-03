@@ -2,20 +2,14 @@ local CODECOMPANION_LEADER = " "
 
 local function config()
 	local codecompanion = require("codecompanion")
-	local autocommands = require("config.autocommands")
 	local mappings = require("config.mappings")
 	local prompts = require("plugin_config.codecompanion.prompts")
+	local utils = require("plugin_config.codecompanion.utils")
 
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
 
-	local default_adapter
-	local anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
-	if anthropic_api_key ~= nil and anthropic_api_key ~= "" then
-		default_adapter = { name = "anthropic", model = "claude-haiku-4-5" }
-	else
-		default_adapter = { name = "copilot", model = "claude-haiku-4.5" }
-	end
+	local DEFAULT_ADAPTER = { name = "copilot", model = "claude-haiku-4.5" }
 
 	codecompanion.setup({
 		adapters = {
@@ -38,14 +32,20 @@ local function config()
 		interactions = {
 			-- Change the default chat adapter
 			chat = {
-				adapter = default_adapter,
+				adapter = DEFAULT_ADAPTER,
 				keymaps = {
 					-- make unreachable ( I use my own functions )
 					send = {
-						modes = { n = "<NOP>", i = "<NOP>" },
+						modes = { n = "<C-s>", i = "<C-s>" },
+						callback = utils.send_prompt,
 					},
 					close = {
-						modes = { n = "<NOP>", i = "<NOP>" },
+						modes = { n = "<C-q>", i = "<C-q>" },
+						callback = utils.close_chat,
+					},
+					change_adapter = {
+						modes = { n = "<C-a>", i = "<C-a>" },
+						callback = utils.change_chat_adapter,
 					},
 				},
 				tools = {
@@ -145,19 +145,17 @@ local function config()
 				opts = {
 					auto_generate_title = true,
 					title_generation_opts = {
-						adapter = default_adapter.name,
-						model = default_adapter.model,
+						adapter = DEFAULT_ADAPTER.name,
+						model = DEFAULT_ADAPTER.model,
 					},
-					summary_generation_opts = { adapter = default_adapter.name, model = default_adapter.model },
+					summary_generation_opts = { adapter = DEFAULT_ADAPTER.name, model = DEFAULT_ADAPTER.model },
 				},
 			},
 		},
 	})
-	-- expand cc to CodeCompanion in the command lines
 	-- register the markdown language for CodeCompanion
 	vim.treesitter.language.register("markdown", "codecompanion")
 	mappings.codecompanion()
-	autocommands.codecompanion()
 end
 
 local function load_on_keymap()

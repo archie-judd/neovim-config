@@ -590,6 +590,12 @@ function M.codecompanion()
 	vim.keymap.set("n", "<LocalLeader>fc", function()
 		vim.cmd("CodeCompanionHistory")
 	end, { noremap = true, silent = true, desc = "CodeCompanion: Find chats with telescope" })
+	vim.keymap.set(
+		"n",
+		"<LocalLeader>ca",
+		codecompanion_utils.change_chat_adapter,
+		{ noremap = true, silent = true, desc = "CodeCompanion: Change chat adapter" }
+	)
 end
 
 function M.terminal()

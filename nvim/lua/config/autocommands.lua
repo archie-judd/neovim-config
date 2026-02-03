@@ -112,32 +112,6 @@ function M.lspconfig()
 	})
 end
 
-function M.codecompanion()
-	local codecompanion = require("codecompanion")
-	local core_utils = require("utils.core")
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "codecompanion",
-		callback = function(event)
-			vim.keymap.set({ "n", "i" }, "<C-q>", function()
-				local chat = codecompanion.last_chat()
-
-				if chat ~= nil and chat.ui:is_visible() and chat.bufnr == event.buf then
-					chat.ui:hide()
-				else
-					core_utils.close_active_or_topmost_floating_window(true)
-				end
-			end, { buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: hide chat if open" })
-			vim.keymap.set({ "n", "i" }, "<C-s>", function()
-				local chat = codecompanion.last_chat()
-				if chat ~= nil then
-					chat:submit()
-					vim.cmd("stopinsert")
-				end
-			end, { buffer = event.buf, silent = true, noremap = true, desc = "CodeCompanion: submit prompt" })
-		end,
-	})
-end
-
 function M.maximise()
 	local maximise = require("plugin_config.maximise")
 	vim.api.nvim_create_autocmd("WinLeave", {
