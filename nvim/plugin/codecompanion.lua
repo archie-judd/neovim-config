@@ -18,6 +18,7 @@ local function config()
 					show_model_choices = true,
 				},
 				claude_code = "claude_code",
+				opencode = "opencode",
 			},
 			http = {
 				opts = {
