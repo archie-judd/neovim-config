@@ -25,7 +25,6 @@ local function config()
 					show_model_choices = true,
 				},
 				copilot = "copilot",
-				anthropic = "anthropic",
 			},
 		},
 		interactions = {
