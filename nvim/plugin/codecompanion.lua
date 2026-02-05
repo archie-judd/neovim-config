@@ -19,6 +19,7 @@ local function config()
 				},
 				claude_code = "claude_code",
 				opencode = "opencode",
+				-- copilot = copilot_acp,
 			},
 			http = {
 				opts = {
@@ -49,12 +50,12 @@ local function config()
 				},
 				tools = {
 					clipboard = {
-						callback = "plugin_config.codecompanion.tools.clipboard",
+						callback = "lib.plugin.codecompanion.tools.clipboard",
 						description = "A tool for copying and pasting text to and from the clipboard",
 						opts = {},
 					},
 					lua_cmd_runner = {
-						callback = "plugin_config.codecompanion.tools.lua_cmd_runner",
+						callback = "lib.plugin.codecompanion.tools.lua_cmd_runner",
 						description = "A tool for executing lua commands",
 						opts = { requires_approval = true },
 					},
@@ -64,7 +65,7 @@ local function config()
 				},
 				variables = {
 					["staged_diff"] = {
-						callback = "plugin_config.codecompanion.variables.staged_diff",
+						callback = "lib.plugin.codecompanion.variables.staged_diff",
 						description = "Share the output of `git diff --cached` with the LLM",
 					},
 				},
@@ -83,7 +84,7 @@ local function config()
 						},
 					},
 					["git_changed"] = {
-						callback = "plugin_config.codecompanion.slash_commands.git_changed_files",
+						callback = "lib.plugin.codecompanion.slash_commands.git_changed_files",
 						description = "Select a changed file within the git repository",
 						opts = {
 							contains_code = true,
