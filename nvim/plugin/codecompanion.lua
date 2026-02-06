@@ -5,10 +5,11 @@ local function config()
 	local mappings = require("config.mappings")
 	local prompts = require("lib.plugin.codecompanion.prompts")
 	local utils = require("lib.plugin.codecompanion.utils")
+	local copilot_acp = require("lib.plugin.codecompanion.adapters.copilot_acp")
 
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
-	local DEFAULT_ADAPTER = { name = "copilot", model = "claude-haiku-4.5" }
+	local DEFAULT_ADAPTER = { name = "copilot_http", model = "claude-haiku-4.5" }
 
 	codecompanion.setup({
 		adapters = {
@@ -18,15 +19,14 @@ local function config()
 					show_model_choices = true,
 				},
 				claude_code = "claude_code",
-				opencode = "opencode",
-				-- copilot = copilot_acp,
+				copilot_acp = copilot_acp,
 			},
 			http = {
 				opts = {
 					show_presets = false,
 					show_model_choices = true,
 				},
-				copilot = "copilot",
+				copilot_http = "copilot",
 			},
 		},
 		interactions = {
