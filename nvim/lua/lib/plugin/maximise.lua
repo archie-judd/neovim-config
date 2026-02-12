@@ -4,6 +4,7 @@ local M = {}
 ---@type table<number, vim.api.keyset.win_config>
 local original_win_configs = {}
 local maximised = {}
+local saved_winrestcmd = nil
 
 local function maximise(win_id)
 	local FLOAT_MAX_HEIGHT = 0.975
@@ -11,35 +12,37 @@ local function maximise(win_id)
 	local cols = vim.o.columns
 	local rows = vim.o.lines - 2
 
-	-- get the current configuration of the floating window
+	local win_config = vim.api.nvim_win_get_config(win_id)
 
-	local update_win_config = vim.api.nvim_win_get_config(win_id)
-
-	if update_win_config.relative ~= "" then
+	if win_config.relative ~= "" then
 		original_win_configs[win_id] = vim.api.nvim_win_get_config(win_id)
-		-- update the row and col to reposition the window
-		update_win_config.row = math.floor(rows * (1 - FLOAT_MAX_HEIGHT) / 2)
-		update_win_config.col = math.floor(cols * (1 - FLOAT_MAX_WIDTH) / 2)
-		update_win_config.height = math.floor(rows * FLOAT_MAX_HEIGHT)
-		update_win_config.width = math.floor(cols * FLOAT_MAX_WIDTH)
+		win_config.row = math.floor(rows * (1 - FLOAT_MAX_HEIGHT) / 2)
+		win_config.col = math.floor(cols * (1 - FLOAT_MAX_WIDTH) / 2)
+		win_config.height = math.floor(rows * FLOAT_MAX_HEIGHT)
+		win_config.width = math.floor(cols * FLOAT_MAX_WIDTH)
+		vim.api.nvim_win_set_config(win_id, win_config)
 	else
-		for i, win_id_ in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-			original_win_configs[win_id_] = vim.api.nvim_win_get_config(win_id_)
-		end
-		update_win_config.height = vim.o.lines
-		update_win_config.width = vim.o.columns
+		saved_winrestcmd = vim.fn.winrestcmd()
+		vim.api.nvim_win_set_width(win_id, vim.o.columns)
+		vim.api.nvim_win_set_height(win_id, vim.o.lines)
 	end
-	-- apply the new configuration
-	vim.api.nvim_win_set_config(0, update_win_config)
 	maximised[win_id] = true
 end
 
 local function restore(win_id)
-	for win_id_, config in pairs(original_win_configs) do
-		vim.api.nvim_win_set_config(win_id_, config)
+	local win_config = vim.api.nvim_win_get_config(win_id)
+	if win_config.relative ~= "" then
+		for win_id_, config in pairs(original_win_configs) do
+			vim.api.nvim_win_set_config(win_id_, config)
+		end
+		original_win_configs = {}
+	else
+		if saved_winrestcmd then
+			vim.cmd(saved_winrestcmd)
+			saved_winrestcmd = nil
+		end
 	end
 	maximised[win_id] = false
-	original_win_configs[win_id] = nil
 end
 
 function M.toggle_maximise()
