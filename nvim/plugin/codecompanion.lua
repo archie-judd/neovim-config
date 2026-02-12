@@ -3,6 +3,7 @@ local CODECOMPANION_LEADER = " "
 local function config()
 	local codecompanion = require("codecompanion")
 	local mappings = require("config.mappings")
+	local user_commands = require("config.usercommands")
 	local prompts = require("lib.plugin.codecompanion.prompts")
 	local utils = require("lib.plugin.codecompanion.utils")
 	local copilot_acp = require("lib.plugin.codecompanion.adapters.copilot_acp")
@@ -156,17 +157,17 @@ local function config()
 	})
 	-- register the markdown language for CodeCompanion
 	vim.treesitter.language.register("markdown", "codecompanion")
+	vim.cmd([[cab cc Codecompanion]])
 	mappings.codecompanion()
 end
 
-local function load_on_keymap()
+local function load_plugin_on_keymap()
 	local lazy_load_util = require("lib.lazy_load")
 	vim.g.maplocalleader = CODECOMPANION_LEADER
-	lazy_load_util.load_plugin_on_keymaps(
-		config,
-		"codecompanion",
-		{ n = { "<LocalLeader>c", "<LocalLeader>n" }, v = { "<LocalLeader>c", "<LocalLeader>n" } }
-	)
+	lazy_load_util.load_plugin_on_keymaps(config, "codecompanion", {
+		n = { "<LocalLeader>c", "<LocalLeader>n", "<LocalLeader>i" },
+		v = { "<LocalLeader>c", "<LocalLeader>n", "<LocalLeader>i" },
+	})
 end
 
-load_on_keymap()
+load_plugin_on_keymap()

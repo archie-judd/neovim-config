@@ -220,13 +220,13 @@ function M.telescope()
 	)
 	vim.keymap.set(
 		"n",
-		"<Leader>fd",
+		"<Leader>fc",
 		telescope.extensions.git_changed_files.git_changed_files,
 		{ silent = true, noremap = true, desc = "Telescope: find changed files" }
 	)
 	vim.keymap.set(
 		"n",
-		"<Leader>fc",
+		"<Leader>fx",
 		telescope.extensions.git_conflicts.git_conflicts,
 		{ silent = true, noremap = true, desc = "Telescope: find git conflict" }
 	)
@@ -587,9 +587,9 @@ function M.codecompanion()
 		codecompanion.actions,
 		{ noremap = true, silent = true, desc = "CodeCompanion: Open actions" }
 	)
-	vim.keymap.set("n", "<LocalLeader>fc", function()
-		vim.cmd("CodeCompanionHistory")
-	end, { noremap = true, silent = true, desc = "CodeCompanion: Find chats with telescope" })
+	vim.keymap.set({ "n", "v" }, "<LocalLeader>i", function()
+		vim.cmd("CodeCompanion")
+	end, { noremap = true, silent = true, desc = "CodeCompanion: Inline assistant" })
 end
 
 function M.terminal()
