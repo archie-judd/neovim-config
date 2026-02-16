@@ -3,7 +3,6 @@ local config = function()
 	local mappings = require("config.mappings")
 
 	mappings.maximise()
-	autocommands.maximise()
 end
 
 config()
