@@ -54,11 +54,4 @@ function M.toggle_maximise()
 	end
 end
 
-function M.restore_if_maximised()
-	local win_id = vim.api.nvim_get_current_win()
-	if maximised[win_id] then
-		restore(win_id)
-	end
-end
-
 return M

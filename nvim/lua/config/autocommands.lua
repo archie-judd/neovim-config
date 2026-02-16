@@ -112,15 +112,6 @@ function M.lspconfig()
 	})
 end
 
-function M.maximise()
-	local maximise = require("lib.plugin.maximise")
-	vim.api.nvim_create_autocmd("WinLeave", {
-		callback = function()
-			maximise.restore_if_maximised()
-		end,
-	})
-end
-
 function M.terminal()
 	local terminal = require("lib.plugin.terminal")
 	vim.api.nvim_create_autocmd("BufEnter", {
