@@ -66,11 +66,13 @@ end
 
 function M.branch_diff()
 	local gitsigns = require("gitsigns")
+	local lazy_load_util = require("lib.lazy_load")
 	vim.api.nvim_create_user_command("BranchDiff", function(opts)
+		lazy_load_util.ensure_loaded("diffview")
 		gitsigns.change_base(opts.args, true)
 		local head = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("%s+", "")
 		vim.cmd("DiffviewOpen " .. opts.args)
-		vim.cmd("DiffviewFileHistory " .. opts.args .. ".." .. head)
+		vim.cmd("DiffviewFileHistory -range=" .. opts.args .. ".." .. head)
 	end, {
 		nargs = 1,
 		complete = function()
