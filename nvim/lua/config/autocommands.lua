@@ -37,7 +37,7 @@ function M.eyeliner()
 end
 
 function M.diffview()
-	local diffview = require("lib.plugin.diffview")
+	local diffview = require("diffview")
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = { "DiffviewFiles" },
 		callback = function(event)
