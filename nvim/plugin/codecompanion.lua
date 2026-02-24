@@ -3,7 +3,6 @@ local CODECOMPANION_LEADER = " "
 local function config()
 	local codecompanion = require("codecompanion")
 	local mappings = require("config.mappings")
-	local prompts = require("lib.plugin.codecompanion.prompts")
 	local utils = require("lib.plugin.codecompanion.utils")
 	local copilot_acp = require("lib.plugin.codecompanion.adapters.copilot_acp")
 
@@ -128,9 +127,6 @@ local function config()
 					show_default_prompt_library = true,
 				},
 			},
-		},
-		prompt_library = {
-			["Edit current buffer"] = prompts.edit_current_buffer,
 		},
 		extensions = {
 			history = {
