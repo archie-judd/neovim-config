@@ -69,7 +69,8 @@ function M.branch_diff()
 	vim.api.nvim_create_user_command("BranchDiff", function(opts)
 		gitsigns.change_base(opts.args, true)
 		local head = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("%s+", "")
-		vim.cmd("DiffviewOpen " .. opts.args .. "..." .. head)
+		vim.cmd("DiffviewOpen " .. opts.args)
+		vim.cmd("DiffviewFileHistory " .. opts.args .. ".." .. head)
 	end, {
 		nargs = 1,
 		complete = function()
