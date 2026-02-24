@@ -1,7 +1,7 @@
 local config = function()
 	local autocommands = require("config.autocommands")
 	local conform = require("conform")
-	
+
 	conform.setup({
 		formatters_by_ft = {
 			lua = { "stylua" },
@@ -36,6 +36,9 @@ local config = function()
 		formatters = {
 			black = {
 				prepend_args = { "--preview" },
+			},
+			jq = {
+				args = { "--indent", "2" },
 			},
 		},
 	})
