@@ -3,7 +3,6 @@ local CODECOMPANION_LEADER = " "
 local function config()
 	local codecompanion = require("codecompanion")
 	local mappings = require("config.mappings")
-	local user_commands = require("config.usercommands")
 	local prompts = require("lib.plugin.codecompanion.prompts")
 	local utils = require("lib.plugin.codecompanion.utils")
 	local copilot_acp = require("lib.plugin.codecompanion.adapters.copilot_acp")
@@ -49,25 +48,18 @@ local function config()
 						callback = utils.change_chat_adapter,
 					},
 				},
-				tools = {
-					clipboard = {
-						callback = "lib.plugin.codecompanion.tools.clipboard",
-						description = "A tool for copying and pasting text to and from the clipboard",
-						opts = {},
-					},
-					lua_cmd_runner = {
-						callback = "lib.plugin.codecompanion.tools.lua_cmd_runner",
-						description = "A tool for executing lua commands",
-						opts = { requires_approval = true },
-					},
-					opts = {
-						wait_timeout = 120000, -- 2 minutes
-					},
-				},
 				variables = {
 					["staged_diff"] = {
 						callback = "lib.plugin.codecompanion.variables.staged_diff",
 						description = "Share the output of `git diff --cached` with the LLM",
+					},
+
+					["diff"] = {
+						callback = "lib.plugin.codecompanion.variables.diff",
+						description = "Share the output of `git diff --cached` with the LLM",
+						opts = {
+							has_params = true,
+						},
 					},
 				},
 				slash_commands = {
@@ -80,12 +72,12 @@ local function config()
 						},
 						keymaps = {
 							modes = {
-								n = { "<Space>f" },
+								n = { "<Space>ff" },
 							},
 						},
 					},
-					["git_changed"] = {
-						callback = "lib.plugin.codecompanion.slash_commands.git_changed_files",
+					["changed_files"] = {
+						callback = "lib.plugin.codecompanion.slash_commands.changed_files",
 						description = "Select a changed file within the git repository",
 						opts = {
 							contains_code = true,
@@ -94,14 +86,14 @@ local function config()
 						},
 						keymaps = {
 							modes = {
-								n = { "<Space>g" },
+								n = { "<Space>fc" },
 							},
 						},
 					},
 					["buffer"] = {
 						keymaps = {
 							modes = {
-								n = { "<Space>b" },
+								n = { "<Space>fb" },
 							},
 						},
 					},
