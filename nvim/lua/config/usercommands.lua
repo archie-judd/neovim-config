@@ -64,4 +64,24 @@ function M.yank_filepath()
 	vim.api.nvim_create_user_command("YankFilename", mk_yank_with_register(yank_utils.yank_filename), { nargs = "?" })
 end
 
+function M.branch_diff()
+	local gitsigns = require("gitsigns")
+	vim.api.nvim_create_user_command("BranchDiff", function(opts)
+		gitsigns.change_base(opts.args, true)
+		local head = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("%s+", "")
+		vim.cmd("DiffviewOpen " .. opts.args .. "..." .. head)
+	end, {
+		nargs = 1,
+		complete = function()
+			local branches = vim.fn.systemlist("git branch -a --format='%(refname:short)'")
+			return branches
+		end,
+	})
+
+	vim.api.nvim_create_user_command("BranchDiffClose", function()
+		vim.cmd("DiffviewClose")
+		gitsigns.change_base(nil, true)
+	end, {})
+end
+
 return M
