@@ -1,11 +1,24 @@
 local M = {}
 
 local loaded = {}
+local configs = {}
+
+function M.ensure_loaded(plugin_name)
+	if not loaded[plugin_name] then
+		if configs[plugin_name] then
+			configs[plugin_name]()
+			loaded[plugin_name] = true
+		else
+			vim.notify("No config registered for plugin: " .. plugin_name, vim.log.levels.ERROR)
+		end
+	end
+end
 
 ---@param config_fn function
 ---@param plugin_name string
 ---@param keymaps table<string, string[]>
 function M.load_plugin_on_keymaps(config_fn, plugin_name, keymaps)
+	configs[plugin_name] = config_fn
 	local expanded_keys = {}
 	for mode, keys in pairs(keymaps) do
 		expanded_keys[mode] = {}
@@ -38,6 +51,7 @@ end
 ---@param event string | string[]
 ---@param pattern string | string[] | nil
 function M.load_plugin_on_event(config_fn, plugin_name, event, pattern)
+	configs[plugin_name] = config_fn
 	local group = vim.api.nvim_create_augroup("LazyLoad" .. plugin_name, { clear = true })
 
 	vim.api.nvim_create_autocmd(event, {
