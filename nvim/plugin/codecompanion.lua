@@ -132,7 +132,7 @@ local function config()
 			action_palette = {
 				provider = "telescope",
 				opts = {
-					show_default_actions = true,
+					show_default_actions = false,
 					show_default_prompt_library = false,
 				},
 			},
