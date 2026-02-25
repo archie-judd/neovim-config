@@ -70,4 +70,34 @@ function M.load_plugin_on_event(config_fn, plugin_name, event, pattern)
 	})
 end
 
+---@param config_fn function
+---@param plugin_name string
+---@param commands string | string[]
+function M.load_plugin_on_usercommands(config_fn, plugin_name, commands)
+	configs[plugin_name] = config_fn
+	if type(commands) == "string" then
+		commands = { commands }
+	end
+	for _, cmd in ipairs(commands) do
+		vim.api.nvim_create_user_command(cmd, function(opts)
+			-- Delete all stub commands first
+			for _, c in ipairs(commands) do
+				pcall(vim.api.nvim_del_user_command, c)
+			end
+			if not loaded[plugin_name] then
+				config_fn()
+				loaded[plugin_name] = true
+			end
+			-- Re-run the original command now that the plugin has registered it
+			local args = opts.args ~= "" and " " .. opts.args or ""
+			vim.cmd(cmd .. args)
+		end, {
+			bang = true,
+			nargs = "*",
+			range = true,
+			desc = "Lazy load " .. plugin_name,
+		})
+	end
+end
+
 return M
