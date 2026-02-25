@@ -10,10 +10,6 @@ local function config()
 	local WINDOW_WIDTH = 0.4
 	local DEFAULT_ADAPTER = { name = "copilot_http", model = "claude-haiku-4.5" }
 
-	local current_file = debug.getinfo(1).source:sub(2)
-	local config_root = vim.fn.fnamemodify(current_file, ":h:h")
-	local prompts_dir = config_root .. "/lua/lib/plugin/codecompanion/prompts/"
-
 	codecompanion.setup({
 		adapters = {
 			acp = {
@@ -103,11 +99,6 @@ local function config()
 				},
 			},
 		},
-		prompt_library = {
-			markdown = {
-				dirs = { prompts_dir },
-			},
-		},
 		display = {
 			chat = {
 				window = {
@@ -133,7 +124,7 @@ local function config()
 				provider = "telescope",
 				opts = {
 					show_default_actions = false,
-					show_default_prompt_library = false,
+					show_default_prompts = false,
 				},
 			},
 		},
