@@ -4,7 +4,7 @@ description: "Review a diff or snippet using the context bundle"
 interaction: chat
 opts:
   ignore_system_prompt: true
-  is_slash_cmd: true
+  is_slash_cmd: false
 ---
 
 ## system

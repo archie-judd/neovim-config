@@ -4,7 +4,7 @@ description: "Retrieve minimal context bundle for a diff or snippet"
 interaction: chat
 opts:
   ignore_system_prompt: true
-  is_slash_cmd: true
+  is_slash_cmd: false
 ---
 
 ## user
