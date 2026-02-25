@@ -10,6 +10,10 @@ local function config()
 	local WINDOW_WIDTH = 0.4
 	local DEFAULT_ADAPTER = { name = "copilot_http", model = "claude-haiku-4.5" }
 
+	local current_file = debug.getinfo(1).source:sub(2)
+	local config_root = vim.fn.fnamemodify(current_file, ":h:h")
+	local prompts_dir = config_root .. "/lua/lib/plugin/codecompanion/prompts/"
+
 	codecompanion.setup({
 		adapters = {
 			acp = {
@@ -99,6 +103,11 @@ local function config()
 				},
 			},
 		},
+		prompt_library = {
+			markdown = {
+				dirs = { prompts_dir },
+			},
+		},
 		display = {
 			chat = {
 				window = {
@@ -124,7 +133,7 @@ local function config()
 				provider = "telescope",
 				opts = {
 					show_default_actions = true,
-					show_default_prompt_library = true,
+					show_default_prompt_library = false,
 				},
 			},
 		},
@@ -153,8 +162,8 @@ local function load_plugin_on_keymap()
 	local lazy_load_util = require("lib.lazy_load")
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	lazy_load_util.load_plugin_on_keymaps(config, "codecompanion", {
-		n = { "<LocalLeader>c", "<LocalLeader>n", "<LocalLeader>i" },
-		v = { "<LocalLeader>c", "<LocalLeader>n", "<LocalLeader>i" },
+		n = { "<LocalLeader>c", "<LocalLeader>n", "<LocalLeader>i", "<LocalLeader>a" },
+		v = { "<LocalLeader>c", "<LocalLeader>n", "<LocalLeader>i", "<LocalLeader>a" },
 	})
 end
 
