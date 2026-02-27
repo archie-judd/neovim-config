@@ -4,11 +4,10 @@ local function config()
 	local codecompanion = require("codecompanion")
 	local mappings = require("config.mappings")
 	local utils = require("lib.plugin.codecompanion.utils")
-	local copilot_acp = require("lib.plugin.codecompanion.adapters.copilot_acp")
 
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
-	local DEFAULT_ADAPTER = { name = "copilot_http", model = "claude-haiku-4.5" }
+	local DEFAULT_ADAPTER = { name = "copilot", model = "claude-haiku-4.5" }
 
 	codecompanion.setup({
 		adapters = {
@@ -17,15 +16,13 @@ local function config()
 					show_presets = false,
 					show_model_choices = true,
 				},
-				claude_code = "claude_code",
-				copilot_acp = copilot_acp,
 			},
 			http = {
 				opts = {
 					show_presets = false,
 					show_model_choices = true,
 				},
-				copilot_http = "copilot",
+				copilot = "copilot",
 			},
 		},
 		interactions = {
@@ -110,6 +107,7 @@ local function config()
 				intro_message = "",
 				show_token_count = true,
 				start_in_insert_mode = false,
+				show_settings = false, -- Can't change adapter if this is true
 			},
 			debug_window = {
 				-- this doesn't seem to work
