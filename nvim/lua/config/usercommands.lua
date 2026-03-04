@@ -69,14 +69,51 @@ function M.branch_diff()
 	local lazy_load_util = require("lib.lazy_load")
 
 	vim.api.nvim_create_user_command("BranchDiff", function(opts)
+		local ref = opts.args ~= "" and opts.args or nil
+
+		-- detect default remote branch if no ref given
+		if not ref then
+			local remote_head = vim.fn.system("git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null"):gsub("\n", "")
+			if remote_head == "" then
+				vim.notify(
+					"BranchDiff: could not detect origin/HEAD. "
+						.. "Try: git remote set-head origin --auto, "
+						.. "or pass a branch explicitly e.g. :BranchDiff origin/main",
+					vim.log.levels.ERROR
+				)
+				return
+			end
+			-- remote_head is e.g. "refs/remotes/origin/main" -> "origin/main"
+			ref = remote_head:gsub("refs/remotes/", "")
+		end
+
+		-- with bang: diff against the ref directly (absolute)
+		-- without bang: resolve merge base so we only see this branch's changes
+		local target
+		if opts.bang then
+			target = ref
+		else
+			target = vim.fn.system("git merge-base HEAD " .. ref .. " 2>/dev/null"):gsub("\n", "")
+			if target == "" then
+				vim.notify(
+					"BranchDiff: git merge-base failed for ref '"
+						.. ref
+						.. "'. "
+						.. "Make sure the ref exists and you are inside a git repo.",
+					vim.log.levels.ERROR
+				)
+				return
+			end
+		end
+
 		lazy_load_util.ensure_loaded("diffview")
-		gitsigns.change_base(opts.args, true)
-		vim.cmd("DiffviewOpen " .. opts.args)
+		gitsigns.change_base(target, true)
+		vim.cmd("DiffviewOpen " .. target)
 	end, {
-		nargs = 1,
+		bang = true,
+		nargs = "?",
 		complete = function()
-			local branches = vim.fn.systemlist("git branch -a --format='%(refname:short)'")
-			return branches
+			return vim.fn.systemlist("git branch -a --format='%(refname:short)'")
 		end,
 	})
 
