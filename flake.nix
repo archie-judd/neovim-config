@@ -29,10 +29,21 @@
           blink-cmp-words = blink-cmp-words;
         };
 
+        neovim-minimal = pkgs.callPackage ./neovim-minimal.nix {
+          pkgs = pkgs;
+          pkgs-unstable = pkgs-unstable;
+        };
+
         nvim = pkgs.writeShellApplication {
           name = "nvim";
           text = ''${neovim.package}/bin/nvim "$@"'';
           runtimeInputs = neovim.extraPackages;
+        };
+
+        nvim-minimal = pkgs.writeShellApplication {
+          name = "nvim";
+          text = ''${neovim-minimal.package}/bin/nvim "$@"'';
+          runtimeInputs = neovim-minimal.extraPackages;
         };
 
         # A script to run neovim with a custom configuration use like nvim-rtp <path-to-nvim-config>
@@ -45,6 +56,7 @@
       in {
         packages = {
           default = nvim;
+          nvim-minimal = nvim-minimal;
           nvim-rtp = nvim-rtp;
         };
       });
