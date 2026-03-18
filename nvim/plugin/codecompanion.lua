@@ -7,7 +7,7 @@ local function config()
 
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
-	local DEFAULT_ADAPTER = { name = "copilot", model = "claude-haiku-4.5" }
+	local DEFAULT_ADAPTER = { name = "copilot", model = "claude-sonnet-4.6" }
 
 	codecompanion.setup({
 		adapters = {
