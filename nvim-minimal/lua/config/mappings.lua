@@ -204,4 +204,10 @@ function M.quickfix()
 	})
 end
 
+function M.terminal()
+	local terminal = require("lib.plugin.terminal")
+
+	vim.keymap.set("n", "<leader>tt", terminal.open, { noremap = true, silent = true, desc = "Terminal: open" })
+end
+
 return M
