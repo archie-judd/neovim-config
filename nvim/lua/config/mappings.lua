@@ -563,9 +563,7 @@ function M.github_link()
 end
 
 function M.codecompanion()
-	local codecompanion = require("codecompanion")
 	local codecompanion_utils = require("lib.plugin.codecompanion.utils")
-
 	vim.keymap.set(
 		{ "v" },
 		"<LocalLeader>c",
@@ -581,15 +579,6 @@ function M.codecompanion()
 	vim.keymap.set("n", "<LocalLeader>n", function()
 		codecompanion_utils.open({ new = true })
 	end, { noremap = true, silent = true, desc = "CodeCompanion: New chat" })
-	vim.keymap.set(
-		"n",
-		"<LocalLeader>a",
-		codecompanion.actions,
-		{ noremap = true, silent = true, desc = "CodeCompanion: Open actions" }
-	)
-	vim.keymap.set({ "n", "v" }, "<LocalLeader>i", function()
-		vim.cmd("CodeCompanion")
-	end, { noremap = true, silent = true, desc = "CodeCompanion: Inline assistant" })
 end
 
 function M.terminal()
