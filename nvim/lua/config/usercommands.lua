@@ -67,7 +67,7 @@ end
 function M.diff()
 	local gitsigns = require("gitsigns")
 	local lazy_load_util = require("lib.lazy_load")
-	local lib = require("lib.plugin.branch_diff")
+	local lib = require("lib.plugin.diff")
 
 	vim.api.nvim_create_user_command("Diff", function(opts)
 		local ref = opts.args ~= "" and opts.args or nil
