@@ -64,12 +64,12 @@ function M.yank_filepath()
 	vim.api.nvim_create_user_command("YankFilename", mk_yank_with_register(yank_utils.yank_filename), { nargs = "?" })
 end
 
-function M.branch_diff()
+function M.diff()
 	local gitsigns = require("gitsigns")
 	local lazy_load_util = require("lib.lazy_load")
 	local lib = require("lib.plugin.branch_diff")
 
-	vim.api.nvim_create_user_command("BranchDiff", function(opts)
+	vim.api.nvim_create_user_command("Diff", function(opts)
 		local ref = opts.args ~= "" and opts.args or nil
 		local target = lib.resolve_ref(ref, not opts.bang)
 		if not target then
@@ -87,7 +87,7 @@ function M.branch_diff()
 		end,
 	})
 
-	vim.api.nvim_create_user_command("BranchDiffClose", function()
+	vim.api.nvim_create_user_command("DiffClose", function()
 		lib.close_diffview_tabs()
 		gitsigns.change_base(nil, true)
 	end, {})
