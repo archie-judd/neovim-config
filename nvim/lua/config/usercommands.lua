@@ -93,4 +93,11 @@ function M.diff()
 	end, {})
 end
 
+function M.tasks()
+	local tasks = vim.env.TASKS_PATH
+	vim.api.nvim_create_user_command("Tasks", function()
+		vim.cmd("edit " .. tasks)
+	end, {})
+end
+
 return M
