@@ -439,30 +439,6 @@ function M.gitsigns(buffer)
 	end, { silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: line blame" })
 end
 
-function M.vim_markdown_toc()
-	vim.keymap.set(
-		{ "n", "v" },
-		"<Leader>tc",
-		":GenTocGFM<CR>",
-		{ buffer = true, noremap = true, silent = true, desc = "Vim-markdown-toc: generate table of contents" }
-	)
-end
-
-function M.markdown_preview()
-	vim.keymap.set(
-		{ "n", "v" },
-		"<Leader>mo",
-		":MarkdownPreview<CR>",
-		{ buffer = true, noremap = true, silent = true, desc = "MarkdownPreview: open" }
-	)
-	vim.keymap.set(
-		{ "n", "v" },
-		"<Leader>mc",
-		":MarkdownPreviewStop<CR>",
-		{ buffer = true, noremap = true, silent = true, desc = "MarkdownPreview: close" }
-	)
-end
-
 function M.typescript()
 	vim.keymap.set("n", "<Leader>1", "o(x)<Space>=><Space>x,<Esc>", {
 		buffer = true,
@@ -633,6 +609,23 @@ function M.textobjects()
 	vim.keymap.set({ "x", "o" }, "as", function()
 		select.select_textobject("@scope", "locals")
 	end, { desc = "Treesitter: select locals in scope" })
+end
+
+function M.markdown_tasks()
+	vim.keymap.set("n", "<leader>tx", function()
+		local line = vim.api.nvim_get_current_line()
+		local new_line = line:gsub("%[ %]", "[x]")
+		vim.api.nvim_set_current_line(new_line)
+	end, { desc = "Mark task done" })
+
+	vim.keymap.set("n", "<leader>tn", function()
+		local date = os.date("%Y-%m-%d")
+		local new_line = "- [ ] " .. date .. " "
+		local row = vim.api.nvim_win_get_cursor(0)[1]
+		vim.api.nvim_buf_set_lines(0, row, row, false, { new_line })
+		vim.api.nvim_win_set_cursor(0, { row + 1, #new_line })
+		vim.cmd("startinsert!")
+	end, { desc = "New task below" })
 end
 
 return M
