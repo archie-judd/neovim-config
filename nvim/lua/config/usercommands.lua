@@ -78,7 +78,6 @@ function M.diff()
 		lazy_load_util.ensure_loaded("diffview")
 		gitsigns.change_base(target, true)
 		vim.cmd("DiffviewOpen " .. target)
-		vim.cmd("DiffviewFileHistory --range=" .. target .. "..HEAD")
 	end, {
 		bang = true,
 		nargs = "?",
