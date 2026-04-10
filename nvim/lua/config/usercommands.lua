@@ -99,4 +99,11 @@ function M.tasks()
 	end, {})
 end
 
+function M.notes()
+	local notes = vim.env.NOTES_PATH
+	vim.api.nvim_create_user_command("Notes", function()
+		vim.cmd("edit " .. notes)
+	end, {})
+end
+
 return M
