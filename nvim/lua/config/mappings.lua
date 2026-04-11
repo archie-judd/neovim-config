@@ -616,7 +616,7 @@ function M.markdown_tasks()
 		local line = vim.api.nvim_get_current_line()
 		local new_line = line:gsub("%[ %]", "[x]")
 		vim.api.nvim_set_current_line(new_line)
-	end, { desc = "Mark task done" })
+	end, { buffer = true, desc = "Mark task done" })
 
 	vim.keymap.set("n", "<leader>tn", function()
 		local date = os.date("%Y-%m-%d")
@@ -625,7 +625,18 @@ function M.markdown_tasks()
 		vim.api.nvim_buf_set_lines(0, row, row, false, { new_line })
 		vim.api.nvim_win_set_cursor(0, { row + 1, #new_line })
 		vim.cmd("startinsert!")
-	end, { desc = "New task below" })
+	end, { buffer = true, desc = "New task below" })
+end
+
+function M.markdown_notes()
+	vim.keymap.set("n", "<leader>nn", function()
+		local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+		local new_lines = { "", "## " .. timestamp, "", "" }
+		local row = vim.api.nvim_win_get_cursor(0)[1]
+		vim.api.nvim_buf_set_lines(0, row, row, false, new_lines)
+		vim.api.nvim_win_set_cursor(0, { row + #new_lines, 0 })
+		vim.cmd("startinsert!")
+	end, { buffer = true, desc = "New note entry below" })
 end
 
 return M
