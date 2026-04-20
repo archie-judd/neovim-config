@@ -24,6 +24,7 @@ local config = function()
 					return { "jq" }
 				end
 			end,
+			jsonl = { "jq" },
 			yaml = { "prettier" },
 			markdown = { "prettier" },
 			nix = { "nixfmt" },
