@@ -164,9 +164,11 @@ function M.lspconfig(bufnr)
 		{ silent = true, noremap = true, buffer = bufnr, desc = "Lsp: hover" }
 	)
 	vim.keymap.set(
-		"n",
+		{ "n", "i", "s" },
 		"<C-s>",
-		vim.lsp.buf.signature_help,
+		function()
+			vim.lsp.buf.signature_help({ close_events = {}, border = "rounded" })
+		end,
 		{ silent = true, noremap = true, buffer = bufnr, desc = "Lsp: signature help" }
 	)
 	vim.keymap.set(
