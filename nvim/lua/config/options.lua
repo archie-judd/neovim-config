@@ -27,3 +27,6 @@ vim.g.clipboard = { -- OSC52 clipboard
 
 -- Diagnostics
 vim.diagnostic.config({ float = { border = "rounded" } })
+
+--jsonl
+vim.treesitter.language.register("json", { "jsonl" })
