@@ -190,21 +190,32 @@ function M.conform()
 		group = vim.api.nvim_create_augroup("FormatConfig", { clear = true }),
 		callback = function(ev)
 			local conform_opts = { bufnr = ev.buf, lsp_format = "fallback", timeout_ms = 2000 }
-			local client = vim.lsp.get_clients({ name = "ts_ls", bufnr = ev.buf })[1]
 
-			if not client then
-				conform.format(conform_opts)
-				return
-			end
-
-			local request_result = client:request_sync("workspace/executeCommand", {
-				command = "_typescript.organizeImports",
-				arguments = { vim.api.nvim_buf_get_name(ev.buf) },
-			})
-
-			if request_result and request_result.err then
-				vim.notify(request_result.err.message, vim.log.levels.ERROR)
-				return
+			local client = vim.lsp.get_clients({ name = "tsgo", bufnr = ev.buf })[1]
+			-- Everything below is a no-op until tsgo supports the "source.organizeImports" code action
+			if client then
+				local params = {
+					textDocument = vim.lsp.util.make_text_document_params(ev.buf),
+					range = {
+						start = { line = 0, character = 0 },
+						["end"] = { line = vim.api.nvim_buf_line_count(ev.buf), character = 0 },
+					},
+					context = {
+						only = { "source.organizeImports" },
+						diagnostics = {},
+					},
+				}
+				local resp = client:request_sync("textDocument/codeAction", params, 2000, ev.buf)
+				if resp and not resp.err and resp.result then
+					for _, action in ipairs(resp.result) do
+						if action.edit then
+							vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
+						end
+						if action.command then
+							client:request_sync("workspace/executeCommand", action.command, 2000, ev.buf)
+						end
+					end
+				end
 			end
 
 			conform.format(conform_opts)

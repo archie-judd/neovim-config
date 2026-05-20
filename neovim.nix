@@ -91,9 +91,7 @@ let
     pkgs.fd
     # copilot
     pkgs.nodejs
-    # typescript
-    pkgs.typescript-language-server
-    pkgs.vscode-langservers-extracted # eslint language server
+    # typescript -- provided by gridshare-edge
     # python
     pkgs.pyright
     # bash

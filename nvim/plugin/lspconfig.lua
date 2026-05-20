@@ -11,16 +11,37 @@ local config = function()
 	vim.lsp.enable("bashls")
 	vim.lsp.enable("nixd")
 	vim.lsp.enable("ts_ls")
+	vim.lsp.enable("tsgo")
 	vim.lsp.enable("sqlls")
 	vim.lsp.enable("yamlls")
 	vim.lsp.enable("eslint")
 	vim.lsp.enable("emmet_language_server")
 	vim.lsp.enable("texlab")
 
-	vim.lsp.config("ts_ls", {
-		cmd_env = {
-			NODE_OPTIONS = "--max-old-space-size=16384",
-		},
+	-- -- Moved to tsgo since ts_ls is too slow and has memory issues
+	-- vim.lsp.config("ts_ls", {
+	-- 	cmd_env = {
+	-- 		NODE_OPTIONS = "--max-old-space-size=16384",
+	-- 	},
+	-- 	settings = {
+	-- 		typescript = {
+	-- 			format = {
+	-- 				tabSize = 2,
+	-- 				indentSize = 2,
+	-- 				convertTabsToSpaces = true, -- Use tabs, not spaces
+	-- 			},
+	-- 		},
+	-- 		javascript = {
+	-- 			format = {
+	-- 				tabSize = 2,
+	-- 				indentSize = 2,
+	-- 				convertTabsToSpaces = true,
+	-- 			},
+	-- 		},
+	-- 	},
+	-- })
+
+	vim.lsp.config("tsgo", {
 		settings = {
 			typescript = {
 				format = {
