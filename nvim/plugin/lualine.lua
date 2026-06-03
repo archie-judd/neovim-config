@@ -1,9 +1,9 @@
 local config = function()
 	local lualine = require("lualine")
-	
+
 	lualine.setup({
 		options = {
-			theme = "catppuccin",
+			theme = "catppuccin-nvim",
 			section_separators = "",
 			component_separators = "",
 			ignore_focus = {
@@ -12,7 +12,11 @@ local config = function()
 		},
 		sections = {
 			lualine_a = { { "branch" } },
-			lualine_b = { { "diff" }, { "diagnostics" } },
+			lualine_b = { { "diff" }, {
+				function()
+					return vim.diagnostic.status()
+				end,
+			} },
 			lualine_c = {
 				{
 					"filename",

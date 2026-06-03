@@ -8,7 +8,7 @@ function M.setup()
 
 	dap.adapters.python = {
 		type = "executable",
-		command = python_debugger_path,
+		command = python_path,
 		args = { "-m", "debugpy.adapter" },
 		options = {
 			source_filetype = "python",

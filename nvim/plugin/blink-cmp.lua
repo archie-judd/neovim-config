@@ -47,11 +47,6 @@ local function config()
 			default = { "lsp", "path", "lazydev" },
 			providers = {
 				dap = { name = "dap", module = "blink.compat.source" },
-				lazydev = {
-					name = "LazyDev",
-					module = "lazydev.integrations.blink",
-					score_offset = 100,
-				},
 				thesaurus = {
 					name = "blink-cmp-words",
 					module = "blink-cmp-words.thesaurus",

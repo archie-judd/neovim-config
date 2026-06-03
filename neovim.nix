@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, telescope-words, blink-cmp-words }:
+{ pkgs, pkgs-unstable, telescope-words, blink-cmp-words, }:
 
 let
 
@@ -19,8 +19,8 @@ let
     dofile("${nvimConfig}/init.lua")
   '';
 
-  tresitterUnstableWithParsers =
-    pkgs-unstable.vimPlugins.nvim-treesitter.withPlugins (p: [
+  tresitterUnstableWithParsers = pkgs.vimPlugins.nvim-treesitter.withPlugins
+    (p: [
       p.javascript
       p.typescript
       p.tsx
@@ -45,19 +45,17 @@ let
 
   plugins = [
     tresitterUnstableWithParsers
-    pkgs-unstable.vimPlugins.nvim-treesitter-textobjects
-    pkgs-unstable.vimPlugins.neotest
-    pkgs-unstable.vimPlugins.neotest-python
-    pkgs-unstable.vimPlugins.neotest-vitest
-    # claude models weren't loading in stable nixpkgs (version was 2025-11-20)
-    pkgs-unstable.vimPlugins.codecompanion-nvim
-    pkgs-unstable.vimPlugins.codecompanion-history-nvim
+    pkgs.vimPlugins.nvim-treesitter-textobjects
+    pkgs.vimPlugins.neotest
+    pkgs.vimPlugins.neotest-python
+    pkgs.vimPlugins.neotest-vitest
+    pkgs.vimPlugins.codecompanion-nvim
+    pkgs.vimPlugins.codecompanion-history-nvim
     pkgs.vimPlugins.plenary-nvim
     pkgs.vimPlugins.catppuccin-nvim
     pkgs.vimPlugins.telescope-nvim
     pkgs.vimPlugins.telescope-live-grep-args-nvim
     pkgs.vimPlugins.telescope-fzf-native-nvim
-    pkgs.vimPlugins.nvim-lspconfig
     pkgs.vimPlugins.lazydev-nvim
     pkgs.vimPlugins.cmp-dap
     pkgs.vimPlugins.blink-cmp
@@ -73,7 +71,7 @@ let
     pkgs.vimPlugins.lualine-nvim
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.copilot-lua
-    pkgs.vimPlugins.indent-blankline-nvim
+    pkgs.vimPlugins.blink-indent
     pkgs.vimPlugins.render-markdown-nvim
     pkgs.vimPlugins.vimtex
     pkgs.vimPlugins.mini-ai
@@ -91,9 +89,6 @@ let
     pkgs.fd
     # copilot
     pkgs.nodejs
-    # typescript -- provided by gridshare-edge
-    # python
-    pkgs.pyright
     # bash
     pkgs.bash-language-server # lsp
     pkgs.shfmt # formatter
@@ -101,19 +96,11 @@ let
     pkgs.marksman # lsp
     pkgs.mdformat # formatter
     # nix
-    pkgs.nixfmt-classic
-    pkgs.nixd
-    # sql
-    pkgs.sqls
-    # html
-    pkgs.emmet-language-server
-    # yml
-    pkgs.yaml-language-server
-    # debugging
-    pkgs.vscode-js-debug
+    pkgs.nixd # lsp
+    pkgs.nixfmt # formatter
     # lua
-    pkgs.lua-language-server
-    pkgs.stylua
+    pkgs.lua-language-server # lsp
+    pkgs.stylua # formatter
   ];
 
   extraPython3Packages = pyPkgs: [ pyPkgs.debugpy ];
@@ -128,14 +115,13 @@ in {
   package = (pkgs.wrapNeovimUnstable.override { python3 = pkgs.python313; })
     pkgs.neovim-unwrapped {
       # These parameters go to the 'wrapper' function
-      withPython3 = true;
-      withNodeJs = true;
+      withPython3 = false;
+      withNodeJs = false;
       withRuby = false;
       withPerl = false;
-      extraPython3Packages = extraPython3Packages;
       plugins = plugins;
       luaRcContent = customRC;
+      # extraPython3Packages = extraPython3Packages;
     };
   extraPackages = extraPackages;
 }
-

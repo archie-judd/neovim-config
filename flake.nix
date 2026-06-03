@@ -1,7 +1,7 @@
 {
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     telescope-words.url =
       "github:archie-judd/telescope-words.nvim?ref=development";
@@ -12,14 +12,21 @@
     , blink-cmp-words, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
+        allowUnfreePredicate = pkg:
+          builtins.elem (nixpkgs.lib.getName pkg) [
+            "neotest-vitest"
+            "eyeliner.nvim"
+          ];
         overlays = import ./overlays.nix { };
         pkgs = import nixpkgs {
           system = system;
           overlays = overlays;
+          config = { allowUnfreePredicate = allowUnfreePredicate; };
         };
         pkgs-unstable = import nixpkgs-unstable {
           system = system;
           overlays = overlays;
+          config = { allowUnfreePredicate = allowUnfreePredicate; };
         };
 
         neovim = pkgs.callPackage ./neovim.nix {
