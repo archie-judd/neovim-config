@@ -11,6 +11,7 @@ vim.opt.laststatus = 3 -- only one statusline
 vim.opt.backupcopy = "yes" -- when writing a file, make a copy of the original file in the backup location, instead of moving it (which can interfere with file watchers)
 vim.opt.shell = vim.env.SHELL
 vim.opt.shellcmdflag = "-c"
+vim.opt.fillchars:append({ eob = " " })
 
 -- Clipboard
 vim.g.clipboard = { -- OSC52 clipboard
