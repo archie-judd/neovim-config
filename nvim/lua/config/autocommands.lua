@@ -192,7 +192,6 @@ function M.conform()
 			local conform_opts = { bufnr = ev.buf, lsp_format = "fallback", timeout_ms = 2000 }
 
 			local client = vim.lsp.get_clients({ name = "tsgo", bufnr = ev.buf })[1]
-			-- Everything below is a no-op until tsgo supports the "source.organizeImports" code action
 			if client then
 				local params = {
 					textDocument = vim.lsp.util.make_text_document_params(ev.buf),
