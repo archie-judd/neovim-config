@@ -1,5 +1,4 @@
 local autocommands = require("config.autocommands")
-local lspconfig_utils = require("lib.plugin.lspconfig")
 
 autocommands.lspconfig()
 
@@ -11,7 +10,6 @@ vim.lsp.enable("nixd")
 vim.lsp.enable("tsgo")
 vim.lsp.enable("sqlls")
 vim.lsp.enable("yamlls")
-vim.lsp.enable("eslint")
 vim.lsp.enable("emmet_language_server")
 vim.lsp.enable("texlab")
 
@@ -32,22 +30,4 @@ vim.lsp.config("tsgo", {
 			},
 		},
 	},
-})
-
-vim.lsp.config("eslint", {
-	on_attach = function(client, bufnr)
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			buffer = bufnr,
-			callback = function()
-				if lspconfig_utils.is_client_ready(client.name) then
-					vim.lsp.buf.code_action({
-						filter = function(action)
-							return action.kind and action.kind:match("^source%.fixAll%.eslint")
-						end,
-						apply = true,
-					})
-				end
-			end,
-		})
-	end,
 })
