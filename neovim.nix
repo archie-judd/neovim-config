@@ -106,8 +106,6 @@ let
     # lua
     pkgs.lua-language-server # lsp
     pkgs.stylua # formatter
-    # js/ts
-    pkgs.vscode-langservers-extracted # eslint lsp
   ];
 
 in
