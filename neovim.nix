@@ -1,4 +1,9 @@
-{ pkgs, pkgs-unstable, telescope-words, blink-cmp-words, }:
+{
+  pkgs,
+  pkgs-unstable,
+  telescope-words,
+  blink-cmp-words,
+}:
 
 let
 
@@ -19,29 +24,28 @@ let
     dofile("${nvimConfig}/init.lua")
   '';
 
-  tresitterUnstableWithParsers = pkgs.vimPlugins.nvim-treesitter.withPlugins
-    (p: [
-      p.javascript
-      p.typescript
-      p.tsx
-      p.html
-      p.css
-      p.json
-      p.c
-      p.python
-      p.haskell
-      p.nix
-      p.bash
-      p.lua
-      p.vim
-      p.vimdoc
-      p.yaml
-      p.sql
-      p.xml
-      p.markdown
-      p.latex
-      p.diff
-    ]);
+  tresitterUnstableWithParsers = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
+    p.javascript
+    p.typescript
+    p.tsx
+    p.html
+    p.css
+    p.json
+    p.c
+    p.python
+    p.haskell
+    p.nix
+    p.bash
+    p.lua
+    p.vim
+    p.vimdoc
+    p.yaml
+    p.sql
+    p.xml
+    p.markdown
+    p.latex
+    p.diff
+  ]);
 
   plugins = [
     tresitterUnstableWithParsers
@@ -105,23 +109,23 @@ let
 
   extraPython3Packages = pyPkgs: [ pyPkgs.debugpy ];
 
-in {
+in
+{
   # wrapNeovimUnstable is a curried function that is partially applied by callPackage here:
   # https://github.com/NixOS/nixpkgs/blob/a8d610af3f1a5fb71e23e08434d8d61a466fc942/pkgs/top-level/all-packages.nix
   # and defined here: https://github.com/NixOS/nixpkgs/blob/a8d610af3f1a5fb71e23e08434d8d61a466fc942/pkgs/applications/editors/neovim/wrapper.nix
   # We use .override to change the python3 argument that callPackage provided (from the default
   # python3 to python312). Then we call the resulting function with neovim-unwrapped and our
   # desired wrapper configuration parameters.
-  package = (pkgs.wrapNeovimUnstable.override { python3 = pkgs.python313; })
-    pkgs.neovim-unwrapped {
-      # These parameters go to the 'wrapper' function
-      withPython3 = false;
-      withNodeJs = false;
-      withRuby = false;
-      withPerl = false;
-      plugins = plugins;
-      luaRcContent = customRC;
-      # extraPython3Packages = extraPython3Packages;
-    };
+  package = (pkgs.wrapNeovimUnstable.override { python3 = pkgs.python313; }) pkgs.neovim-unwrapped {
+    # These parameters go to the 'wrapper' function
+    withPython3 = false;
+    withNodeJs = false;
+    withRuby = false;
+    withPerl = false;
+    plugins = plugins;
+    luaRcContent = customRC;
+    # extraPython3Packages = extraPython3Packages;
+  };
   extraPackages = extraPackages;
 }

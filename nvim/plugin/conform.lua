@@ -17,16 +17,10 @@ local config = function()
 			typescriptreact = { "prettier" },
 			css = { "prettier" },
 			html = { "prettier" },
-			json = function(bufnr)
-				if conform.get_formatter_info("prettier", bufnr).available then
-					return { "prettier" }
-				else
-					return { "jq" }
-				end
-			end,
+			json = { "prettier", "jq", stop_after_first = true },
 			jsonl = { "jq" },
 			yaml = { "prettier" },
-			markdown = { "prettier" },
+			markdown = { "prettier", "mdformat", stop_after_first = true },
 			nix = { "nixfmt" },
 			haskell = { "ormolu" },
 		},
