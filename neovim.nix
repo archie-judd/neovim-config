@@ -106,27 +106,22 @@ let
     # lua
     pkgs.lua-language-server # lsp
     pkgs.stylua # formatter
+    # js/ts
+    pkgs.vscode-langservers-extracted # eslint lsp
   ];
-
-  extraPython3Packages = pyPkgs: [ pyPkgs.debugpy ];
 
 in
 {
   # wrapNeovimUnstable is a curried function that is partially applied by callPackage here:
   # https://github.com/NixOS/nixpkgs/blob/a8d610af3f1a5fb71e23e08434d8d61a466fc942/pkgs/top-level/all-packages.nix
   # and defined here: https://github.com/NixOS/nixpkgs/blob/a8d610af3f1a5fb71e23e08434d8d61a466fc942/pkgs/applications/editors/neovim/wrapper.nix
-  # We use .override to change the python3 argument that callPackage provided (from the default
-  # python3 to python312). Then we call the resulting function with neovim-unwrapped and our
-  # desired wrapper configuration parameters.
-  package = (pkgs.wrapNeovimUnstable.override { python3 = pkgs.python313; }) pkgs.neovim-unwrapped {
-    # These parameters go to the 'wrapper' function
+  package = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
     withPython3 = false;
     withNodeJs = false;
     withRuby = false;
     withPerl = false;
     plugins = plugins;
     luaRcContent = customRC;
-    # extraPython3Packages = extraPython3Packages;
   };
   extraPackages = extraPackages;
 }
