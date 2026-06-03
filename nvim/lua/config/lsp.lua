@@ -1,6 +1,5 @@
 local autocommands = require("config.autocommands")
 local lspconfig_utils = require("lib.plugin.lspconfig")
-vim.lsp.set_log_level("warn")
 
 autocommands.lspconfig()
 
