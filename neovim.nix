@@ -50,6 +50,7 @@ let
   plugins = [
     tresitterUnstableWithParsers
     pkgs.vimPlugins.nvim-treesitter-textobjects
+    pkgs.vimPlugins.nvim-lspconfig
     pkgs.vimPlugins.neotest
     pkgs.vimPlugins.neotest-python
     pkgs.vimPlugins.neotest-vitest
