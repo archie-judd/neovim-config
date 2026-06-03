@@ -2,16 +2,22 @@ local autocommands = require("config.autocommands")
 
 autocommands.lspconfig()
 
-vim.lsp.enable("pyright")
-vim.lsp.enable("lua_ls")
-vim.lsp.enable("marksman")
-vim.lsp.enable("bashls")
-vim.lsp.enable("nixd")
-vim.lsp.enable("tsgo")
-vim.lsp.enable("sqlls")
-vim.lsp.enable("yamlls")
-vim.lsp.enable("emmet_language_server")
-vim.lsp.enable("texlab")
+local function enable_if_available(name, bin)
+	if vim.fn.executable(bin) == 1 then
+		vim.lsp.enable(name)
+	end
+end
+
+enable_if_available("pyright", "pyright-langserver")
+enable_if_available("lua_ls", "lua-language-server")
+enable_if_available("marksman", "marksman")
+enable_if_available("bashls", "bash-language-server")
+enable_if_available("nixd", "nixd")
+enable_if_available("tsgo", "tsgo")
+enable_if_available("sqlls", "sql-language-server")
+enable_if_available("yamlls", "yaml-language-server")
+enable_if_available("emmet_language_server", "emmet-language-server")
+enable_if_available("texlab", "texlab")
 
 vim.lsp.config("tsgo", {
 	settings = {
