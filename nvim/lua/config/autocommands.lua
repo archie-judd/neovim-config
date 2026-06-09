@@ -102,12 +102,12 @@ function M.telescope()
 	})
 end
 
-function M.lspconfig()
+function M.lsp()
 	local mappings = require("config.mappings")
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 		callback = function(event)
-			mappings.lspconfig(event.buf)
+			mappings.lsp(event.buf)
 		end,
 	})
 end

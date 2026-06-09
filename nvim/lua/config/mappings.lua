@@ -139,7 +139,7 @@ function M.core()
 end
 
 ---@param bufnr integer
-function M.lspconfig(bufnr)
+function M.lsp(bufnr)
 	local telescope_builtin = require("telescope.builtin")
 
 	vim.keymap.set(
