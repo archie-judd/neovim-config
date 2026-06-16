@@ -16,29 +16,28 @@ let
     dofile("${nvimConfig}/init.lua")
   '';
 
-  tresitterUnstableWithParsers =
-    pkgs-unstable.vimPlugins.nvim-treesitter.withPlugins (p: [
-      p.javascript
-      p.typescript
-      p.tsx
-      p.html
-      p.css
-      p.json
-      p.c
-      p.python
-      p.haskell
-      p.nix
-      p.bash
-      p.lua
-      p.vim
-      p.vimdoc
-      p.yaml
-      p.sql
-      p.xml
-      p.markdown
-      p.latex
-      p.diff
-    ]);
+  tresitterUnstableWithParsers = pkgs-unstable.vimPlugins.nvim-treesitter.withPlugins (p: [
+    p.javascript
+    p.typescript
+    p.tsx
+    p.html
+    p.css
+    p.json
+    p.c
+    p.python
+    p.haskell
+    p.nix
+    p.bash
+    p.lua
+    p.vim
+    p.vimdoc
+    p.yaml
+    p.sql
+    p.xml
+    p.markdown
+    p.latex
+    p.diff
+  ]);
 
   plugins = [
     tresitterUnstableWithParsers
@@ -50,6 +49,7 @@ let
     pkgs.vimPlugins.nvim-web-devicons
     pkgs.vimPlugins.tmux-nvim
     pkgs.vimPlugins.oil-nvim
+    pkgs.vimPlugins.mini-ai
   ];
 
   extraPackages = [
@@ -58,7 +58,8 @@ let
     pkgs.fd
   ];
 
-in {
+in
+{
   package = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
     withPython3 = false;
     withNodeJs = false;
