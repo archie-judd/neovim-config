@@ -30,7 +30,6 @@ local function config()
 			chat = {
 				adapter = DEFAULT_ADAPTER,
 				keymaps = {
-					-- make unreachable ( I use my own functions )
 					send = {
 						modes = { n = "<C-s>", i = "<C-s>" },
 						callback = utils.send_prompt,
@@ -42,6 +41,10 @@ local function config()
 					change_adapter = {
 						modes = { n = "ga" },
 						callback = utils.change_chat_adapter,
+					},
+					add_current_buffer = {
+						modes = { n = "<C-b>", i = "<C-b>" },
+						callback = utils.add_current_buffer_to_chat,
 					},
 				},
 				variables = {

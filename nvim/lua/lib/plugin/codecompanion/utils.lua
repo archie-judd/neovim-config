@@ -1,3 +1,4 @@
+local EditorContext = require("codecompanion.interactions.shared.editor_context.buffer")
 local change_chat_adapter = require("codecompanion.interactions.chat.keymaps.change_adapter")
 local codecompanion = require("codecompanion")
 local config = require("codecompanion.config")
@@ -84,6 +85,12 @@ function M.change_chat_adapter()
 	change_chat_adapter.callback(chat)
 	chat.opts.ignore_system_prompt = ignore_system_prompt_original
 	config.interactions.chat.adapter = chat.adapter
+end
+
+function M.add_current_buffer_to_chat()
+	local chat = require("codecompanion").buf_get_chat(0)
+	---@diagnostic disable-next-line: missing-fields
+	EditorContext.new({ Chat = chat, buffer_context = chat.buffer_context, config = {} }):chat_render({})
 end
 
 return M
