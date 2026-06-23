@@ -43,8 +43,9 @@ local function config()
 						callback = utils.change_chat_adapter,
 					},
 					add_current_buffer = {
-						modes = { n = "<C-b>", i = "<C-b>" },
+						modes = { n = "<LocalLeader>b" },
 						callback = utils.add_current_buffer_to_chat,
+						description = "Add the current buffer to the chat context",
 					},
 				},
 				variables = {
