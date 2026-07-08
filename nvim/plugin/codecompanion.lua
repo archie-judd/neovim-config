@@ -9,6 +9,7 @@ local function config()
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
 	local DEFAULT_ADAPTER = { name = "claude_code", model = "opus" }
+	local HISTORY_ADAPTER = { name = "copilot", model = "haiku-4.5" }
 
 	codecompanion.setup({
 		adapters = {
@@ -147,10 +148,10 @@ local function config()
 					expiration_days = 7,
 					auto_generate_title = true,
 					title_generation_opts = {
-						adapter = DEFAULT_ADAPTER.name,
-						model = DEFAULT_ADAPTER.model,
+						adapter = HISTORY_ADAPTER.name,
+						model = HISTORY_ADAPTER.model,
 					},
-					summary_generation_opts = { adapter = DEFAULT_ADAPTER.name, model = DEFAULT_ADAPTER.model },
+					summary_generation_opts = { adapter = HISTORY_ADAPTER.name, model = HISTORY_ADAPTER.model },
 				},
 			},
 		},
