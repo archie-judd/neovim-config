@@ -31,3 +31,9 @@ vim.diagnostic.config({ float = { border = "rounded" } })
 
 --jsonl
 vim.treesitter.language.register("json", { "jsonl" })
+
+vim.filetype.add({
+	filename = {
+		[".envrc"] = "bash",
+	},
+})
