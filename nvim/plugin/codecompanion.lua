@@ -4,10 +4,11 @@ local function config()
 	local codecompanion = require("codecompanion")
 	local mappings = require("config.mappings")
 	local utils = require("lib.plugin.codecompanion.utils")
+	local adapters = require("codecompanion.adapters")
 
 	vim.g.maplocalleader = CODECOMPANION_LEADER
 	local WINDOW_WIDTH = 0.4
-	local DEFAULT_ADAPTER = { name = "copilot", model = "claude-sonnet-4.6" }
+	local DEFAULT_ADAPTER = { name = "claude_code", model = "opus" }
 
 	codecompanion.setup({
 		adapters = {
@@ -16,6 +17,15 @@ local function config()
 					show_presets = false,
 					show_model_choices = true,
 				},
+				claude_code = function()
+					return adapters.extend("claude_code", {
+						env = {
+							CLAUDE_CODE_OAUTH_TOKEN = function()
+								return nil
+							end,
+						},
+					})
+				end,
 			},
 			http = {
 				opts = {
