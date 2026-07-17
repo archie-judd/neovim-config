@@ -182,6 +182,26 @@ function M.dap()
 	})
 end
 
+function M.codecompanion()
+	local codecompanion = require("codecompanion")
+	-- `chat.messages` doesn't yet contain the pending user input when `on_before_submit`
+	-- fires, so we have to re-parse the buffer the same way `chat:submit()` does.
+	vim.api.nvim_create_autocmd("User", {
+		pattern = "CodeCompanionChatCreated",
+		callback = function(args)
+			local chat = codecompanion.buf_get_chat(args.data.bufnr)
+			chat:add_callback("on_before_submit", function(c)
+				local parser = require("codecompanion.interactions.chat.parser")
+				local pending = parser.messages(c, c.header_line)
+				if not pending or pending.content == "" then
+					vim.notify("CodeCompanion: empty prompt, not submitting", vim.log.levels.WARN)
+					return false
+				end
+			end)
+		end,
+	})
+end
+
 function M.conform()
 	local conform = require("conform")
 	vim.api.nvim_create_autocmd("BufWritePre", {

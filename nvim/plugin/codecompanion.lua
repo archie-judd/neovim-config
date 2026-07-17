@@ -4,6 +4,7 @@ local function config()
 	local codecompanion = require("codecompanion")
 	local mappings = require("config.mappings")
 	local utils = require("lib.plugin.codecompanion.utils")
+	local autocommands = require("config.autocommands")
 	local adapters = require("codecompanion.adapters")
 
 	vim.g.maplocalleader = CODECOMPANION_LEADER
@@ -148,12 +149,14 @@ local function config()
 					auto_generate_title = false,
 				},
 			},
+			spinner = {},
 		},
 	})
 	-- register the markdown language for CodeCompanion
 	vim.treesitter.language.register("markdown", "codecompanion")
 	vim.cmd([[cab cc Codecompanion]])
 	mappings.codecompanion()
+	autocommands.codecompanion()
 end
 
 local function load_plugin_on_keymap()
