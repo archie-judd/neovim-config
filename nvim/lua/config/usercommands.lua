@@ -106,4 +106,11 @@ function M.notes()
 	end, {})
 end
 
+function M.dap()
+	local sls = require("lib.plugin.dap.sls")
+	vim.api.nvim_create_user_command("DapDebugSls", function()
+		sls.debug()
+	end, {})
+end
+
 return M

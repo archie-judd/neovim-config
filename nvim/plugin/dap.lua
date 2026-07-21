@@ -8,6 +8,7 @@ local config = function()
 	local dap_pwa_node = require("lib.plugin.dap.pwa_node")
 	local mappings = require("config.mappings")
 	local telescope = require("telescope")
+	local usercommands = require("config.usercommands")
 
 	vim.g.maplocalleader = DAP_LEADER
 
@@ -19,6 +20,7 @@ local config = function()
 	dap_python.setup()
 	dap_pwa_node.setup()
 	mappings.dap()
+	usercommands.dap()
 	autocommands.dap()
 	telescope.load_extension("dap")
 	vim.api.nvim_exec_autocmds("User", { pattern = "DapLoaded" }) -- notify that dap has been loaded (for other plugins to hook into)
@@ -28,6 +30,7 @@ local function load_on_keymap()
 	local lazy_load_util = require("lib.lazy_load")
 	vim.g.maplocalleader = DAP_LEADER
 	lazy_load_util.load_plugin_on_keymaps(config, "dap", { n = { "<LocalLeader>d", "<LocalLeader>b" } })
+	lazy_load_util.load_plugin_on_usercommands(config, "dap", { "DapDebugSls" })
 end
 
 load_on_keymap()
