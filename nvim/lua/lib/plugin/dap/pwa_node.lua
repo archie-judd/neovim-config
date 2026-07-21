@@ -163,10 +163,10 @@ function M.setup()
 		{
 			type = "pwa-node",
 			request = "launch",
-			name = "Debug SLS Invoke Local (node + serverless)",
+			name = "Debug SLS Invoke Local (node + osls)",
 			cwd = "${workspaceFolder}",
 			runtimeExecutable = "node",
-			program = "${workspaceFolder}/node_modules/serverless/bin/serverless.js",
+			program = "${workspaceFolder}/node_modules/osls/bin/serverless.js",
 			args = get_sls_invoke_local_args,
 			sourceMaps = true,
 			outFiles = {
