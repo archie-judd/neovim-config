@@ -48,7 +48,7 @@ function M.add_selection(opts)
 	end
 	chat:add_buf_message({
 		role = config.constants.USER_ROLE,
-		content = "```" .. context.filetype .. "\n" .. content .. "\n```\n\n",
+		content = "\n" .. "```" .. context.filetype .. "\n" .. content .. "\n```\n\n",
 	})
 end
 
@@ -88,7 +88,7 @@ function M.change_chat_adapter()
 end
 
 function M.add_current_buffer_to_chat()
-	local chat = require("codecompanion").buf_get_chat(0)
+	local chat = codecompanion.buf_get_chat(0)
 	---@diagnostic disable-next-line: missing-fields
 	EditorContext.new({ Chat = chat, buffer_context = chat.buffer_context, config = {} }):chat_render({})
 end
