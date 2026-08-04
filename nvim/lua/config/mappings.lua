@@ -148,12 +148,6 @@ function M.lsp(bufnr)
 		telescope_builtin.lsp_definitions,
 		{ silent = true, noremap = true, buffer = bufnr, desc = "Lsp: go to definition with telescope" }
 	)
-	vim.keymap.set(
-		"n",
-		"<Leader>td",
-		telescope_builtin.lsp_type_definitions,
-		{ silent = true, noremap = true, buffer = bufnr, desc = "Lsp: go to type definition with telescope" }
-	)
 	vim.keymap.set("n", "<Leader>lr", function()
 		telescope_builtin.lsp_references({ show_line = false })
 	end, { silent = true, noremap = true, buffer = bufnr, desc = "Lsp: list references" })
@@ -388,6 +382,9 @@ function M.neotest()
 		neotest.run.run,
 		{ silent = true, noremap = true, desc = "Neotest: run closest test" }
 	)
+	vim.keymap.set("n", "<Leader>ra", function()
+		neotest.run.run(vim.fn.expand("%"))
+	end, { silent = true, noremap = true, desc = "Neotest: run all tests" })
 end
 
 function M.gitsigns(buffer)
