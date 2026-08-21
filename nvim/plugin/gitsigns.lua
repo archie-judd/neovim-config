@@ -1,7 +1,8 @@
 local config = function()
 	local gitsigns = require("gitsigns")
 	local mappings = require("config.mappings")
-	
+	local usercommands = require("config.usercommands")
+
 	gitsigns.setup({
 		signs = {
 			add = { text = "+" },
@@ -15,6 +16,8 @@ local config = function()
 		end,
 		preview_config = { border = "rounded", focusable = true },
 	})
+
+	usercommands.stage()
 end
 
 config()

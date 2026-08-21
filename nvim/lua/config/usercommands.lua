@@ -92,6 +92,18 @@ function M.diff()
 	end, {})
 end
 
+function M.stage()
+	local gitsigns = require("gitsigns")
+
+	vim.api.nvim_create_user_command("Stage", function(opts)
+		if opts.range ~= 0 then
+			gitsigns.stage_hunk({ opts.line1, opts.line2 })
+		else
+			gitsigns.stage_hunk()
+		end
+	end, { range = true })
+end
+
 function M.tasks()
 	local tasks = vim.env.TASKS_PATH
 	vim.api.nvim_create_user_command("Tasks", function()
@@ -99,10 +111,10 @@ function M.tasks()
 	end, {})
 end
 
-function M.notes()
-	local notes = vim.env.NOTES_PATH
-	vim.api.nvim_create_user_command("Notes", function()
-		vim.cmd("edit " .. notes)
+function M.log()
+	local log = vim.env.LOG_PATH
+	vim.api.nvim_create_user_command("Log", function()
+		vim.cmd("edit " .. log)
 	end, {})
 end
 

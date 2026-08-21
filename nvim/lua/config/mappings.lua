@@ -413,7 +413,7 @@ function M.gitsigns(buffer)
 	vim.keymap.set(
 		"n",
 		"<Leader>hs",
-		gitsigns.stage_hunk,
+		"<Cmd>Stage<CR>",
 		{ silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: stage/unstage hunk" }
 	)
 	vim.keymap.set(
@@ -422,11 +422,19 @@ function M.gitsigns(buffer)
 		gitsigns.reset_hunk,
 		{ silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: reset hunk" }
 	)
-	vim.keymap.set("v", "<Leader>hs", function()
-		gitsigns.stage_hunk({ vim.fn.line("'<"), vim.fn.line("'>") })
-	end, { silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: stage/unstage selection" })
+	vim.keymap.set(
+		"v",
+		"<Leader>hs",
+		":Stage<CR>",
+		{ silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: stage/unstage selection" }
+	)
 	vim.keymap.set("v", "<Leader>hr", function()
-		gitsigns.reset_hunk({ vim.fn.line("'<."), vim.fn.line("'>") })
+		-- line(".") and line("v") come back in cursor/anchor order, not line order
+		local from, to = vim.fn.line("."), vim.fn.line("v")
+		if from > to then
+			from, to = to, from
+		end
+		gitsigns.reset_hunk({ from, to })
 	end, { silent = true, noremap = true, buffer = buffer, desc = "Gitsigns: reset selection" })
 	vim.keymap.set("n", "<Leader>gb", function()
 		gitsigns.blame_line({ full = true })
@@ -612,14 +620,6 @@ function M.markdown_tasks()
 		vim.api.nvim_set_current_line(new_line)
 	end, { buffer = true, desc = "Tasks: mark done" })
 
-	vim.keymap.set("n", "<leader>ts", function()
-		local row = vim.api.nvim_win_get_cursor(0)[1]
-		local line = vim.api.nvim_get_current_line()
-		local new_line = "~~" .. line .. "~~"
-		vim.api.nvim_set_current_line(new_line)
-		vim.api.nvim_win_set_cursor(0, { row, #new_line })
-	end, { buffer = true, desc = "Tasks: strikethrough" })
-
 	vim.keymap.set("n", "<leader>tn", function()
 		local date = os.date("%Y-%m-%d")
 		local new_line = "- [ ] " .. date .. " "
@@ -668,23 +668,15 @@ function M.markdown_tasks()
 	end, { buffer = true, desc = "Tasks: sort by completion and date" })
 end
 
-function M.markdown_notes()
-	vim.keymap.set("n", "<leader>ns", function()
-		local row = vim.api.nvim_win_get_cursor(0)[1]
-		local line = vim.api.nvim_get_current_line()
-		local new_line = "~~" .. line .. "~~"
-		vim.api.nvim_set_current_line(new_line)
-		vim.api.nvim_win_set_cursor(0, { row, #new_line })
-	end, { buffer = true, desc = "Notes: strikethrough" })
-
-	vim.keymap.set("n", "<leader>nn", function()
+function M.markdown_log()
+	vim.keymap.set("n", "<leader>ln", function()
 		local timestamp = os.date("%Y-%m-%d %H:%M:%S")
 		local new_lines = { "", "## " .. timestamp, "", "" }
 		local row = vim.api.nvim_win_get_cursor(0)[1]
 		vim.api.nvim_buf_set_lines(0, row, row, false, new_lines)
 		vim.api.nvim_win_set_cursor(0, { row + #new_lines, 0 })
 		vim.cmd("startinsert!")
-	end, { buffer = true, desc = "Notes: new entry" })
+	end, { buffer = true, desc = "Log: new entry" })
 end
 
 return M

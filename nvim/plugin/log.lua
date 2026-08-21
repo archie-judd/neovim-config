@@ -1,6 +1,6 @@
 local config = function()
 	local usercommands = require("config.usercommands")
-	usercommands.notes()
+	usercommands.log()
 end
 
 config()
