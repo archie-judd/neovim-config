@@ -39,7 +39,7 @@ vim.lsp.config("tsgo", {
 		},
 	},
 })
-vim.lsp.config("oxlint", {
+vim.lsp.config("eslint", {
 	on_attach = function(client, bufnr)
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			buffer = bufnr,
@@ -47,7 +47,7 @@ vim.lsp.config("oxlint", {
 				if lsp_utils.is_client_ready(client.name) then
 					vim.lsp.buf.code_action({
 						filter = function(action)
-							return action.kind and action.kind:match("^source%.fixAll%.oxc")
+							return action.kind and action.kind:match("^source%.fixAll%.eslint")
 						end,
 						apply = true,
 					})
@@ -56,3 +56,21 @@ vim.lsp.config("oxlint", {
 		})
 	end,
 })
+-- -- For when we move to oxlint
+-- vim.lsp.config("oxlint", {
+-- 	on_attach = function(client, bufnr)
+-- 		vim.api.nvim_create_autocmd("BufWritePre", {
+-- 			buffer = bufnr,
+-- 			callback = function()
+-- 				if lsp_utils.is_client_ready(client.name) then
+-- 					vim.lsp.buf.code_action({
+-- 						filter = function(action)
+-- 							return action.kind and action.kind:match("^source%.fixAll%.oxc")
+-- 						end,
+-- 						apply = true,
+-- 					})
+-- 				end
+-- 			end,
+-- 		})
+-- 	end,
+-- })
