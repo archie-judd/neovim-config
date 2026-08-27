@@ -118,6 +118,33 @@ function M.user_input_or_nil(prompt)
 	return input
 end
 
+---@class Lines
+---@field start number
+---@field ['end'] number
+
+--- Get the line range of the current visual selection.
+--- Reads the live cursor and selection anchor while visual mode is still active, as the
+--- '< and '> marks are only updated on leaving it.
+---@return Lines | nil
+function M.get_visual_line_range()
+	local mode = vim.api.nvim_get_mode().mode:sub(1, 1)
+	local start_line, end_line
+	if mode == "v" or mode == "V" or mode == "\22" then
+		start_line = vim.fn.getpos("v")[2]
+		end_line = vim.fn.getpos(".")[2]
+	else
+		start_line = vim.fn.line("'<")
+		end_line = vim.fn.line("'>")
+	end
+	if start_line == 0 or end_line == 0 then
+		return nil
+	end
+	if start_line > end_line then
+		start_line, end_line = end_line, start_line
+	end
+	return { start = start_line, ["end"] = end_line }
+end
+
 function M.next_conflict()
 	vim.fn.search("^<<<<<<< ", "w")
 end

@@ -1,5 +1,7 @@
 local M = {}
 
+local core = require("lib.core")
+
 ---@return boolean
 local function is_in_git_repo()
 	local result = vim.system({ "git", "rev-parse", "--is-inside-work-tree" }, { text = true }):wait()
@@ -104,10 +106,6 @@ local get_github_remote_url = function(remote)
 	end
 end
 
----@class Lines
----@field start number
----@field ['end'] number
-
 ---@param remote_url string
 ---@param commit string
 ---@param file_path string
@@ -188,9 +186,7 @@ function M.github_link(opts)
 	---@type Lines | nil
 	local lines
 	if mode:lower() == "v" or opts.range == true then
-		local start_line = vim.fn.line("'<")
-		local end_line = vim.fn.line("'>")
-		lines = { start = start_line, ["end"] = end_line }
+		lines = core.get_visual_line_range()
 	end
 
 	url = make_github_link(repo_url, commit, file_path, lines)
