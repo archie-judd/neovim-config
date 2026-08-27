@@ -672,7 +672,7 @@ function M.markdown_log()
 	vim.keymap.set("n", "<leader>ln", function()
 		local timestamp = os.date("%Y-%m-%d")
 		local new_lines = { "", "## " .. timestamp, "", "" }
-		local row = vim.api.nvim_win_get_cursor(0)[1]
+		local row = vim.api.nvim_buf_line_count(0)
 		vim.api.nvim_buf_set_lines(0, row, row, false, new_lines)
 		vim.api.nvim_win_set_cursor(0, { row + #new_lines, 0 })
 		vim.cmd("startinsert!")
