@@ -17,6 +17,24 @@ local config = function()
 				["-"] = false,
 			},
 		},
+		hooks = {
+			hooks = {
+				view_enter = function()
+					vim.opt.autowriteall = true
+				end,
+				view_leave = function(view)
+					for _, win in ipairs(vim.api.nvim_tabpage_list_wins(view.tabpage)) do
+						local buf = vim.api.nvim_win_get_buf(win)
+						if vim.bo[buf].modified and vim.bo[buf].modifiable and vim.bo[buf].buftype == "" then
+							vim.api.nvim_buf_call(buf, function()
+								vim.cmd("silent! write")
+							end)
+						end
+					end
+					vim.opt.autowriteall = false
+				end,
+			},
+		},
 	})
 	mappings.diffview()
 	autocommands.diffview()
