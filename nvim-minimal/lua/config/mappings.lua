@@ -142,12 +142,6 @@ function M.telescope()
 
 	vim.keymap.set(
 		"n",
-		"<Leader>fk",
-		telescope_builtin.keymaps,
-		{ silent = true, noremap = true, desc = "Telescope: keymaps" }
-	)
-	vim.keymap.set(
-		"n",
 		"<Leader>fb",
 		telescope_builtin.buffers,
 		{ silent = true, noremap = true, desc = "Telescope: buffers" }
@@ -157,12 +151,6 @@ function M.telescope()
 		"<Leader>fr",
 		telescope_builtin.registers,
 		{ silent = true, noremap = true, desc = "Telescope: registers" }
-	)
-	vim.keymap.set(
-		"n",
-		"<Leader>fq",
-		telescope_builtin.quickfixhistory,
-		{ silent = true, noremap = true, desc = "Telescope: quickfix lists" }
 	)
 	vim.keymap.set(
 		"n",

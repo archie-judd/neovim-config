@@ -3,6 +3,7 @@ local config = function()
 	local autocommands = require("config.autocommands")
 	local mappings = require("config.mappings")
 	local telescope = require("telescope")
+	local usercommands = require("config.usercommands")
 
 	telescope.setup({
 		defaults = {
@@ -66,6 +67,7 @@ local config = function()
 	telescope.load_extension("live_grep_args")
 	telescope.load_extension("fzf")
 	mappings.telescope()
+	usercommands.telescope()
 	autocommands.telescope()
 end
 

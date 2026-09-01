@@ -181,12 +181,6 @@ function M.telescope()
 
 	vim.keymap.set(
 		"n",
-		"<Leader>fk",
-		telescope_builtin.keymaps,
-		{ silent = true, noremap = true, desc = "Telescope: keymaps" }
-	)
-	vim.keymap.set(
-		"n",
 		"<Leader>fb",
 		telescope_builtin.buffers,
 		{ silent = true, noremap = true, desc = "Telescope: buffers" }
@@ -196,12 +190,6 @@ function M.telescope()
 		"<Leader>fr",
 		telescope_builtin.registers,
 		{ silent = true, noremap = true, desc = "Telescope: registers" }
-	)
-	vim.keymap.set(
-		"n",
-		"<Leader>fq",
-		telescope_builtin.quickfixhistory,
-		{ silent = true, noremap = true, desc = "Telescope: quickfix lists" }
 	)
 	vim.keymap.set(
 		"n",
@@ -249,7 +237,6 @@ function M.dap()
 	local dap_utils = require("lib.plugin.dap.utils")
 	local dap_widgets = require("dap.ui.widgets")
 	local telescope = require("telescope")
-	local core_utils = require("lib.core")
 
 	vim.keymap.set(
 		"n",
@@ -277,29 +264,10 @@ function M.dap()
 	)
 	vim.keymap.set(
 		"n",
-		"<LocalLeader>fc",
-		telescope.extensions.dap.dap_commands,
-		{ silent = true, noremap = true, desc = "Telescope Dap: find commands" }
-	)
-	vim.keymap.set(
-		"n",
 		"<LocalLeader>b",
 		dap.toggle_breakpoint,
 		{ silent = true, noremap = true, desc = "Dap: toggle breakpoint" }
 	)
-
-	vim.keymap.set("n", "<LocalLeader>z", function()
-		dap.set_breakpoint(
-			core_utils.user_input_or_nil("Condition (default is always stop): "),
-			core_utils.user_input_or_nil("Number of hits to trigger (default is zero): "),
-			core_utils.user_input_or_nil("Log message (default is none): ")
-		)
-	end, {
-		silent = false,
-		noremap = true,
-		desc = "Dap: add conditional breakpoint",
-	})
-
 	vim.keymap.set(
 		"n",
 		"<LocalLeader>c",
@@ -323,12 +291,6 @@ function M.dap()
 		"<LocalLeader>u",
 		dap_utils.step_out,
 		{ silent = true, noremap = true, desc = "Dap: step out of" }
-	)
-	vim.keymap.set(
-		"n",
-		"<LocalLeader>x",
-		dap.clear_breakpoints,
-		{ silent = true, noremap = true, desc = "Dap: clear breakpoints" }
 	)
 	vim.keymap.set("n", "<LocalLeader>v", function()
 		dap_widgets.hover()
@@ -365,12 +327,6 @@ function M.diffview()
 		diffview_utils.open_diffview,
 		{ silent = true, noremap = true, desc = "Diffview: open" }
 	)
-	vim.keymap.set(
-		"n",
-		"<Leader>gh",
-		diffview_utils.open_diffview_file_history,
-		{ silent = true, noremap = true, desc = "Diffview: open file history" }
-	)
 end
 
 function M.neotest()
@@ -382,9 +338,6 @@ function M.neotest()
 		neotest.run.run,
 		{ silent = true, noremap = true, desc = "Neotest: run closest test" }
 	)
-	vim.keymap.set("n", "<Leader>ra", function()
-		neotest.run.run(vim.fn.expand("%"))
-	end, { silent = true, noremap = true, desc = "Neotest: run all tests" })
 end
 
 function M.gitsigns(buffer)
@@ -463,7 +416,7 @@ function M.typescript()
 end
 
 function M.quickfix()
-	vim.keymap.set("qf", "<C-q>", function()
+	vim.keymap.set("n", "<C-q>", function()
 		vim.api.nvim_buf_delete(0, { force = true })
 	end, {
 		buffer = true,
@@ -527,16 +480,6 @@ function M.maximise()
 		silent = true,
 		noremap = true,
 		desc = "Maximise: toggle maximise",
-	})
-end
-
-function M.github_link()
-	local github_link = require("lib.plugin.github_link")
-
-	vim.keymap.set({ "n", "v" }, "<Leader>gl", github_link.github_link, {
-		silent = true,
-		noremap = true,
-		desc = "GitHub link: generate GitHub link",
 	})
 end
 
@@ -633,50 +576,6 @@ function M.markdown_tasks()
 		local line = vim.api.nvim_get_current_line()
 		vim.api.nvim_set_current_line(line .. " [In Review]")
 	end, { buffer = true, desc = "Tasks: mark in review" })
-
-	vim.keymap.set("n", "<leader>to", function()
-		local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-		local non_conforming = {}
-		local conforming = {}
-		local pattern = "^- %[([x ])%] (%d%d%d%d%-%d%d%-%d%d) "
-
-		for _, line in ipairs(lines) do
-			local status, date = line:match(pattern)
-			if status and date then
-				table.insert(conforming, { line = line, done = status == "x", date = date })
-			else
-				table.insert(non_conforming, line)
-			end
-		end
-
-		table.sort(conforming, function(a, b)
-			if a.done ~= b.done then
-				return a.done
-			end
-			return a.date < b.date
-		end)
-
-		local result = {}
-		for _, line in ipairs(non_conforming) do
-			table.insert(result, line)
-		end
-		for _, entry in ipairs(conforming) do
-			table.insert(result, entry.line)
-		end
-
-		vim.api.nvim_buf_set_lines(0, 0, -1, false, result)
-	end, { buffer = true, desc = "Tasks: sort by completion and date" })
-end
-
-function M.markdown_log()
-	vim.keymap.set("n", "<leader>ln", function()
-		local timestamp = os.date("%Y-%m-%d")
-		local new_lines = { "", "## " .. timestamp, "", "" }
-		local row = vim.api.nvim_buf_line_count(0)
-		vim.api.nvim_buf_set_lines(0, row, row, false, new_lines)
-		vim.api.nvim_win_set_cursor(0, { row + #new_lines, 0 })
-		vim.cmd("startinsert!")
-	end, { buffer = true, desc = "Log: new entry" })
 end
 
 return M

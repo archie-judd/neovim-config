@@ -1,2 +1,2 @@
 local mappings = require("config.mappings")
-mappings.qf()
+mappings.quickfix()

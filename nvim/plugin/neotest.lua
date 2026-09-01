@@ -3,6 +3,7 @@ local config = function()
 	local neotest = require("neotest")
 	local neotest_python = require("neotest-python")
 	local neotest_vitest = require("neotest-vitest")
+	local usercommands = require("config.usercommands")
 
 	local python_path = vim.fn.exepath("python") ~= "" and vim.fn.exepath("python") or vim.fn.exepath("python3")
 
@@ -31,12 +32,14 @@ local config = function()
 		},
 	})
 	mappings.neotest()
+	usercommands.neotest()
 end
 
 local function load_on_keymap()
 	local lazy_load_util = require("lib.lazy_load")
 	lazy_load_util.load_plugin_on_event(config, "neotest", "User", "DapLoaded") -- load neotest when dap is loaded
-	lazy_load_util.load_plugin_on_keymaps(config, "neotest", { n = { "<Leader>rt", "<Leader>ra" } })
+	lazy_load_util.load_plugin_on_keymaps(config, "neotest", { n = { "<Leader>rt" } })
+	lazy_load_util.load_plugin_on_usercommands(config, "neotest", { "TestFile" })
 end
 
 load_on_keymap()

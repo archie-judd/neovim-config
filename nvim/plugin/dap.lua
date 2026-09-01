@@ -30,7 +30,11 @@ local function load_on_keymap()
 	local lazy_load_util = require("lib.lazy_load")
 	vim.g.maplocalleader = DAP_LEADER
 	lazy_load_util.load_plugin_on_keymaps(config, "dap", { n = { "<LocalLeader>d", "<LocalLeader>b" } })
-	lazy_load_util.load_plugin_on_usercommands(config, "dap", { "DapDebugSls" })
+	lazy_load_util.load_plugin_on_usercommands(
+		config,
+		"dap",
+		{ "DapDebugSls", "DapBreakpoint", "DapClearBreakpoints", "DapCommands" }
+	)
 end
 
 load_on_keymap()

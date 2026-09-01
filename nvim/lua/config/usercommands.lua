@@ -115,6 +115,41 @@ function M.tasks()
 	end, {})
 end
 
+function M.markdown_tasks()
+	vim.api.nvim_buf_create_user_command(0, "TasksSort", function()
+		local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+		local non_conforming = {}
+		local conforming = {}
+		local pattern = "^- %[([x ])%] (%d%d%d%d%-%d%d%-%d%d) "
+
+		for _, line in ipairs(lines) do
+			local status, date = line:match(pattern)
+			if status and date then
+				table.insert(conforming, { line = line, done = status == "x", date = date })
+			else
+				table.insert(non_conforming, line)
+			end
+		end
+
+		table.sort(conforming, function(a, b)
+			if a.done ~= b.done then
+				return a.done
+			end
+			return a.date < b.date
+		end)
+
+		local result = {}
+		for _, line in ipairs(non_conforming) do
+			table.insert(result, line)
+		end
+		for _, entry in ipairs(conforming) do
+			table.insert(result, entry.line)
+		end
+
+		vim.api.nvim_buf_set_lines(0, 0, -1, false, result)
+	end, {})
+end
+
 function M.log()
 	local log = vim.env.LOG_PATH
 	vim.api.nvim_create_user_command("Log", function()
@@ -122,10 +157,68 @@ function M.log()
 	end, {})
 end
 
+function M.markdown_log()
+	vim.api.nvim_buf_create_user_command(0, "LogEntry", function()
+		local timestamp = os.date("%Y-%m-%d")
+		local new_lines = { "", "## " .. timestamp, "", "" }
+		local row = vim.api.nvim_buf_line_count(0)
+		vim.api.nvim_buf_set_lines(0, row, row, false, new_lines)
+		vim.api.nvim_win_set_cursor(0, { row + #new_lines, 0 })
+		vim.cmd("startinsert!")
+	end, {})
+end
+
 function M.dap()
+	local core_utils = require("lib.core")
+	local dap = require("dap")
 	local sls = require("lib.plugin.dap.sls")
+	local telescope = require("telescope")
+
 	vim.api.nvim_create_user_command("DapDebugSls", function()
 		sls.debug()
+	end, {})
+	vim.api.nvim_create_user_command("DapBreakpoint", function()
+		dap.set_breakpoint(
+			core_utils.user_input_or_nil("Condition (default is always stop): "),
+			core_utils.user_input_or_nil("Number of hits to trigger (default is zero): "),
+			core_utils.user_input_or_nil("Log message (default is none): ")
+		)
+	end, {})
+	vim.api.nvim_create_user_command("DapClearBreakpoints", function()
+		dap.clear_breakpoints()
+	end, {})
+	vim.api.nvim_create_user_command("DapCommands", function()
+		telescope.extensions.dap.dap_commands()
+	end, {})
+end
+
+function M.telescope()
+	local telescope_builtin = require("telescope.builtin")
+
+	vim.api.nvim_create_user_command("Keymaps", function()
+		telescope_builtin.keymaps()
+	end, {})
+	vim.api.nvim_create_user_command("Commands", function()
+		telescope_builtin.commands()
+	end, {})
+	vim.api.nvim_create_user_command("QuickfixHistory", function()
+		telescope_builtin.quickfixhistory()
+	end, {})
+end
+
+function M.diffview()
+	local diffview_utils = require("lib.plugin.diffview")
+
+	vim.api.nvim_create_user_command("DiffHistory", function()
+		diffview_utils.open_diffview_file_history()
+	end, {})
+end
+
+function M.neotest()
+	local neotest = require("neotest")
+
+	vim.api.nvim_create_user_command("TestFile", function()
+		neotest.run.run(vim.fn.expand("%"))
 	end, {})
 end
 

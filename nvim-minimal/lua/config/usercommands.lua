@@ -32,4 +32,18 @@ function M.yank_filepath()
 	)
 end
 
+function M.telescope()
+	local telescope_builtin = require("telescope.builtin")
+
+	vim.api.nvim_create_user_command("Keymaps", function()
+		telescope_builtin.keymaps()
+	end, {})
+	vim.api.nvim_create_user_command("Commands", function()
+		telescope_builtin.commands()
+	end, {})
+	vim.api.nvim_create_user_command("QuickfixHistory", function()
+		telescope_builtin.quickfixhistory()
+	end, {})
+end
+
 return M

@@ -3,6 +3,7 @@ local config = function()
 	local autocommands = require("config.autocommands")
 	local mappings = require("config.mappings")
 	local telescope = require("telescope")
+	local usercommands = require("config.usercommands")
 	local word_actions = require("telescope-words.actions")
 
 	telescope.setup({
@@ -83,6 +84,7 @@ local config = function()
 	telescope.load_extension("fzf")
 	telescope.load_extension("git_changed_files")
 	mappings.telescope()
+	usercommands.telescope()
 	autocommands.telescope()
 end
 

@@ -2,6 +2,7 @@ local config = function()
 	local autocommands = require("config.autocommands")
 	local diffview = require("diffview")
 	local mappings = require("config.mappings")
+	local usercommands = require("config.usercommands")
 
 	diffview.setup({
 		file_panel = {
@@ -37,12 +38,14 @@ local config = function()
 		},
 	})
 	mappings.diffview()
+	usercommands.diffview()
 	autocommands.diffview()
 end
 
 local function load_on_keymap()
 	local lazy_load_util = require("lib.lazy_load")
-	lazy_load_util.load_plugin_on_keymaps(config, "diffview", { n = { "<Leader>gs", "<Leader>gh" } })
+	lazy_load_util.load_plugin_on_keymaps(config, "diffview", { n = { "<Leader>gs" } })
+	lazy_load_util.load_plugin_on_usercommands(config, "diffview", { "DiffHistory" })
 end
 
 load_on_keymap()
