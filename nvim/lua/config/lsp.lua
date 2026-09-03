@@ -11,7 +11,7 @@ end
 
 enable_if_available("pyright", "pyright-langserver")
 enable_if_available("tsgo", "tsgo")
-enable_if_available("eslint", "vscode-eslint-language-server")
+enable_if_available("oxlint", "oxlint")
 enable_if_available("lua_ls", "lua-language-server")
 enable_if_available("marksman", "marksman")
 enable_if_available("bashls", "bash-language-server")
@@ -39,7 +39,8 @@ vim.lsp.config("tsgo", {
 		},
 	},
 })
-vim.lsp.config("eslint", {
+-- -- For when we move to oxlint
+vim.lsp.config("oxlint", {
 	on_attach = function(client, bufnr)
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			buffer = bufnr,
@@ -47,7 +48,7 @@ vim.lsp.config("eslint", {
 				if lsp_utils.is_client_ready(client.name) then
 					vim.lsp.buf.code_action({
 						filter = function(action)
-							return action.kind and action.kind:match("^source%.fixAll%.eslint")
+							return action.kind and action.kind:match("^source%.fixAll%.oxc")
 						end,
 						apply = true,
 					})
@@ -56,21 +57,3 @@ vim.lsp.config("eslint", {
 		})
 	end,
 })
--- -- For when we move to oxlint
--- vim.lsp.config("oxlint", {
--- 	on_attach = function(client, bufnr)
--- 		vim.api.nvim_create_autocmd("BufWritePre", {
--- 			buffer = bufnr,
--- 			callback = function()
--- 				if lsp_utils.is_client_ready(client.name) then
--- 					vim.lsp.buf.code_action({
--- 						filter = function(action)
--- 							return action.kind and action.kind:match("^source%.fixAll%.oxc")
--- 						end,
--- 						apply = true,
--- 					})
--- 				end
--- 			end,
--- 		})
--- 	end,
--- })
