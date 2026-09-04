@@ -564,11 +564,46 @@ function M.markdown_tasks()
 	end, { buffer = true, desc = "Tasks: mark done" })
 
 	vim.keymap.set("n", "<leader>tn", function()
-		local date = os.date("%Y-%m-%d")
-		local new_line = "- [ ] " .. date .. " "
-		local row = vim.api.nvim_win_get_cursor(0)[1]
-		vim.api.nvim_buf_set_lines(0, row, row, false, { new_line })
-		vim.api.nvim_win_set_cursor(0, { row + 1, #new_line })
+		local heading = "### " .. os.date("%Y-%m-%d")
+		local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+		local section_start
+		for i, line in ipairs(lines) do
+			if line == heading then
+				section_start = i
+				break
+			end
+		end
+
+		local new_lines, row
+		if section_start then
+			local section_end = #lines
+			for i = section_start + 1, #lines do
+				if lines[i]:match("^#") then
+					section_end = i - 1
+					break
+				end
+			end
+			while section_end > section_start and lines[section_end] == "" do
+				section_end = section_end - 1
+			end
+			new_lines = { "- [ ] " }
+			row = section_end
+		else
+			local last = #lines
+			while last > 0 and lines[last] == "" do
+				last = last - 1
+			end
+			if last > 0 then
+				new_lines = { "", heading, "", "- [ ] " }
+			else
+				new_lines = { heading, "", "- [ ] " }
+			end
+			row = last
+		end
+
+		vim.api.nvim_buf_set_lines(0, row, row, false, new_lines)
+		vim.api.nvim_win_set_cursor(0, { row + #new_lines, 0 })
 		vim.cmd("startinsert!")
 	end, { buffer = true, desc = "Tasks: new task" })
 

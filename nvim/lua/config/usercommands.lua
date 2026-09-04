@@ -115,41 +115,6 @@ function M.tasks()
 	end, {})
 end
 
-function M.markdown_tasks()
-	vim.api.nvim_buf_create_user_command(0, "TasksSort", function()
-		local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-		local non_conforming = {}
-		local conforming = {}
-		local pattern = "^- %[([x ])%] (%d%d%d%d%-%d%d%-%d%d) "
-
-		for _, line in ipairs(lines) do
-			local status, date = line:match(pattern)
-			if status and date then
-				table.insert(conforming, { line = line, done = status == "x", date = date })
-			else
-				table.insert(non_conforming, line)
-			end
-		end
-
-		table.sort(conforming, function(a, b)
-			if a.done ~= b.done then
-				return a.done
-			end
-			return a.date < b.date
-		end)
-
-		local result = {}
-		for _, line in ipairs(non_conforming) do
-			table.insert(result, line)
-		end
-		for _, entry in ipairs(conforming) do
-			table.insert(result, entry.line)
-		end
-
-		vim.api.nvim_buf_set_lines(0, 0, -1, false, result)
-	end, {})
-end
-
 function M.log()
 	local log = vim.env.LOG_PATH
 	vim.api.nvim_create_user_command("Log", function()
