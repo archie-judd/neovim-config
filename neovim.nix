@@ -100,7 +100,7 @@ let
     pkgs.shfmt # formatter
     # markdown
     pkgs.marksman # lsp
-    pkgs.mdformat # formatter
+    (pkgs.mdformat.withPlugins (ps: with ps; [ mdformat-frontmatter ])) # formatter
     # nix
     pkgs.nixd # lsp
     pkgs.nixfmt # formatter
