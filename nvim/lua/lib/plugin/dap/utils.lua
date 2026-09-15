@@ -95,6 +95,9 @@ function M.open_terminal()
 	local TERMINAL_WIDTH = 0.4
 	local buf = vim.api.nvim_create_buf(false, true) -- Create a new buffer (no file, scratch)
 	local width = math.floor(vim.o.columns * TERMINAL_WIDTH)
+	if windows.debugged == nil then
+		windows.debugged = vim.api.nvim_get_current_win()
+	end
 	vim.cmd("vsplit")
 	vim.cmd("vertical resize " .. width)
 	windows.dap_terminal = vim.api.nvim_get_current_win()
@@ -117,7 +120,7 @@ end
 function M.dap_restart()
 	if dap_is_active() then
 		vim.notify("Restarting debug session", vim.log.levels.INFO)
-		if vim.api.nvim_win_is_valid(windows.debugged) then
+		if windows.debugged ~= nil and vim.api.nvim_win_is_valid(windows.debugged) then
 			vim.api.nvim_set_current_win(windows.debugged)
 			dap.restart()
 		else
@@ -130,7 +133,7 @@ end
 
 function M.dap_continue()
 	if dap_is_active() then
-		if vim.api.nvim_win_is_valid(windows.debugged) then
+		if windows.debugged ~= nil and vim.api.nvim_win_is_valid(windows.debugged) then
 			vim.api.nvim_set_current_win(windows.debugged)
 			dap.continue()
 		else
@@ -143,7 +146,7 @@ end
 
 function M.step_over()
 	if dap_is_active() then
-		if vim.api.nvim_win_is_valid(windows.debugged) then
+		if windows.debugged ~= nil and vim.api.nvim_win_is_valid(windows.debugged) then
 			vim.api.nvim_set_current_win(windows.debugged)
 			dap.step_over()
 		else
@@ -156,7 +159,7 @@ end
 
 function M.step_into()
 	if dap_is_active() then
-		if vim.api.nvim_win_is_valid(windows.debugged) then
+		if windows.debugged ~= nil and vim.api.nvim_win_is_valid(windows.debugged) then
 			vim.api.nvim_set_current_win(windows.debugged)
 			dap.step_into()
 		else
@@ -169,7 +172,7 @@ end
 
 function M.step_out()
 	if dap_is_active() then
-		if vim.api.nvim_win_is_valid(windows.debugged) then
+		if windows.debugged ~= nil and vim.api.nvim_win_is_valid(windows.debugged) then
 			vim.api.nvim_set_current_win(windows.debugged)
 			dap.step_out()
 		else
