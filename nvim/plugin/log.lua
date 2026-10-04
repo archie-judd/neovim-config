@@ -1,6 +1,6 @@
 local config = function()
-	local usercommands = require("config.usercommands")
-	usercommands.log()
+	local mappings = require("config.mappings")
+	mappings.log()
 end
 
 config()
