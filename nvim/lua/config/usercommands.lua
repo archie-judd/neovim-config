@@ -108,22 +108,6 @@ function M.stage()
 	end, { range = true })
 end
 
-function M.tasks()
-	local tasks = vim.env.TASKS_PATH
-	vim.api.nvim_create_user_command("Tasks", function()
-		vim.cmd("edit " .. tasks)
-	end, {})
-end
-
-function M.log()
-	local log = vim.env.LOG_PATH
-	vim.api.nvim_create_user_command("Log", function()
-		vim.cmd("edit " .. log)
-	end, {})
-end
-
-function M.markdown_log() end
-
 function M.dap()
 	local core_utils = require("lib.core")
 	local dap = require("dap")
