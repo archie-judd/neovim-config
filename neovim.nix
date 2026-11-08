@@ -54,9 +54,6 @@ let
     pkgs.vimPlugins.neotest
     pkgs.vimPlugins.neotest-python
     pkgs.vimPlugins.neotest-vitest
-    pkgs.vimPlugins.codecompanion-nvim
-    pkgs.vimPlugins.codecompanion-history-nvim
-    pkgs.vimPlugins.codecompanion-spinner-nvim
     pkgs.vimPlugins.plenary-nvim
     pkgs.vimPlugins.catppuccin-nvim
     pkgs.vimPlugins.telescope-nvim

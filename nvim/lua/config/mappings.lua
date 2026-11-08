@@ -483,25 +483,6 @@ function M.maximise()
 	})
 end
 
-function M.codecompanion()
-	local codecompanion_utils = require("lib.plugin.codecompanion.utils")
-	vim.keymap.set(
-		{ "v" },
-		"<LocalLeader>c",
-		codecompanion_utils.add_selection,
-		{ noremap = true, silent = true, desc = "CodeCompanion: Add selection to chat" }
-	)
-	vim.keymap.set({ "v" }, "<LocalLeader>n", function()
-		codecompanion_utils.add_selection({ new = true })
-	end, { noremap = true, silent = true, desc = "CodeCompanion: Add selection to new chat" })
-	vim.keymap.set({ "n" }, "<LocalLeader>c", function()
-		codecompanion_utils.open({ new = false })
-	end, { noremap = true, silent = true, desc = "CodeCompanion: Open chat" })
-	vim.keymap.set("n", "<LocalLeader>n", function()
-		codecompanion_utils.open({ new = true })
-	end, { noremap = true, silent = true, desc = "CodeCompanion: New chat" })
-end
-
 function M.terminal()
 	local terminal = require("lib.plugin.terminal")
 
